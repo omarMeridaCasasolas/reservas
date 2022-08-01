@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.min.css">
+    <!-- <script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script> -->
+    <!-- <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous"> -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+    <style>
+        .carousel-inner img {
+            width: 100%;
+            height: 100%;
+        }
+        td:nth-child(2) {
+            background: #efefef;
+        }
+    </style>
+    <title>Reserva de cancha</title>
+</head>
+<body>
+    <nav class="navbar navbar-expand-sm bg-primary navbar-dark">
+        <ul class="navbar-nav">
+            <li class="nav-item active">
+            <a class="nav-link" href="#">Bienvenido</a>
+            </li>
+            <li class="nav-item">
+            <a class="nav-link" href="#">Reserva</a>
+            </li>
+            <li class="nav-item">
+            <a class="nav-link" href="#">Acceso</a>
+            </li>
+            <li class="nav-item">
+            <a class="nav-link disabled" href="#">Disabled</a>
+            </li>
+        </ul>
+    </nav>
+    <main class="container border">
+        <h1 class="text-center p-5">Reservas</h1>
+        <div class="form-group">
+            <input type="date" name="" id="fechaReserva" class="form-control" min="2022-07-29" max="2022-08-29" value=<?php echo date('Y-m-d');?>>
+        </div>
+        <div class="table-responsive">
+            <table class="table table-sm table-bordered text-center" id="myTable">
+                <thead>
+                    <tr>
+                        <th>Horario</th>
+                        <th>Lunes</th>
+                        <th>Martes</th>
+                        <th>Miercoles</th>
+                        <th>Jueves</th>
+                        <th>Viernes</th>
+                        <th>Sabado</th>
+                        <th>Domingo</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>09:00</td>
+                        <td class="bg-light"><button type="button" class="btn btn-success btn-sm">Disponible</button></td>
+                        <td><button type="button" class="btn btn-success btn-sm">Disponible</button></td>
+                        <td><button type="button" class="btn btn-success btn-sm">Disponible</button></td>
+                        <td><button type="button" class="btn btn-success btn-sm">Disponible</button></td>
+                        <td><button type="button" class="btn btn-success btn-sm">Disponible</button></td>
+                        <td><button type="button" class="btn btn-success btn-sm">Disponible</button></td>
+                        <td><button type="button" class="btn btn-success btn-sm">Disponible</button></td>
+                    </tr>
+                    <tr>
+                        <td>10:00</td>
+                        <td class="bg-light"><button type="button" class="btn btn-success btn-sm">Disponible</button></td>
+                        <td><button type="button" class="btn btn-success btn-sm">Disponible</button></td>
+                        <td><button type="button" class="btn btn-warning btn-sm">Reservado</button></td>
+                        <td><button type="button" class="btn btn-warning btn-sm">Reservado</button></td>
+                        <td><button type="button" class="btn btn-success btn-sm">Disponible</button></td>
+                        <td><button type="button" class="btn btn-success btn-sm">Disponible</button></td>
+                        <td><button type="button" class="btn btn-success btn-sm">Disponible</button></td>
+                    </tr>
+                    <tr>
+                        <td>11:00</td>
+                        <td class="bg-light"><button type="button" class="btn btn-success btn-sm">Disponible</button></td>
+                        <td><button type="button" class="btn btn-success btn-sm">Disponible</button></td>
+                        <td><button type="button" class="btn btn-success btn-sm">Disponible</button></td>
+                        <td><button type="button" class="btn btn-success btn-sm">Disponible</button></td>
+                        <td><button type="button" class="btn btn-success btn-sm">Disponible</button></td>
+                        <td><button type="button" class="btn btn-success btn-sm">Disponible</button></td>
+                        <td><button type="button" class="btn btn-danger btn-sm">Cerrado</button></td>
+                    </tr>
+                    <tr>
+                        <td>10:00</td>
+                        <td class="bg-light"><button type="button" class="btn btn-success btn-sm">Disponible</button></td>
+                        <td><button type="button" class="btn btn-success btn-sm">Disponible</button></td>
+                        <td><button type="button" class="btn btn-warning btn-sm">Reservado</button></td>
+                        <td><button type="button" class="btn btn-warning btn-sm">Reservado</button></td>
+                        <td><button type="button" class="btn btn-success btn-sm">Disponible</button></td>
+                        <td><button type="button" class="btn btn-success btn-sm">Disponible</button></td>
+                        <td><button type="button" class="btn btn-success btn-sm">Disponible</button></td>
+                    </tr>
+                    <tr>
+                        <td>11:00</td>
+                        <td class="bg-light"><button type="button" class="btn btn-success btn-sm">Disponible</button></td>
+                        <td><button type="button" class="btn btn-success btn-sm">Disponible</button></td>
+                        <td><button type="button" class="btn btn-success btn-sm">Disponible</button></td>
+                        <td><button type="button" class="btn btn-success btn-sm">Disponible</button></td>
+                        <td><button type="button" class="btn btn-success btn-sm">Disponible</button></td>
+                        <td><button type="button" class="btn btn-success btn-sm">Disponible</button></td>
+                        <td><button type="button" class="btn btn-danger btn-sm">Cerrado</button></td>
+                    </tr>
+                    <tr>
+                        <td>10:00</td>
+                        <td class="bg-light"><button type="button" class="btn btn-success btn-sm">Disponible</button></td>
+                        <td><button type="button" class="btn btn-success btn-sm">Disponible</button></td>
+                        <td><button type="button" class="btn btn-warning btn-sm">Reservado</button></td>
+                        <td><button type="button" class="btn btn-warning btn-sm">Reservado</button></td>
+                        <td><button type="button" class="btn btn-success btn-sm">Disponible</button></td>
+                        <td><button type="button" class="btn btn-success btn-sm">Disponible</button></td>
+                        <td><button type="button" class="btn btn-success btn-sm">Disponible</button></td>
+                    </tr>
+                    <tr>
+                        <td>11:00</td>
+                        <td class="bg-light"><button type="button" class="btn btn-success btn-sm">Disponible</button></td>
+                        <td><button type="button" class="btn btn-success btn-sm">Disponible</button></td>
+                        <td><button type="button" class="btn btn-success btn-sm">Disponible</button></td>
+                        <td><button type="button" class="btn btn-success btn-sm">Disponible</button></td>
+                        <td><button type="button" class="btn btn-success btn-sm">Disponible</button></td>
+                        <td><button type="button" class="btn btn-success btn-sm">Disponible</button></td>
+                        <td><button type="button" class="btn btn-danger btn-sm">Cerrado</button></td>
+                    </tr>
+                    <tr>
+                        <td>10:00</td>
+                        <td class="bg-light"><button type="button" class="btn btn-success btn-sm">Disponible</button></td>
+                        <td><button type="button" class="btn btn-success btn-sm">Disponible</button></td>
+                        <td><button type="button" class="btn btn-warning btn-sm">Reservado</button></td>
+                        <td><button type="button" class="btn btn-warning btn-sm">Reservado</button></td>
+                        <td><button type="button" class="btn btn-success btn-sm">Disponible</button></td>
+                        <td><button type="button" class="btn btn-success btn-sm">Disponible</button></td>
+                        <td><button type="button" class="btn btn-success btn-sm">Disponible</button></td>
+                    </tr>
+                    <tr>
+                        <td>11:00</td>
+                        <td class="bg-light"><button type="button" class="btn btn-success btn-sm">Disponible</button></td>
+                        <td><button type="button" class="btn btn-success btn-sm">Disponible</button></td>
+                        <td><button type="button" class="btn btn-success btn-sm">Disponible</button></td>
+                        <td><button type="button" class="btn btn-success btn-sm">Disponible</button></td>
+                        <td><button type="button" class="btn btn-success btn-sm">Disponible</button></td>
+                        <td><button type="button" class="btn btn-success btn-sm">Disponible</button></td>
+                        <td><button type="button" class="btn btn-danger btn-sm">Cerrado</button></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </main>
+    <!-- MODAL -->
+    <div class="modal fade" id="modalNoDisponble" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header bg-info">
+                    <h5 class="modal-title" id="modalNoDisponble">No disponnible</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <h6>No se puede reservar la cancha,ya esta fuera del rango de atencion gracias</h6> 
+                    <h6>Lunes - Viernes => 9:00 a 22:00</h6> 
+                    <h6>Sabado => 9:00 a 20:00</h6> 
+                    <h6>Lunes - Viernes => 9:00 a 14:00</h6> 
+                    <h3 class="text-center bg-light"><i class="fas fa-smile"></i>&nbsp&nbsp<i class="fas fa-smile"></i>&nbsp&nbsp<i class="fas fa-smile"></i></h3>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modalDisponble" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header bg-info">
+                    <h5 class="modal-title" id="modalDisponble">Disponnible</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <h6>Posible, para ser la reserva comunicarse a los siguientes contactos, gracias</h6> 
+                    <h6><i class="fas fa-mail-bulk"></i>&nbsp Correo electronico: <a href="mailto:cuenta@deemail.com">OmarCasasolasMerida@gmail.com</a>
+                    <h6><i class="fas fa-search-location"></i>&nbsp Direccion: Juan de la rosa y america #14521</h6> 
+                    <h6><i class="fab fa-whatsapp"></i>&nbsp Whatsapp: <a href="https://wa.me/+59175931697?text=I'm%20interested%20in%20your%20car%20for%20sale" target="_blank" rel="noopener noreferrer">Enviar mensaje</a></h6> 
+                    <h3 class="text-center bg-light"><i class="fas fa-smile"></i>&nbsp&nbsp<i class="fas fa-smile"></i>&nbsp&nbsp<i class="fas fa-smile"></i></h3>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="page-footer font-small teal pt-4">
+        <!-- Footer Text -->
+        <div class="container-fluid text-center text-md-left">
+        <!-- Grid row -->
+            <div class="row bg-primary text-white">
+                <!-- Grid column -->
+                <div class="col-md-6 mt-md-0 mt-3 p-5">
+                    <!-- Content -->
+                    <h5 class="text-uppercase font-weight-bold">Contactos</h5>
+                    <div class="row">
+                        Ubicacion: Juan de la rosa y america #14521
+                    </div>
+                    <div class="row">
+                        Telefono: +591 78221414
+                    </div>
+                    <div class="row">
+                        Correo: micancha@gamilc.om
+                    </div>
+                </div>
+                <!-- Grid column -->
+                <hr class="clearfix w-100 d-md-none pb-3">
+                <!-- Grid column -->
+                <div class="col-md-6 mb-md-0 mb-3 p-5">
+                    <!-- Content -->
+                    <h5 class="text-uppercase font-weight-bold">¿Quienes Somos?</h5>
+                    <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Optio deserunt fuga perferendis modi earum
+                        commodi aperiam temporibus quod nulla nesciunt aliquid debitis ullam omnis quos ipsam, aspernatur id
+                        excepturi hic.
+                    </p>
+                </div>
+                <!-- Grid column -->
+            </div>
+        <!-- Grid row -->
+        </div>
+        <!-- Footer Text -->
+    </footer>
+    <!-- Footer -->
+</body>
+<script src="js/reserva.js"></script>
+</html>
