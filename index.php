@@ -33,7 +33,7 @@
             </li>
         </ul>
     </nav>
-    <main class="container border shadow p-4 mb-4 bg-white">
+    <main class="container border shadow p-4 mb-4 bg-light">
         <h1 class="text-center p-2">Bienvenido</h1>
         <div class="text-center mb-3">
             <img src="vista/src/logo.png" alt="logo de la empresa" srcset="" width="35%">
@@ -101,11 +101,13 @@
                     <div class="row">
                         Correo: micancha@gamilc.om
                     </div>
+                    <br>
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d12807.713804295758!2d-66.14294054297238!3d-17.37546562191324!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0xeec53f8cbc955985!2sSoccer%20Club!5e0!3m2!1sen!2sbo!4v1659403541154!5m2!1sen!2sbo" width="400" height="250" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
                 </div>
                 <!-- Grid column -->
-                <hr class="clearfix w-100 d-md-none pb-3">
+                <hr class="clearfix w-100 d-md-none pb-2">
                 <!-- Grid column -->
-                <div class="col-md-6 mb-md-0 mb-3 p-5">
+                <div class="col-md-6 mb-md-0 mb-3 p-3">
                     <!-- Content -->
                     <h5 class="text-uppercase font-weight-bold">¿Quienes Somos?</h5>
                     <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Optio deserunt fuga perferendis modi earum

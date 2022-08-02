@@ -27,9 +27,9 @@
                     $res = "Error de autentificacion";
                 }
                 break;
-            // case 'verPublicaciones':
-            //     $res = $publicacion->verPublicaciones();
-            //     break; 
+            case 'listarSnackCliente':
+                $res = $producto->listarSnackCliente();
+                break; 
             // case 'eliminarPublicacion':
             //     $idPublicacion = $_REQUEST['idPublicacion'];
             //     $res = $publicacion->eliminarPublicacion($idPublicacion);

@@ -7,8 +7,8 @@ $(document).ready(function () {
         console.log("Se esta haciendo click");
         let porReserva = $('#checkReserva').is(':checked');
         let porVenta =  $('#checkVenta').is(':checked');
-        console.log(porReserva);
-        console.log(porVenta);
+        // console.log(porReserva);
+        // console.log(porVenta);
         let fechaInicio = $("#fechaInicioReporte").val();
         let fechaFin = $("#fechaFinalReporte").val();
         if(porReserva){

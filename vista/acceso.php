@@ -33,16 +33,16 @@
     <nav class="navbar navbar-expand-sm bg-primary navbar-dark">
         <ul class="navbar-nav p-2">
             <li class="nav-item">
-                <a class="nav-link" href="#">Bienvenido</a>
+                <a class="nav-link" href="../index.php">Bienvenido</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="vista/reserva.php">Reserva</a>
+                <a class="nav-link" href="reserva.php">Reserva</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="vista/snack.php">Snack</a>
+                <a class="nav-link" href="snack.php">Snack</a>
             </li>
             <li class="nav-item active border border-top-0 border-left-0 border-right-0">
-                <a class="nav-link border border-top-0 border-left-0 border-right-0" href="vista/acceso.php">Acceso</a>
+                <a class="nav-link border border-top-0 border-left-0 border-right-0" href="acceso.php">Acceso</a>
             </li>
         </ul>
     </nav>
@@ -95,44 +95,6 @@
             <!-- <button type="button" class="btn btn-success btn-block mb-4">Ingreso</button> -->
         </form>
     </main>
-    <!-- Footer -->
-    <footer class="page-footer font-small teal pt-4">
-        <!-- Footer Text -->
-        <div class="container-fluid text-center text-md-left">
-        <!-- Grid row -->
-            <div class="row bg-primary text-white">
-                <!-- Grid column -->
-                <div class="col-md-6 mt-md-0 mt-3 p-5">
-                    <!-- Content -->
-                    <h5 class="text-uppercase font-weight-bold">Contactos</h5>
-                    <div class="row">
-                        Ubicacion: Juan de la rosa y america #14521
-                    </div>
-                    <div class="row">
-                        Telefono: +591 78221414
-                    </div>
-                    <div class="row">
-                        Correo: micancha@gamilc.om
-                    </div>
-                </div>
-                <!-- Grid column -->
-                <hr class="clearfix w-100 d-md-none pb-3">
-                <!-- Grid column -->
-                <div class="col-md-6 mb-md-0 mb-3 p-5">
-                    <!-- Content -->
-                    <h5 class="text-uppercase font-weight-bold">¿Quienes Somos?</h5>
-                    <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Optio deserunt fuga perferendis modi earum
-                        commodi aperiam temporibus quod nulla nesciunt aliquid debitis ullam omnis quos ipsam, aspernatur id
-                        excepturi hic.
-                    </p>
-                </div>
-                <!-- Grid column -->
-            </div>
-        <!-- Grid row -->
-        </div>
-        <!-- Footer Text -->
-    </footer>
-    <!-- Footer -->
 </body>
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="js/acceso.js"></script>

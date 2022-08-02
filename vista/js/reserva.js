@@ -10,6 +10,8 @@ var reservasDomingo = new Array();
 var semanaCompleta = new Array();
 
 $(document).ready(function () {
+    calendarioReserva($("#fechaReserva").val());
+
     $("#fechaReserva").change(function (e) { 
         e.preventDefault();
         console.log("Se esta cambiando el dia");

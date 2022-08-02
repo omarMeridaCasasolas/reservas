@@ -61,7 +61,7 @@
                     <a class="nav-link" href="reportes.php">Reportes</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="empleados.php">Empleados</a>
+                    <a class="nav-link" href="clientes.php">Clientes</a>
                 </li>
             </ul>
         </div>

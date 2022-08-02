@@ -29,6 +29,15 @@
             $sentenceSQL->closeCursor();
             return $res;
         }
+
+        public function listarSnackCliente(){
+            $sql = "SELECT * from producto WHERE stock_producto > 1;";
+            $sentenceSQL = $this->connexion_bd->prepare($sql);
+            $res = $sentenceSQL->execute();
+            $respuesta = $sentenceSQL->fetchAll(PDO::FETCH_ASSOC);
+            $sentenceSQL->closeCursor();
+            return json_encode($respuesta, JSON_PRETTY_PRINT);
+        }
     } 
 
 ?>

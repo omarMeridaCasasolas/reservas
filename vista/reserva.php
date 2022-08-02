@@ -25,18 +25,18 @@
 </head>
 <body>
     <nav class="navbar navbar-expand-sm bg-primary navbar-dark">
-        <ul class="navbar-nav">
-            <li class="nav-item active">
-            <a class="nav-link" href="#">Bienvenido</a>
+        <ul class="navbar-nav p-2">
+            <li class="nav-item">
+                <a class="nav-link " href="../index.php">Bienvenido</a>
+            </li>
+            <li class="nav-item active border border-top-0 border-left-0 border-right-0">
+                <a class="nav-link border border-top-0 border-left-0 border-right-0" href="reserva.php">Reserva</a>
             </li>
             <li class="nav-item">
-            <a class="nav-link" href="#">Reserva</a>
+                <a class="nav-link" href="snack.php">Snack</a>
             </li>
             <li class="nav-item">
-            <a class="nav-link" href="#">Acceso</a>
-            </li>
-            <li class="nav-item">
-            <a class="nav-link disabled" href="#">Disabled</a>
+                <a class="nav-link" href="acceso.php">Acceso</a>
             </li>
         </ul>
     </nav>
@@ -60,96 +60,6 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>09:00</td>
-                        <td class="bg-light"><button type="button" class="btn btn-success btn-sm">Disponible</button></td>
-                        <td><button type="button" class="btn btn-success btn-sm">Disponible</button></td>
-                        <td><button type="button" class="btn btn-success btn-sm">Disponible</button></td>
-                        <td><button type="button" class="btn btn-success btn-sm">Disponible</button></td>
-                        <td><button type="button" class="btn btn-success btn-sm">Disponible</button></td>
-                        <td><button type="button" class="btn btn-success btn-sm">Disponible</button></td>
-                        <td><button type="button" class="btn btn-success btn-sm">Disponible</button></td>
-                    </tr>
-                    <tr>
-                        <td>10:00</td>
-                        <td class="bg-light"><button type="button" class="btn btn-success btn-sm">Disponible</button></td>
-                        <td><button type="button" class="btn btn-success btn-sm">Disponible</button></td>
-                        <td><button type="button" class="btn btn-warning btn-sm">Reservado</button></td>
-                        <td><button type="button" class="btn btn-warning btn-sm">Reservado</button></td>
-                        <td><button type="button" class="btn btn-success btn-sm">Disponible</button></td>
-                        <td><button type="button" class="btn btn-success btn-sm">Disponible</button></td>
-                        <td><button type="button" class="btn btn-success btn-sm">Disponible</button></td>
-                    </tr>
-                    <tr>
-                        <td>11:00</td>
-                        <td class="bg-light"><button type="button" class="btn btn-success btn-sm">Disponible</button></td>
-                        <td><button type="button" class="btn btn-success btn-sm">Disponible</button></td>
-                        <td><button type="button" class="btn btn-success btn-sm">Disponible</button></td>
-                        <td><button type="button" class="btn btn-success btn-sm">Disponible</button></td>
-                        <td><button type="button" class="btn btn-success btn-sm">Disponible</button></td>
-                        <td><button type="button" class="btn btn-success btn-sm">Disponible</button></td>
-                        <td><button type="button" class="btn btn-danger btn-sm">Cerrado</button></td>
-                    </tr>
-                    <tr>
-                        <td>10:00</td>
-                        <td class="bg-light"><button type="button" class="btn btn-success btn-sm">Disponible</button></td>
-                        <td><button type="button" class="btn btn-success btn-sm">Disponible</button></td>
-                        <td><button type="button" class="btn btn-warning btn-sm">Reservado</button></td>
-                        <td><button type="button" class="btn btn-warning btn-sm">Reservado</button></td>
-                        <td><button type="button" class="btn btn-success btn-sm">Disponible</button></td>
-                        <td><button type="button" class="btn btn-success btn-sm">Disponible</button></td>
-                        <td><button type="button" class="btn btn-success btn-sm">Disponible</button></td>
-                    </tr>
-                    <tr>
-                        <td>11:00</td>
-                        <td class="bg-light"><button type="button" class="btn btn-success btn-sm">Disponible</button></td>
-                        <td><button type="button" class="btn btn-success btn-sm">Disponible</button></td>
-                        <td><button type="button" class="btn btn-success btn-sm">Disponible</button></td>
-                        <td><button type="button" class="btn btn-success btn-sm">Disponible</button></td>
-                        <td><button type="button" class="btn btn-success btn-sm">Disponible</button></td>
-                        <td><button type="button" class="btn btn-success btn-sm">Disponible</button></td>
-                        <td><button type="button" class="btn btn-danger btn-sm">Cerrado</button></td>
-                    </tr>
-                    <tr>
-                        <td>10:00</td>
-                        <td class="bg-light"><button type="button" class="btn btn-success btn-sm">Disponible</button></td>
-                        <td><button type="button" class="btn btn-success btn-sm">Disponible</button></td>
-                        <td><button type="button" class="btn btn-warning btn-sm">Reservado</button></td>
-                        <td><button type="button" class="btn btn-warning btn-sm">Reservado</button></td>
-                        <td><button type="button" class="btn btn-success btn-sm">Disponible</button></td>
-                        <td><button type="button" class="btn btn-success btn-sm">Disponible</button></td>
-                        <td><button type="button" class="btn btn-success btn-sm">Disponible</button></td>
-                    </tr>
-                    <tr>
-                        <td>11:00</td>
-                        <td class="bg-light"><button type="button" class="btn btn-success btn-sm">Disponible</button></td>
-                        <td><button type="button" class="btn btn-success btn-sm">Disponible</button></td>
-                        <td><button type="button" class="btn btn-success btn-sm">Disponible</button></td>
-                        <td><button type="button" class="btn btn-success btn-sm">Disponible</button></td>
-                        <td><button type="button" class="btn btn-success btn-sm">Disponible</button></td>
-                        <td><button type="button" class="btn btn-success btn-sm">Disponible</button></td>
-                        <td><button type="button" class="btn btn-danger btn-sm">Cerrado</button></td>
-                    </tr>
-                    <tr>
-                        <td>10:00</td>
-                        <td class="bg-light"><button type="button" class="btn btn-success btn-sm">Disponible</button></td>
-                        <td><button type="button" class="btn btn-success btn-sm">Disponible</button></td>
-                        <td><button type="button" class="btn btn-warning btn-sm">Reservado</button></td>
-                        <td><button type="button" class="btn btn-warning btn-sm">Reservado</button></td>
-                        <td><button type="button" class="btn btn-success btn-sm">Disponible</button></td>
-                        <td><button type="button" class="btn btn-success btn-sm">Disponible</button></td>
-                        <td><button type="button" class="btn btn-success btn-sm">Disponible</button></td>
-                    </tr>
-                    <tr>
-                        <td>11:00</td>
-                        <td class="bg-light"><button type="button" class="btn btn-success btn-sm">Disponible</button></td>
-                        <td><button type="button" class="btn btn-success btn-sm">Disponible</button></td>
-                        <td><button type="button" class="btn btn-success btn-sm">Disponible</button></td>
-                        <td><button type="button" class="btn btn-success btn-sm">Disponible</button></td>
-                        <td><button type="button" class="btn btn-success btn-sm">Disponible</button></td>
-                        <td><button type="button" class="btn btn-success btn-sm">Disponible</button></td>
-                        <td><button type="button" class="btn btn-danger btn-sm">Cerrado</button></td>
-                    </tr>
                 </tbody>
             </table>
         </div>
@@ -220,11 +130,13 @@
                     <div class="row">
                         Correo: micancha@gamilc.om
                     </div>
+                    <br>
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d12807.713804295758!2d-66.14294054297238!3d-17.37546562191324!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0xeec53f8cbc955985!2sSoccer%20Club!5e0!3m2!1sen!2sbo!4v1659403541154!5m2!1sen!2sbo" width="400" height="250" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
                 </div>
                 <!-- Grid column -->
-                <hr class="clearfix w-100 d-md-none pb-3">
+                <hr class="clearfix w-100 d-md-none pb-2">
                 <!-- Grid column -->
-                <div class="col-md-6 mb-md-0 mb-3 p-5">
+                <div class="col-md-6 mb-md-0 mb-3 p-3">
                     <!-- Content -->
                     <h5 class="text-uppercase font-weight-bold">¿Quienes Somos?</h5>
                     <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Optio deserunt fuga perferendis modi earum
