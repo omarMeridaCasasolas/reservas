@@ -54,17 +54,26 @@
                     <a class="nav-link" href="#">Reserva</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="productos.php"> Productos</a>
-                </li>
-                <li class="nav-item">
                     <a class="nav-link" href="ventas.php">Ventas</a>
                 </li>
-                <li class="nav-item active">
+                <li class="nav-item">
                     <a class="nav-link" href="reportes.php"> <i class="fas fa-eye"></i> Reportes</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="clientes.php">Clientes</a>
                 </li>
+                <?php
+                if($_SESSION['tipo_empleado'] == 'Administrador' || $_SESSION['tipo_empleado'] == 'Tecnico'){
+                    echo '<li class="nav-item">
+                    <a class="nav-link" href="productos.php">Productos</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="empleado.php">Empleado</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="proveedor.php"></i> Proveedor</a>
+                </li>';
+                }?>
             </ul>
         </div>
     </nav>

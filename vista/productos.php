@@ -53,9 +53,6 @@
                 <li class="nav-item">
                     <a class="nav-link" href="cReserva.php">Reserva</a>
                 </li>
-                <li class="nav-item active">
-                    <a class="nav-link" href="productos.php"><i class="fas fa-eye"></i> Productos</a>
-                </li>
                 <li class="nav-item">
                     <a class="nav-link" href="ventas.php">Ventas</a>
                 </li>
@@ -63,8 +60,20 @@
                     <a class="nav-link" href="reportes.php">Reportes - Libro</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="empleados.php">Empleados</a>
+                    <a class="nav-link" href="clientes.php">Clientes</a>
                 </li>
+                <?php
+                if($_SESSION['tipo_empleado'] == 'Administrador' || $_SESSION['tipo_empleado'] == 'Tecnico'){
+                    echo '<li class="nav-item active">
+                    <a class="nav-link" href="productos.php"><i class="fas fa-eye"></i> Productos</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="empleado.php">Empleado</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="proveedor.php">Proveedor</a>
+                </li>';
+                }?>
             </ul>
         </div>
     </nav>

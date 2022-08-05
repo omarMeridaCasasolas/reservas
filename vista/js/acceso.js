@@ -9,7 +9,7 @@ $(document).ready(function () {
             data: {usuario,pass},
             dataType: "JSON",
             success: function (response) {
-                if(response.respuesta == true){
+                if(response.respuesta === true){
                     Swal.fire('Exito!!','Se ha verificado los datos','success');
                     setTimeout(() => {
                         window.location.href = "cReserva.php";

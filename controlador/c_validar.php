@@ -16,6 +16,7 @@
                 $_SESSION['usuario'] = $res[0]['usuario_empleado'];
                 $_SESSION['pass'] = $res[0]['pass_empleado'];
                 $_SESSION['nombre'] = $res[0]['nombre_empleado'];
+                $_SESSION['tipo_empleado'] = $res[0]['tipo_empleado'];
                 $salida = array('respuesta' => true );
             }else{
                 $salida  = array('respuesta' => false );

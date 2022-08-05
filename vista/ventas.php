@@ -53,9 +53,6 @@
                 <li class="nav-item">
                     <a class="nav-link" href="cReserva.php">Reserva</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="productos.php">Productos</a>
-                </li>
                 <li class="nav-item active">
                     <a class="nav-link" href="ventas.php"><i class="fas fa-eye"></i> Ventas</a>
                 </li>
@@ -65,6 +62,18 @@
                 <li class="nav-item">
                     <a class="nav-link" href="clientes.php">Clientes</a>
                 </li>
+                <?php
+                if($_SESSION['tipo_empleado'] == 'Administrador' || $_SESSION['tipo_empleado'] == 'Tecnico'){
+                    echo '<li class="nav-item">
+                    <a class="nav-link" href="productos.php">Productos</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="empleado.php">Empleado</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="proveedor.php"></i> Proveedor</a>
+                </li>';
+                }?>
             </ul>
         </div>
     </nav>
@@ -107,23 +116,6 @@
                             <select class="my-2" id="addPedidoTienda" name='addPedidoTienda' required style="width:100%;">
                             </select>
                             <hr>
-                            <!-- <div class="row d-none">
-                                <div class="form-group col-6">
-                                    <label for="">Pago</label>
-                                    <select id="addEstadaPago" class='form-control'>
-                                        <option value="Pendiente de pago">Pendiente de pago</option>
-                                        <option value="Pago realizado">Pago realizado</option>
-                                    </select>
-                                </div>
-                                <div class="form-group col-6">
-                                    <label for="">Estado pedido</label>
-                                    <select id="addEstadoPedido" class='form-control'>
-                                        <option value="Pedido realizado">Pedido realizado</option>
-                                        <option value="Pedido en almacen">Pedido en almacen</option>
-                                        <option value="Pedido entregado">Pedido entregado</option>
-                                    </select>
-                                </div>
-                            </div> -->
                             <div id="contenedorInput" style="font-size: 13px;">
                                 <div class="row">
                                     <div class="col-4"><strong>Producto</strong></div>
