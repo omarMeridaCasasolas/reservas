@@ -44,7 +44,25 @@
                 }else{
                     $res = "Error de autentificacion";
                 }
-                break; 
+                break;
+                
+            case 'agregarRapidoProveedorNombre':
+                if(isset($_SESSION['usuario']) && ($_SESSION['tipo_empleado'] == 'Administrador' || $_SESSION['tipo_empleado'] == 'Tecnico')){
+                    $nombre = $_REQUEST['nombre']; 
+                    $res = $proveedor->agregarRapidoProveedorNombre($nombre);
+                }else{
+                    $res = "Error de autentificacion";
+                }
+                break;
+            case 'agregarRapidoProveedor':
+                if(isset($_SESSION['usuario']) && ($_SESSION['tipo_empleado'] == 'Administrador' || $_SESSION['tipo_empleado'] == 'Tecnico')){
+                    $nombre = $_REQUEST['nombre'];
+                    $numero = $_REQUEST['numero'];
+                    $res = $proveedor->agregarRapidoProveedor($nombre,$numero);
+                }else{
+                    $res = "Error de autentificacion";
+                }
+                break;
             default:
                 # code...
                 break;

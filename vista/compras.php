@@ -51,13 +51,13 @@
         <div class="collapse navbar-collapse" id="collapsibleNavbar">
             <ul class="navbar-nav p-2">
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Reserva</a>
+                    <a class="nav-link" href="cReserva.php">Reserva</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="ventas.php"><i class="fas fa-eye"></i> Ventas</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="ventas.php">Ventas</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="reportes.php"> <i class="fas fa-eye"></i> Reportes</a>
+                    <a class="nav-link" href="reportes.php">Reportes - Libro</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="clientes.php">Clientes</a>
@@ -81,97 +81,84 @@
         </div>
     </nav>
     <main class="container border shadow p-4 mb-4 mx-auto my-1 bg-white" style="min-height: 650px;">
-        <div class="col-xl-8 col-lg-10 col-sm-11 border mx-auto bg-light p-3">
-            <h1 class="text-center p-2 text-primary">Reportes</h1>
-            <div class="form-group">
-                <h6>Registros por </h6>
-                <div class="form-check">
-                    <label class="form-check-label">
-                        <input type="checkbox" class="form-check-input" value="" id="checkReserva" checked>Reserva de Cancha
-                    </label>
-                </div>
-                <div class="form-check">
-                    <label class="form-check-label">
-                        <input type="checkbox" class="form-check-input" value="" id="checkVenta" checked>Venta de productos
-                    </label>
-                </div>
-            </div>
-            <hr>
-            <div class="row">
-                <div class="form-group col-sm-6">
-                    <label for="">Fecha inicio (00:00)</label>
-                    <input type="date" name="fechaInicioReporte" id="fechaInicioReporte" class="form-control" value="<?php echo date("Y-m-d");?>" max="<?php echo date("Y-m-d");?>">
-                </div>
-                <div class="form-group col-sm-6">
-                    <label for="">Fecha Final (23:59)</label>
-                    <input type="date" name="fechaFinalReporte" id="fechaFinalReporte" class="form-control" value="<?php echo date("Y-m-d");?>" max="<?php echo date("Y-m-d");?>">
-                </div>
-            </div>
-            <div class="text-center">
-                <button type="button" class="btn btn-dark btn-block" id="btnSolicitarReporte">Solicitar reporte</button>
-            </div>
-            <hr>
-            <!-- <div class="form-group">
-                <label for="">Tipo de grafico</label>
-                <select name="" id="" class="form-control">
-                    <option value="">Pie</option>
-                    <option value="">Barras</option>
-                    <option value="">Etc</option>
-                </select>
-            </div> -->
+        <h1 class="text-center p-2 text-primary">Compras hechas</h1>
+        <div>
+            <button class="btn btn-success" data-toggle='modal' data-target='#myModal'>Crear Compra</button>
         </div>
-
-        <div class="col-xl-8 col-lg-10 col-sm-11 border mx-auto bg-light p-3">
-            <h2 class="text-center p-2 text-primary">Libro</h2>
-            <div id="cajaReserva" class="d-none">
-                <h5 class='text-danger'>Dinero por uso de cancha</h5>
-                <table class="table compact" style="width:100%" id="tablaReserva">
-                    <thead>
-                        <tr>
-                            <th>Nombre</th>
-                            <th>Cantidad</th>
-                            <th>Total</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-
-                    </tbody>
-                </table>
-                <div class="text-right">
-                    <span>Total: <strong id="totalReserva"></strong></span>
-                </div>
-                <div class="mx-auto text-center">
-                    <canvas id="myChart" width="400" height="400" class="myChart"></canvas>
-                </div>
-            </div>
-            <br>
-            <hr>
-            <div id="cajaVenta" class="d-none">
-                <h5 class='text-danger'>Dinero por venta de snack</h4>
-                <table class="table compact" style="width:100%" id="tablaVentas">
-                    <thead>
-                        <tr>
-                            <th>Producto</th>
-                            <th>Cantidad</th>
-                            <th>Total</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-
-                    </tbody>
-                </table>
-                <div class="text-right">
-                    <span>Total: <strong id="totalVentas"></strong></span>
-                </div>
-                <!-- <div class="mx-auto text-center">
-                    <canvas id="myChart2" width="400" height="400" class="myChart"></canvas>
-                </div> -->
-            </div>
-            <hr>
+        <br>
+        <hr>
+        <div class="table-responsive">
+            <table id="tablaCompra" class="table compact bordered table-hover" style="width:100%">
+                <thead>
+                    <tr>
+                        <th>Fecha</th>
+                        <th>Proveedor</th>
+                        <th>Productos</th>
+                        <th>Total</th>
+                        <th>Opc</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
         </div>
     </main>
     <!-- MODAL PARA VENTA -->
-    
+    <div class="modal fade" id="myModal" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <!-- Modal Header -->
+                    <div class="modal-header bg-success text-white">
+                        <h4 class="modal-title">Nueva compra</h4>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                    <!-- Modal body -->
+                    <div class="modal-body">
+                        <form id="formAddPedido" autocomplete="off">
+                            <select class="my-2" id="addPedidoTienda" name='addPedidoTienda' required style="width:100%;">
+                            </select>
+                            <br>
+                            <br>
+                            <div id="mensajeProveedor"></div>
+                            <hr>
+                            <div id="contenedorInput" style="font-size: 13px;">
+                                <div class="row">
+                                    <div class="col-4"><strong>Producto</strong></div>
+                                    <div class="col-3"><strong>Cant.</strong></div>
+                                    <div class="col-3"><strong>Tot.</strong></div>
+                                    <div class="col-2 text-center"><strong>Elim.</strong></div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-6"></div>
+                                <div class="col-1"></div>
+                                <div class="col-1"></div>
+                                <div class="col-4">Total:<input type="text" name="IdTotalPedido" id="IdTotalPedido" disabled class='form-control'></div>  
+                            </div>
+                            <hr>
+                            <br>
+                            <table id="tablaDeProductos" class="display compact" style="width:100%">
+                                <thead>
+                                    <tr class='bg-secondary text-white'>
+                                        <th>Producto</th>
+                                        <th>Desc.</th>
+                                        <th>Bs.</th>
+                                        <th>Opc.</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                            <hr>
+                            <div class="text-center">
+                                <input type="submit" class="btn btn-primary" id="subAddPedido" value="Venta">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
     <!-- MODAL PARA AGREGAR pRODUCTO-->
     <div class="modal fade" id="modalAgregarProducto" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
@@ -258,6 +245,9 @@
         </div>
     </div>
 </body>
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script src="js/reportes.js"></script>
+<!-- <link rel="stylesheet" href="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.min.css"> -->
+<!-- <script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script> -->
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<script src="js/compras.js"></script>
 </html>

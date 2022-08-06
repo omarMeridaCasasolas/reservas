@@ -67,6 +67,9 @@
                     echo '<li class="nav-item">
                     <a class="nav-link" href="productos.php">Productos</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="compras.php">Compras</a>
+                </li>
                 <li class="nav-item active">
                     <a class="nav-link" href="empleado.php"><i class="fas fa-eye"></i> Empleado</a>
                 </li>

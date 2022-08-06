@@ -66,6 +66,9 @@
                     <a class="nav-link" href="productos.php"> Productos</a>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link" href="compras.php">Compras</a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link" href="empleado.php">Empleado</a>
                 </li>
                 <li class="nav-item">

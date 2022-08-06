@@ -54,6 +54,36 @@
             $sentenceSQL->closeCursor();
             return $res;
         }
+
+        public function agregarRapidoProveedorNombre($nombre){
+            $sql = "INSERT INTO proveedor(nombre_proveedor) VALUES(:nom);";
+            $sentenceSQL = $this->connexion_bd->prepare($sql);
+            $res = $sentenceSQL->execute(array(":nom"=>$nombre));
+            if($res == 1 || $res == true){
+                $res = $this->connexion_bd->lastInsertId();
+                $string = preg_replace("/[\r\n|\n|\r]+/", PHP_EOL, $res);
+                $sentenceSQL->closeCursor();
+                return $string;
+            }else{
+                $sentenceSQL->closeCursor();
+                return $res;
+            }
+        }
+
+        public function agregarRapidoProveedor($nombre,$numero){
+            $sql = "INSERT INTO proveedor(nombre_proveedor,telefono_proveedor) VALUES(:nom,:telef);";
+            $sentenceSQL = $this->connexion_bd->prepare($sql);
+            $res = $sentenceSQL->execute(array(":nom"=>$nombre,":telef"=>$numero));
+            if($res == 1 || $res == true){
+                $res = $this->connexion_bd->lastInsertId();
+                $string = preg_replace("/[\r\n|\n|\r]+/", PHP_EOL, $res);
+                $sentenceSQL->closeCursor();
+                return $string;
+            }else{
+                $sentenceSQL->closeCursor();
+                return $res;
+            }
+        }
     } 
 
 ?>
