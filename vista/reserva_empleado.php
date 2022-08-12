@@ -86,23 +86,8 @@
     </nav>
     <main class="container border shadow p-4 mb-4 mx-auto my-5 bg-white" style="min-height: 650px;">
         <h1 class="text-center p-2">Reservas</h1>
-        <div class="row">
-            <div class="col-sm-8 form-group">
-                <input type="date" name="" id="fechaReserva" class="form-control" min="2022-07-29" max="2022-08-29" value=<?php echo date('Y-m-d');?>>
-            </div>
-            <div class="col-sm-4 form-group" id="cajaIntervalo">
-                <h6>Vista en intervalos:</h6>
-                <div class="form-check">
-                    <label class="form-check-label">
-                        <input type="radio" class="form-check-input" name="radioIntervalo" value="60" checked>60 minutos
-                    </label>
-                </div>
-                <div class="form-check">
-                    <label class="form-check-label">
-                        <input type="radio" class="form-check-input" name="radioIntervalo" value="30">30 minutos
-                    </label>
-                </div>
-            </div>
+        <div class="form-group">
+            <input type="date" name="" id="fechaReserva" class="form-control" min="2022-07-29" max="2022-08-29" value=<?php echo date('Y-m-d');?>>
         </div>
         <div class="table-responsive">
             <table class="table table-sm table-bordered text-center" id="myTable">
@@ -145,35 +130,14 @@
                         <div class="col-sm-6">
                             <span>Hora: <strong id="detalleHora"></strong></span>
                         </div>
+                        <div class="col-sm-6">
+                            <span>Precio: <strong id="detallePrecio"></strong></span>
+                        </div>
                     </div>
-                    <hr>
+                    <br>
                     <form action="" id="formReservar">
-                        <div class="row">
-                            <div class="col-sm-6 form-group">
-                                <label for="">Hora limite</label>
-                                <select name="hrLimiteReserva" id="hrLimiteReserva"></select>
-                            </div>
-                            <div class="col-sm-6 form-group">
-                                <span>Precio: <strong id="detallePrecio"></strong></span>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-sm-6 form-group">
-                                <label for="">Pago digital</label>
-                                <input type="number" value="0" name="reservaDigital" id="reservaDigital" class="form-control">
-                            </div>
-                            <div class="col-sm-6 form-group">
-                                <label for="">Caja</label>
-                                <input type="number" value="0" name="reservaFsica" id="reservaFsica" class="form-control">
-                            </div>
-                        </div>
-                        <div class="text-right">
-                            <strong>Total <span>X</span></strong>
-                        </div>  
-                        <div class="text-right">
-                            <strong>En caja <span>X</span></strong>
-                        </div>  
                         <select name="" id="nombreCliente" style="width:100%"></select>
+                        <br>
                         <hr>
                         <div class="form-group">
                             <label for="">Detalles:</label>

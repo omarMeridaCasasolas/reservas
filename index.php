@@ -29,6 +29,9 @@
                 <a class="nav-link" href="vista/snack.php">Snack</a>
             </li>
             <li class="nav-item">
+                <a class="nav-link" href="vista/evento.php">Eventos</a>
+            </li>
+            <li class="nav-item">
                 <a class="nav-link" href="vista/acceso.php">Acceso</a>
             </li>
         </ul>

@@ -41,6 +41,9 @@
             <li class="nav-item">
                 <a class="nav-link" href="snack.php">Snack</a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link" href="evento.php">Eventos</a>
+            </li>
             <li class="nav-item active border border-top-0 border-left-0 border-right-0">
                 <a class="nav-link border border-top-0 border-left-0 border-right-0" href="acceso.php">Acceso</a>
             </li>

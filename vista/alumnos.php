@@ -70,38 +70,34 @@
                 <li class="nav-item">
                     <a class="nav-link" href="compras.php">Compras</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="cursos.php">Cursos</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="alumnos.php">Alumnos</a>
-                </li>
                 <li class="nav-item active">
-                    <a class="nav-link" href="empleado.php"><i class="fas fa-eye"></i> Empleado</a>
+                    <a class="nav-link" href="alumnos.php"><i class="fas fa-eye"></i> Alumnos</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="proveedor.php"></i> Proveedor</a>
+                    <a class="nav-link" href="empleado.php"> Empleado</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="proveedor.php">Proveedor</a>
                 </li>';
                 }?>
             </ul>
         </div>
     </nav>
     <main class="container border shadow p-4 mb-4 mx-auto my-1 bg-white" style="min-height: 650px;">
-        <h1 class="text-center p-2 text-primary">Lista de empleados</h1>
+        <h1 class="text-center p-2 text-primary">Lista de alumnos</h1>
         <div>
-            <button class="btn btn-success" data-toggle='modal' data-target='#modalAgregarEmpleado'>Agregar Empleado</button>
+            <button class="btn btn-success" data-toggle='modal' data-target='#modalAgregarProveedor'>Crear alumno</button>
         </div>
         <br>
         <br>
         <div class="table-responsive">
-            <table id="tablaEmpleado" class="table compact bordered table-hover" style="width:100%">
+            <table id="tablaAlumno" class="table compact bordered table-hover" style="width:100%">
                 <thead>
                     <tr>
-                        <th>Nombre</th>
-                        <th>Usuario</th>
-                        <th>Telefono</th>
-                        <th>Tipo</th>
-                        <th>Estado</th>
+                        <th>Alumno</th>
+                        <th>Carnet</th>
+                        <th>Responsable</th>
+                        <th>Celular</th>
                         <th>Opc</th>
                     </tr>
                 </thead>
@@ -110,22 +106,22 @@
             </table>
         </div>
     </main>
-    <!-- MODAL PARA ELIMINAR EMPLEADO -->
-    <div class="modal fade" id="modalEliminarEmpleado" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <!-- MODAL PARA ELIMINAR PROVEEDOR -->
+    <div class="modal fade" id="modalEliminarProveedor" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header bg-danger">
-                    <h5 class="modal-title">Eliminar Empleado</h5>
+                    <h5 class="modal-title">Eliminar Alumno</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form action="" id="formDeletEmpleado">
-                        <span class="d-none" id="idDeletEmpleado"></span>
-                        <p>¿Usted esta seguro que desea eliminar el empleado <strong id="nomDeletEmpleado"></strong>?</p>
+                    <form action="" id="formDeletProveedor">
+                        <span class="d-none" id="idDeletAlumno"></span>
+                        <p>¿Usted esta seguro que desea eliminar al alumno <strong id="nomDeletAlumno"></strong>?</p>
                         <br>
-                        <span class="text-danger">* Solo se podra eliminar si no existe ningun registro de venta relacionado al empleado</span>
+                        <span class="text-danger">* Solo se podra eliminar si no existe ningun registro de compra relacionado al proveedor</span>
                         <div class="text-center my-3">
                             <input type="submit" class="btn btn-primary" value="Eliminar">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
@@ -136,54 +132,35 @@
         </div>
     </div>
 
-    <!-- MODAL PARA EDITAR EMPLEADOS -->
-    <div class="modal fade" id="modalEditarEmpleados" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <!-- MODAL PARA EDITAR PROVEEDORES -->
+    <div class="modal fade" id="modalEditarProveedor" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header bg-warning">
-                    <h5 class="modal-title">Editar empleado</h5>
+                    <h5 class="modal-title">Editar Proveedor</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form action="" id="formEditEmpleado">
-                        <span class="d-none" id="idEditEmpleado"></span>
+                    <form action="" id="formEditProveedor">
+                        <span class="d-none" id="idEditProveedor"></span>
                         <div class="row">
-                            <div class="col-sm-6">
+                            <div class="col-sm-7">
                                 <label for="">Nombre:</label>
-                                <input type="text" name="nomEditEmpleado" id="nomEditEmpleado" class="form-control" required>
+                                <input type="text" name="nomEditProveedor" id="nomEditProveedor" class="form-control" required>
                             </div>
-                            <div class="col-sm-6">
-                                <label for="">Usuario:</label>
-                                <input type="email" name="userEditEmpleado" id="userEditEmpleado" class="form-control" required>
+                            <div class="col-sm-5">
+                                <label for="">Telefono:</label>
+                                <input type="text" name="telEditProveedor" id="telEditProveedor" class="form-control" required>
                             </div>
                             <br>
                         </div>
                         <br>
-                        <div class="row">
-                            <div class="col-sm-6 form-group">
-                                <label for="">Estado empleado</label>
-                                <select name="estadoEditEmpleado" id="estadoEditEmpleado" class="form-control">
-                                    <option value="0">Inactivo</option>
-                                    <option value="1">Activo</option>
-                                </select>
-                            </div>
-                            <div class="col-sm-6 form-group">
-                                <label for="">Tipo de empleado</label>
-                                <select name="tipoEditEmpleado" id="tipoEditEmpleado" class="form-control">
-                                    <option value="Servicio">Servicio</option>
-                                    <option value="Administrador">Administrador</option>
-                                </select>
-                            </div>
-                        </div>
                         <div class="form-group">
-                            <label for="">Telefono</label>
-                            <input type="text" name="telEditEmpleado" id="telEditEmpleado" class="form-control">
+                            <label for="">Detalle:</label>
+                            <input type="text" name="detalleEditProveedor" id="detalleEditProveedor" class="form-control">
                         </div>
-                        <!-- <div class="row">
-                            
-                        </div> -->
                         <div class="text-center my-3">
                             <input type="submit" class="btn btn-primary" value="Actualizar">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
@@ -194,8 +171,8 @@
         </div>
     </div>
     
-    <!-- MODAL PARA AGREGAR EMPLEADOS-->
-    <div class="modal fade" id="modalAgregarEmpleado" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <!-- MODAL PARA AGREGAR PROVEEDOR-->
+    <div class="modal fade" id="modalAgregarProveedor" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header bg-success">
@@ -205,35 +182,22 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form action="" id="formAddEmpleado">
+                    <form action="" id="formAddProveedor">
                         <div class="row">
-                            <div class="col-sm-6">
+                            <div class="col-sm-7">
                                 <label for="">Nombre:</label>
-                                <input type="text" name="nomAddEmpleado" id="nomAddEmpleado" class="form-control" required>
+                                <input type="text" name="nomAddProveedor" id="nomAddProveedor" class="form-control" required>
                             </div>
-                            <div class="col-sm-6">
-                                <label for="">Usuario:</label>
-                                <input type="email" name="userAddEmpleado" id="userAddEmpleado" class="form-control" required>
+                            <div class="col-sm-5">
+                                <label for="">Telefono:</label>
+                                <input type="text" name="telAddProveedor" id="telAddProveedor" class="form-control" required>
                             </div>
                             <br>
                         </div>
                         <br>
-                        <div class="row">
-                            <div class="col-sm-6 form-group">
-                                <label for="">Contraseña:</label>
-                                <input type="text" name="passAddEmpleado" id="passAddEmpleado" class="form-control" required>
-                            </div>  
-                            <div class="col-sm-6 form-group">
-                                <label for="">Tipo de empleado</label>
-                                <select name="tipoAddEmpleado" id="tipoAddEmpleado" class="form-control">
-                                    <option value="Servicio">Servicio</option>
-                                    <option value="Administrador">Administrador</option>
-                                </select>
-                            </div>
-                        </div>
                         <div class="form-group">
-                            <label for="">Telefono</label>
-                            <input type="text" name="telAddEmpleado" id="telAddEmpleado" class="form-control">
+                            <label for="">Detalle:</label>
+                            <input type="text" name="detalleAddProveedor" id="detalleAddProveedor" class="form-control">
                         </div>
                         <!-- <div class="row">
                             
@@ -251,5 +215,5 @@
 <!-- <link rel="stylesheet" href="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.min.css"> -->
 <!-- <script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script> -->
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<script src="js/empleado.js"></script>
+<script src="js/alumnos.js"></script>
 </html>

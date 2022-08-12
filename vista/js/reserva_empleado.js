@@ -25,40 +25,29 @@ $(document).ready(function () {
         console.log("Se ha hecho click en cerrado");
     });
 
-    $("#cajaIntervalo .form-check-input").change(function (e) { 
-        e.preventDefault();
-        let intervalo = $('input[name="radioIntervalo"]:checked').val();
-        if(intervalo == "60"){
-            $(".cat1").hide();
-        }else{
-            $(".cat1").show();
-        }
-        // console.log(intervalo);
-    });
-
     $("#myTable").on('click','button.btnDisponible',function (e) {
 		e.preventDefault();
+        console.log(this.id);
         let aux = this.id;
         let arreglo = aux.split('_');
-        // if(arreglo.length >= 2){
-        //     $.ajax({
-        //         type: "POST",
-        //         url: "../controlador/c_reserva.php",
-        //         data: {metodo:"getReserva", reserva :arreglo[1]},
-        //         dataType: "JSON",
-        //         success: function (response) {
-        //             // console.log(typeof(response));
-        //             $("#idReservaActual").html(response.id_reserva);
-        //             $("#detalleFecha").html(response.fecha_reserva);
-        //             $("#detalleDia").html(response.dia_reserva);
-        //             $("#detalleHora").html(response.hora_reserva);
-        //             $("#detallePrecio").html(response.precio_hora);
-        //         }
-        //     });
-        // }else{
-        //     console.log("No es numero");
-        // }
-        // let fecha = 
+        if(arreglo.length >= 2){
+            $.ajax({
+                type: "POST",
+                url: "../controlador/c_reserva.php",
+                data: {metodo:"getReserva", reserva :arreglo[1]},
+                dataType: "JSON",
+                success: function (response) {
+                    // console.log(typeof(response));
+                    $("#idReservaActual").html(response.id_reserva);
+                    $("#detalleFecha").html(response.fecha_reserva);
+                    $("#detalleDia").html(response.dia_reserva);
+                    $("#detalleHora").html(response.hora_reserva);
+                    $("#detallePrecio").html(response.precio_hora);
+                }
+            });
+        }else{
+            console.log("No es numero");
+        }
     });
 
     $("#formReservar").submit(function (e) { 
@@ -187,15 +176,11 @@ function showCabezera(){
 function showBody(){
     let fila = "";
     for(let i = 9; i<23; i++){
-        let hora = buscarReserva(i);
-        fila += `<tr>${hora}</tr>`;
-
-        let media = buscarReservaMedia(i);
-        fila += `<tr class="cat1">${media}</tr>`;
+        let res = buscarReserva(i);
+        fila += `<tr>${res}</tr>`;
     }
     $("#myTable tbody").empty();
     $("#myTable tbody").html(fila);
-    $(".cat1").hide();
 }
 
 function buscarReserva(tmp){
@@ -209,34 +194,7 @@ function buscarReserva(tmp){
             if(myArray[0].dia_reserva == diaNombre){
                 let aux = myArray.find(e => e.hora_reserva == hora);
                 if(aux == undefined){
-                    res += `<td><button type='button' class='btn btn-sm btn-info btnCerrado' data-toggle='modal' data-target='#modalNoDisponble'>Revision</button></td>`;
-                }else{
-                    if(aux.id_cliente == null){
-                        res += `<td><button type='button' class='btn btn-sm btn-success btnDisponible' data-toggle='modal' data-target='#modalDisponble' id='idRsv_${aux.id_reserva}'>Disponible</button></td>`;
-                    }else{
-                        res += `<td><button type='button' class='btn btn-sm btn-warning btnReservado' id='idRsv_${aux.id_reserva}'>Reservado</button></td>`;
-                    }
-                }
-            }
-            
-        }
-    }
-    return res;
-}
-
-
-function buscarReservaMedia(tmp){
-    let res ="";
-    let hora = tmp+":30";
-    res += `<td>${hora}</td>`;
-    for (let i = 0; i < diaReserva.length; i++) {
-        let diaNombre = diaReserva[i];      //lunes
-        for (let j = 0; j < semanaCompleta.length; j++) {
-            let myArray = semanaCompleta[j];
-            if(myArray[0].dia_reserva == diaNombre){
-                let aux = myArray.find(e => e.hora_reserva == hora);
-                if(aux == undefined){
-                    res += `<td><button type='button' class='btn btn-sm btn-info btnCerrado' data-toggle='modal' data-target='#modalNoDisponble'>Revision</button></td>`;
+                    res += `<td><button type='button' class='btn btn-sm btn-info btnCerrado' data-toggle='modal' data-target='#modalNoDisponble'>En revision</button></td>`;
                 }else{
                     if(aux.id_cliente == null){
                         res += `<td><button type='button' class='btn btn-sm btn-success btnDisponible' data-toggle='modal' data-target='#modalDisponble' id='idRsv_${aux.id_reserva}'>Disponible</button></td>`;

@@ -5,7 +5,7 @@
         $reserva = new Reserva();
         $idCancha = 1;
         $hora = 9;
-        $precio = 90;
+        $precio = 85;
         $today = getdate();
         var_dump($today);
         for($i=0;$i<$dias;$i++){
@@ -17,6 +17,9 @@
                 for($j = 9; $j< 14 ;$j++){
                     $hora = $j.":00";
                     $reserva->insertarReserva($idCancha,$fecha,convDiasSemana($today['weekday']),$precio,$hora,'disponible');
+                    // agregar media hora
+                    $hora = $j.":30";
+                    $reserva->insertarReserva($idCancha,$fecha,convDiasSemana($today['weekday']),$precio,$hora,'disponible');
                 }
             }else{
                 if($intDia <= 5){
@@ -24,10 +27,16 @@
                     for($j = 9; $j< 23 ;$j++){
                         $hora = $j.":00";
                         $reserva->insertarReserva($idCancha,$fecha,convDiasSemana($today['weekday']),$precio,$hora,'disponible');
+
+                        $hora = $j.":30";
+                        $reserva->insertarReserva($idCancha,$fecha,convDiasSemana($today['weekday']),$precio,$hora,'disponible');
                     }
                 }else{
                     for($j = 9; $j< 20 ;$j++){
                         $hora = $j.":00";
+                        $reserva->insertarReserva($idCancha,$fecha,convDiasSemana($today['weekday']),$precio,$hora,'disponible');
+
+                        $hora = $j.":30";
                         $reserva->insertarReserva($idCancha,$fecha,convDiasSemana($today['weekday']),$precio,$hora,'disponible');
                     }
                     // echo "Es sabado\n";

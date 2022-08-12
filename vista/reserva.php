@@ -36,6 +36,9 @@
                 <a class="nav-link" href="snack.php">Snack</a>
             </li>
             <li class="nav-item">
+                <a class="nav-link" href="evento.php">Eventos</a>
+            </li>
+            <li class="nav-item">
                 <a class="nav-link" href="acceso.php">Acceso</a>
             </li>
         </ul>

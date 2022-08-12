@@ -53,8 +53,8 @@
                 <li class="nav-item">
                     <a class="nav-link" href="cReserva.php">Reserva</a>
                 </li>
-                <li class="nav-item active">
-                    <a class="nav-link" href="ventas.php"><i class="fas fa-eye"></i> Ventas</a>
+                <li class="nav-item">
+                    <a class="nav-link" href="ventas.php"> Ventas</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="reportes.php">Reportes - Libro</a>
@@ -67,8 +67,8 @@
                     echo '<li class="nav-item">
                     <a class="nav-link" href="productos.php">Productos</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="compras.php">Compras</a>
+                <li class="nav-item active">
+                    <a class="nav-link" href="compras.php"><i class="fas fa-eye"></i>Compras</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="empleado.php">Empleado</a>

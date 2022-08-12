@@ -71,6 +71,12 @@
                     <a class="nav-link" href="compras.php">Compras</a>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link" href="cursos.php">Cursos</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="alumnos.php">Alumnos</a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link" href="empleado.php">Empleado</a>
                 </li>
                 <li class="nav-item">
@@ -111,7 +117,7 @@
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header bg-info">
-                    <h5 class="modal-title">Agregar producto al inventario</h5>
+                    <h5 class="modal-title">Agregar producto</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                     </button>
@@ -129,59 +135,12 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-sm-5 form-group">
+                            <div class="col-sm-6 form-group">
                                 <label for="">Precio de venta en Bs</label>
                                 <input type="number" step="0.1" value="1" name="addVentaProducto" id="addVentaProducto" class="form-control">
                             </div>
-                            <div class="col-sm-7 form-group">
-                            <label for="">Seleccione el tipo de compra:</label>
-                                <div class="form-check">
-                                    <label class="form-check-label">
-                                        <input type="radio" class="form-check-input" name="optradio" value="compraPorUnidad" required>Compra por unidad
-                                    </label>
-                                    </div>
-                                    <div class="form-check">
-                                    <label class="form-check-label">
-                                        <input type="radio" class="form-check-input" name="optradio" value="compraPorPaquete">Compra por paquete
-                                    </label>
-                                </div>
-                            </div>
                         </div>
                         <hr>
-                        <div id="compraPaquete" class="d-none">
-                            <div class="row">
-                                <div class="col-sm-6 form-group">
-                                    <label for="">Precio compra paquete</label>
-                                    <input  type="number" step="0.1" value="1" name="addCompraPaqueteProducto" id="addCompraPaqueteProducto" class="form-control" required>
-                                </div>
-                                <div class="col-sm-6 form-group">
-                                    <label for="">Cant. unidades por paquete</label>
-                                    <input type="number" value="1" min="1" name="addCantPaqueteProducto" id="addCantPaqueteProducto" class="form-control">
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-sm-6 form-group">
-                                    <label for="">Paquetes comprados</label>
-                                    <input type="number" value="1" min="1" name="addCantPaqueteComprados" id="addCantPaqueteComprados" class="form-control">
-                                </div>
-                                <div class="col-sm-6 form-group">
-                                    <label for="">Precio unitario compra</label>
-                                    <input type="text" name="calPrecioUnit" id="calPrecioUnit" class="form-control" disabled required>
-                                </div>
-                            </div>
-                        </div>
-                        <div id="compraUnidad" class="d-none">
-                            <div class="row">
-                                <div class="col-sm-6 form-group">
-                                    <label for="">Precio unitario compra</label>
-                                    <input type="number" value="1" step="0.1" name="addPrecioCompraUnit" id="addPrecioCompraUnit" class="form-control">
-                                </div>
-                                <div class="col-sm-6 form-group">
-                                    <label for="">Unidades compradas</label>
-                                    <input type="number" value="1" min="1" name="addUnidadesCompra" id="addUnidadesCompra" class="form-control">
-                                </div>
-                            </div>
-                        </div>
                         <div class="text-center my-2">
                             <input type="submit" class="btn btn-primary" value="Agregar">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
