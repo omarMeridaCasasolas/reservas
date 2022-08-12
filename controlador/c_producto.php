@@ -16,13 +16,22 @@
                 }
                 break;
             case 'agregarProducto':
-                if(isset($_SESSION['usuario'])){
+                if(isset($_SESSION['usuario']) && ($_SESSION['tipo_empleado'] == 'Administrador' || $_SESSION['tipo_empleado'] == 'Tecnico')){
                     $nombre = $_REQUEST['nombre'];
                     $descripcion = $_REQUEST['descripcion'];
                     $precioVenta = $_REQUEST['precioVenta'];
-                    $precioCompraUnidad = $_REQUEST['precioCompraUnidad'];
-                    $unidadesCompradas = $_REQUEST['unidadesCompradas'];
-                    $res = $producto->agregarProducto($nombre,$descripcion,$precioVenta,$precioCompraUnidad,$unidadesCompradas);
+                    $res = $producto->agregarProducto($nombre,$descripcion,$precioVenta);
+                }else{
+                    $res = "Error de autentificacion";
+                }
+                break;
+            case 'actualizarProducto':
+                if(isset($_SESSION['usuario']) && ($_SESSION['tipo_empleado'] == 'Administrador' || $_SESSION['tipo_empleado'] == 'Tecnico')){
+                    $nombre = $_REQUEST['nombre'];
+                    $descripcion = $_REQUEST['descripcion'];
+                    $precioVenta = $_REQUEST['precioVenta'];
+                    $id =  $_REQUEST['id'];
+                    $res = $producto->actualizarProducto($nombre,$descripcion,$precioVenta,$id);
                 }else{
                     $res = "Error de autentificacion";
                 }
@@ -30,10 +39,22 @@
             case 'listarSnackCliente':
                 $res = $producto->listarSnackCliente();
                 break; 
-            // case 'eliminarPublicacion':
-            //     $idPublicacion = $_REQUEST['idPublicacion'];
-            //     $res = $publicacion->eliminarPublicacion($idPublicacion);
-            //     break; 
+            case 'eliminarProducto':
+                if(isset($_SESSION['usuario']) && ($_SESSION['tipo_empleado'] == 'Administrador' || $_SESSION['tipo_empleado'] == 'Tecnico')){
+                    $id = $_REQUEST['id']; 
+                    $res = $producto->eliminarProducto($id);
+                }else{
+                    $res = "Error de autentificacion";
+                }
+                break;
+            case 'obtenerComprasProducto':
+                if(isset($_SESSION['usuario']) && ($_SESSION['tipo_empleado'] == 'Administrador' || $_SESSION['tipo_empleado'] == 'Tecnico')){
+                    $id = $_REQUEST['id']; 
+                    $res = $producto->obtenerComprasProducto($id);
+                }else{
+                    $res = "Error de autentificacion";
+                }
+                break;
             default:
                 # code...
                 break;

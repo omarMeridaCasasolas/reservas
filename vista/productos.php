@@ -92,9 +92,8 @@
             <button class="btn btn-success" data-toggle='modal' data-target='#modalAgregarProducto'>Agregar producto</button>
         </div>
         <br>
-        <br>
         <div class="table-responsive">
-            <table id="tablaProducto" class="table compact bordered table-hover" style="width:100%">
+            <table id="tablaProducto" class="table compact table-sm bordered table-hover" style="width:100%">
                 <thead>
                     <tr>
                         <th>ID</th>
@@ -110,13 +109,76 @@
             </table>
         </div>
     </main>
-    <!-- MODAL PARA VENTA -->
+
+    <!-- MODAL INFO PRODUCTO -->
+    <div class="modal fade" id="modalInfoProducto" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header bg-info">
+                    <h5 class="modal-title"><i class='fas fa-info-circle'></i> Informacion de productos - Compras</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <span>Nombre:<strong id="nombDetalleProducto"></strong></span>
+                        </div>
+                        <div class="col-sm-6">
+                            <span>Descripcion:<strong id="descDetalleProducto"></strong></span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <span>Precio venta:<strong id="ventDetalleProducto"></strong></span>
+                        </div>
+                        <div class="col-sm-6">
+                            <span>Stock: <strong id="stockDetalleProducto"></strong></span>
+                        </div>
+                    </div>
+                    <div id="contInfo" class="bg-light border p-2 mt-3">
+
+                    </div>
+                    <div class="text-center my-3">
+                        <button type="button" class="btn btn-primary" data-dismiss="modal">Aceptar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL PARA ELIMINAR PRODUCTO -->
+    <div class="modal fade" id="modalEliminarProducto" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header bg-danger">
+                    <h5 class="modal-title">Eliminar Producto</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="" id="formDeletProducto">
+                        <span class="d-none" id="idDeletProducto"></span>
+                        <p>¿Usted esta seguro que desea eliminar el producto <strong id="nomDeletProducto"></strong>?</p>
+                        <br>
+                        <span class="text-danger">* Solo se podra eliminar si no existe ningun registro de compra o venta del producto</span>
+                        <div class="text-center my-3">
+                            <input type="submit" class="btn btn-primary" value="Eliminar">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
     
-    <!-- MODAL PARA AGREGAR pRODUCTO-->
+    <!-- MODAL PARA AGREGAR PRODUCTO-->
     <div class="modal fade" id="modalAgregarProducto" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
-                <div class="modal-header bg-info">
+                <div class="modal-header bg-success">
                     <h5 class="modal-title">Agregar producto</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
@@ -125,22 +187,21 @@
                 <div class="modal-body">
                     <form action="" id="formAddProducto">
                         <div class="row">
-                            <div class="col-sm-6 form-group">
+                            <div class="col-8 form-group">
                                 <label for="">Nombre del producto</label>
                                 <input type="text" name="addNomProducto" id="addNomProducto" class="form-control" required>
                             </div>
-                            <div class="col-sm-6 form-group">
+                            <div class="col-4 form-group">
+                                <label for="">Precio de venta</label>
+                                <input type="number" step="0.1" value="1" name="addVentaProducto" id="addVentaProducto" class="form-control">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12 form-group">
                                 <label for="">Descripcion del producto</label>
                                 <input type="text" name="addDescProducto" id="addDescProducto" class="form-control">
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-sm-6 form-group">
-                                <label for="">Precio de venta en Bs</label>
-                                <input type="number" step="0.1" value="1" name="addVentaProducto" id="addVentaProducto" class="form-control">
-                            </div>
-                        </div>
-                        <hr>
                         <div class="text-center my-2">
                             <input type="submit" class="btn btn-primary" value="Agregar">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
@@ -150,8 +211,46 @@
             </div>
         </div>
     </div>
+
+    <!--MODAL EDITAR PRODUCTO  -->
+    <div class="modal fade" id="modalEditarProducto" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header bg-warning">
+                    <h5 class="modal-title">Editar producto</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="" id="formEditProducto">
+                        <input type="text" class='d-none' id="editIDProducto">
+                        <div class="row">
+                            <div class="col-8 form-group">
+                                <label for="">Nombre del producto</label>
+                                <input type="text" id="editNomProducto" class="form-control" required>
+                            </div>
+                            <div class="col-4 form-group">
+                                <label for="">Precio de venta</label>
+                                <input type="number" step="0.1" value="1" id="editVentaProducto" class="form-control">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12 form-group">
+                                <label for="">Descripcion del producto</label>
+                                <input type="text" id="editDescProducto" class="form-control">
+                            </div>
+                        </div>
+                        <div class="text-center my-2">
+                            <input type="submit" class="btn btn-primary" value="Actualizar">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
-<!-- <link rel="stylesheet" href="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.min.css"> -->
-<!-- <script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script> -->
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="js/productos.js"></script>
 </html>
