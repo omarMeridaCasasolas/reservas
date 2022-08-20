@@ -67,11 +67,14 @@
                     echo '<li class="nav-item">
                     <a class="nav-link" href="productos.php">Productos</a>
                 </li>
-                <li class="nav-item active">
-                    <a class="nav-link" href="compras.php"><i class="fas fa-eye"></i>Compras</a>
+                <li class="nav-item">
+                    <a class="nav-link" href="compras.php">Compras</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="empleado.php">Empleado</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="tipo_eventos.php"><i class="fas fa-eye"></i> Tipo evento</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="proveedor.php"></i> Proveedor</a>

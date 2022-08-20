@@ -20,34 +20,40 @@
             return json_encode(array('data' => $respuesta), JSON_PRETTY_PRINT);
         }
 
-        // public function getListaClientesData(){
-        //     $sql = "SELECT * from cliente";
-        //     $sentenceSQL = $this->connexion_bd->prepare($sql);
-        //     $res = $sentenceSQL->execute();
-        //     $respuesta = $sentenceSQL->fetchAll(PDO::FETCH_ASSOC);
-        //     $sentenceSQL->closeCursor();
-        //     return json_encode(array('data' => $respuesta), JSON_PRETTY_PRINT);
-        // }
-
-        public function agregaralumno($nombre,$telefono,$detalle){
-            $sql = "INSERT INTO alumno(nombre_alumno, telefono_alumno, detalle_alumno) 
-            VALUES(:nom,:telef,:detalle);";
+        public function agregarAlumnoCurso($idCurso,$idAlumno,$fechaInscripcion){
+            $sql = "INSERT INTO gestion_curso(id_curso, id_alumno, fecha_inscripcion) VALUES(:curso,:alumno,:fecha);";
             $sentenceSQL = $this->connexion_bd->prepare($sql);
-            $res = $sentenceSQL->execute(array(":nom"=>$nombre,":telef"=>$telefono,":detalle"=>$detalle));
+            $res = $sentenceSQL->execute(array(":curso"=>$idCurso,":alumno"=>$idAlumno,":fecha"=>$fechaInscripcion));
             $sentenceSQL->closeCursor();
             return $res;
         }
 
-        public function actualizaralumno($id,$nombre,$telefono,$detalle){
-            $sql = "UPDATE alumno SET nombre_alumno = :nom , detalle_alumno = :detalle, telefono_alumno = :telef 
-            WHERE id_alumno = :id;";
+        public function agregarAlumno($nombre,$carnet,$nombreTutor,$contacto,$fecha){
+            $sql = "INSERT INTO alumno(nombre_alumno, carnet_alumno, nombre_tutor, celular_contacto, fecha_nacimiento) 
+            VALUES(:nom,:carnet,:tutor,:contacto,:fecha);";
             $sentenceSQL = $this->connexion_bd->prepare($sql);
-            $res = $sentenceSQL->execute(array(":nom"=>$nombre,":detalle"=>$detalle,":telef"=>$telefono,":id"=>$id));
+            $res = $sentenceSQL->execute(array(":nom"=>$nombre,":carnet"=>$carnet,":tutor"=>$nombreTutor,":contacto"=>$contacto,":fecha"=>$fecha));
+            if($res == 1 ){
+                $res = $this->connexion_bd->lastInsertId();
+                $string = preg_replace("/[\r\n|\n|\r]+/", PHP_EOL, $res);
+                $sentenceSQL->closeCursor();
+                return $string;
+            }else{
+                $sentenceSQL->closeCursor();
+                return $res;
+            }
+        }
+
+        public function actualizarAlumno($id,$nombre,$carnet,$fecha,$tutor,$contacto){
+            $sql = "UPDATE alumno SET nombre_alumno = :nom , carnet_alumno = :carnet, nombre_tutor = :tutor,  celular_contacto = :telefono, 
+            fecha_nacimiento = :fecha WHERE id_alumno = :id;";
+            $sentenceSQL = $this->connexion_bd->prepare($sql);
+            $res = $sentenceSQL->execute(array(":nom"=>$nombre,":carnet"=>$carnet,":tutor"=>$tutor,":telefono"=>$contacto,":fecha"=>$fecha,":id"=>$id));
             $sentenceSQL->closeCursor();
             return $res;
         }
 
-        public function eliminaralumno($id){
+        public function eliminarAlumno($id){
             $sql = "DELETE FROM alumno WHERE id_alumno = :id;";
             $sentenceSQL = $this->connexion_bd->prepare($sql);
             $res = $sentenceSQL->execute(array(":id"=>$id));

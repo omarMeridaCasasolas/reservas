@@ -12,7 +12,7 @@
         }
 
         public function getListaCurso(){
-            $sql = "SELECT curso.id_curso, nombre_profesor,nombre_curso, fecha_inicio, horario_curso, count(gestion_curso.id_curso) as cantidad_alumnos
+            $sql = "SELECT curso.id_curso, nombre_profesor,nombre_curso, fecha_inicio, horario_entrada, count(gestion_curso.id_curso) as cantidad_alumnos
             from curso LEFT JOIN gestion_curso ON curso.id_curso = gestion_curso.id_curso group by (curso.id_curso);";
             $sentenceSQL = $this->connexion_bd->prepare($sql);
             $res = $sentenceSQL->execute();
@@ -21,22 +21,30 @@
             return json_encode(array('data' => $respuesta), JSON_PRETTY_PRINT);
         }
 
-        // public function getListaClientesData(){
-        //     $sql = "SELECT * from cliente";
-        //     $sentenceSQL = $this->connexion_bd->prepare($sql);
-        //     $res = $sentenceSQL->execute();
-        //     $respuesta = $sentenceSQL->fetchAll(PDO::FETCH_ASSOC);
-        //     $sentenceSQL->closeCursor();
-        //     return json_encode(array('data' => $respuesta), JSON_PRETTY_PRINT);
-        // }
-
-        public function agregaralumno($nombre,$telefono,$detalle){
-            $sql = "INSERT INTO alumno(nombre_alumno, telefono_alumno, detalle_alumno) 
-            VALUES(:nom,:telef,:detalle);";
+        public function getListaCursoInscripcion(){
+            $sql = "SELECT id_curso, nombre_curso FROM curso;";
             $sentenceSQL = $this->connexion_bd->prepare($sql);
-            $res = $sentenceSQL->execute(array(":nom"=>$nombre,":telef"=>$telefono,":detalle"=>$detalle));
+            $res = $sentenceSQL->execute();
+            $respuesta = $sentenceSQL->fetchAll(PDO::FETCH_ASSOC);
             $sentenceSQL->closeCursor();
-            return $res;
+            return json_encode($respuesta, JSON_PRETTY_PRINT);
+        }
+
+        public function agregarCurso($nombre,$precio,$nomProfesor,$grupo,$entrada,$salida,$fechaEntrada,$fechaSalida){
+            $sql = "INSERT INTO curso(nombre_curso, precio_curso, nombre_profesor, grupo_curso, horario_entrada, horario_salida, fecha_inicio, fecha_final) 
+            VALUES(:nom,:precio,:profesor,:grupo,:horaEntrada,:horaSalida,:fechaInicio,:fechaFinal);";
+            $sentenceSQL = $this->connexion_bd->prepare($sql);
+            $res = $sentenceSQL->execute(array(":nom"=>$nombre,":precio"=>$precio,":profesor"=>$nomProfesor,":grupo"=>$grupo,":horaEntrada"=>$entrada,
+            ":horaSalida"=>$salida,":fechaInicio"=>$fechaEntrada,":fechaFinal"=>$fechaSalida));
+            if($res == 1 || $res == true){
+                $res = $this->connexion_bd->lastInsertId();
+                $string = preg_replace("/[\r\n|\n|\r]+/", PHP_EOL, $res);
+                $sentenceSQL->closeCursor();
+                return $string;
+            }else{
+                $sentenceSQL->closeCursor();
+                return $res;
+            }
         }
 
         public function actualizaralumno($id,$nombre,$telefono,$detalle){
@@ -48,8 +56,8 @@
             return $res;
         }
 
-        public function eliminaralumno($id){
-            $sql = "DELETE FROM alumno WHERE id_alumno = :id;";
+        public function eliminarCurso($id){
+            $sql = "DELETE FROM curso WHERE id_curso = :id;";
             $sentenceSQL = $this->connexion_bd->prepare($sql);
             $res = $sentenceSQL->execute(array(":id"=>$id));
             $sentenceSQL->closeCursor();

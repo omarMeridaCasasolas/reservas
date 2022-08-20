@@ -2,19 +2,50 @@ var tablaCurso;
 $(document).ready(function () {
     getListaCurso();
     getListaAlumno(); 
+    calcularFechaReserva();
+
+    $("#addTurnoEntrada").change(function (e) { 
+        e.preventDefault();
+        let tiempoEntrada = $("#addTurnoEntrada").val();
+        let target = new Date("1970-01-01 " + tiempoEntrada);
+        target.setMinutes(target.getMinutes() + 30);
+        //target = new Date(target); 
+        let horaSalida = agregarZero(parseInt(target.getHours()))+":"+agregarZero(parseInt(target.getMinutes()));
+        $("#addTurnoSalida").val(horaSalida);
+        console.log(horaSalida);
+    });
+
+
+
+    // CAMBIAR FECHA 
+    $("#addFechaEntrada").change(function (e) { 
+        e.preventDefault();
+        calcularFechaReserva();
+    });
 
     $("#formAddCurso").submit(function (e) { 
         e.preventDefault();
         let nombre = $("#addNombreCurso").val();
-        let fecha = $("#addFechaCurso").val();
+        let precio = $("#addPrecioCurso").val();
         let nomProfesor = $("#addProfesorCurso").val();
         let grupo = $("#addGrupoCurso").val();
-        $('#modalAgregarProveedor').modal('hide');
+        let entrada = $("#addTurnoEntrada").val();
+        let salida = $("#addTurnoSalida").val();
+        let fechaEntrada = $("#addFechaEntrada").val();
+        let fechaSalida = $("#addFechaSalida").val();
+        let fechasJuego = new Array();
+        $('#cajaFechasSemana .form-check-input:checked').each(function() {
+            fechasJuego.push($(this).val());
+        });
+        console.log(fechasJuego);
+        console.log(fechaEntrada);
+        console.log(entrada);
+        $('#myModal').modal('hide');
         $.ajax({
             type: "POST",
             url: "../controlador/c_curso.php",
-            data: {metodo:"agregarProveedor",nombre, telefono, detalle},
-            dataType: "JSON",
+            data: {metodo:"agregarCurso",nombre, precio, nomProfesor,grupo, entrada,salida,fechaEntrada,fechaSalida ,fechasReserva: JSON.stringify(fechasJuego)},
+            // dataType: "JSON",
             success: function (response) {
                 console.log(response);
                 if(response == "1"){
@@ -26,6 +57,7 @@ $(document).ready(function () {
                 }
             }
         });
+
     });
 
     // EDITAR EMPLEADO
@@ -67,27 +99,27 @@ $(document).ready(function () {
         $("#idEditProveedor").html(datosProveedor.id_proveedor);
     });
 
-    $("#tablaCurso tbody").on('click','button.deletProveedor',function () {
-		let datosProveedor = tablaCurso.row( $(this).parents('tr') ).data();
+    $("#tablaCurso tbody").on('click','button.deletCurso',function () {
+		let datosCurso = tablaCurso.row( $(this).parents('tr') ).data();
         // $("#delIdPublicacion").html(datosPublicacion.id_publicacion);
-        $("#idDeletProveedor").html(datosProveedor.id_proveedor);
-		$("#nomDeletProveedor").html(datosProveedor.nombre_proveedor);
+        $("#idDeletCurso").html(datosCurso.id_curso);
+		$("#nomDeletCurso").html(datosCurso.nombre_curso);
     });
 
-    $("#formDeletProveedor").submit(function (e) { 
+    $("#formDeletCurso").submit(function (e) { 
         e.preventDefault();
-        let id = $("#idDeletProveedor").html();
-        $('#modalEliminarProveedor').modal('hide');
+        let id = $("#idDeletCurso").html();
+        $('#modalEliminarCurso').modal('hide');
         $.ajax({
             type: "POST",
             url: "../controlador/c_curso.php",
-            data: {metodo:"eliminarProveedor", id},
+            data: {metodo:"eliminarCurso", id},
             success: function (response) {
                 console.log(response);
                 if(response == "1"){
                     tablaCurso.ajax.reload();
-                    Swal.fire('Exito!!','Se ha eliminado al proveedor '+$("#nomDeletProveedor").html(),'success');
-					$('#formDeletProveedor')[0].reset();
+                    Swal.fire('Exito!!','Se ha eliminado al curso '+$("#nomDeletCurso").html(),'success');
+					$('#formDeletCurso')[0].reset();
                 }else{
                     Swal.fire('Error!!',response,'error');
                 }
@@ -166,14 +198,46 @@ function getListaCurso(){
 			{ data: "nombre_curso", width: "25%" },
 			{ data: "nombre_profesor", width: "20%" },
             { data: "fecha_inicio", width: "10%" },
-            { data: "horario_curso", width: "10%" },
+            { data: "horario_entrada", width: "10%" },
             { data: "cantidad_alumnos", width: "10%" },
 			{ data: null,
 				defaultContent:
 				"<button type='button' class='editProveedor btn btn-warning btn-sm' data-toggle='modal' data-target='#modalEditarProveedor'><i class='fas fa-edit'></i></button> "+
-                "<button type='button' class='deletProveedor btn btn-danger btn-sm' data-toggle='modal' data-target='#modalEliminarProveedor'><i class='fas fa-trash'></i></button> ",
+                "<button type='button' class='deletCurso btn btn-danger btn-sm' data-toggle='modal' data-target='#modalEliminarCurso'><i class='fas fa-trash'></i></button> ",
 				width: "10%"
 			}
 		]
 	});
+}
+
+
+function agregarZero(val){
+    if(val<10){
+        return "0"+val;
+    }else{
+        return val;
+    }
+}
+
+function calcularFechaReserva(){
+    let weekday = ["domingo","lunes","martes","miercoles","jueves","viernes","sabado"];
+        let fecha = new Date($("#addFechaEntrada").val());
+        fecha.setDate(fecha.getDate() + 1);
+        let fechaInicio = parseInt(fecha.getDay());
+        let cadena = '<p>Fechas de practica</p>';
+        for (let i = 0; i < weekday.length; i++) {
+            let dia = weekday[fechaInicio];
+            console.log(dia);
+            cadena += `<div class="form-check">
+                <label class="form-check-label" for="check_${i}">
+                    <input type="checkbox" class="form-check-input" id="check_${i}" value="${fecha.getFullYear() + "-" + agregarZero(fecha.getMonth() + 1) + "-"+ agregarZero(fecha.getDate())}" 
+                    name="option1">${dia+" "+ agregarZero(fecha.getDate()) + "/" + agregarZero(fecha.getMonth() + 1) + "/"+fecha.getFullYear()}
+                </label>
+            </div>`;
+            fechaInicio = (fechaInicio + 1) % 7;
+            // fecha = addDays(fecha.getFullYear() + "-" + (fecha.getMonth() + 1) + "-" + fecha.getDate());
+            // fecha.setDate(setDate(fecha.getDate() + days));
+            fecha.setDate(fecha.getDate() + 1);
+        }
+        $("#cajaFechasSemana").html(cadena);
 }

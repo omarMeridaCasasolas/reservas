@@ -77,6 +77,9 @@
                     <a class="nav-link" href="empleado.php"> Empleado</a>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link" href="tipo_eventos.php">Tipo evento</a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link" href="proveedor.php">Proveedor</a>
                 </li>';
                 }?>
@@ -86,7 +89,7 @@
     <main class="container border shadow p-4 mb-4 mx-auto my-1 bg-white" style="min-height: 650px;">
         <h1 class="text-center p-2 text-primary">Lista de alumnos</h1>
         <div>
-            <button class="btn btn-success" data-toggle='modal' data-target='#modalAgregarProveedor'>Crear alumno</button>
+            <button class="btn btn-success" data-toggle='modal' data-target='#modalAgregarAlumno'>Crear alumno</button>
         </div>
         <br>
         <br>
@@ -94,6 +97,7 @@
             <table id="tablaAlumno" class="table compact bordered table-hover" style="width:100%">
                 <thead>
                     <tr>
+                        <th>ID</th>
                         <th>Alumno</th>
                         <th>Carnet</th>
                         <th>Responsable</th>
@@ -106,8 +110,8 @@
             </table>
         </div>
     </main>
-    <!-- MODAL PARA ELIMINAR PROVEEDOR -->
-    <div class="modal fade" id="modalEliminarProveedor" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <!-- MODAL PARA ELIMINAR ALUMNO -->
+    <div class="modal fade" id="modalEliminarAlumno" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header bg-danger">
@@ -117,7 +121,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form action="" id="formDeletProveedor">
+                    <form action="" id="formDeletAlumno">
                         <span class="d-none" id="idDeletAlumno"></span>
                         <p>¿Usted esta seguro que desea eliminar al alumno <strong id="nomDeletAlumno"></strong>?</p>
                         <br>
@@ -132,35 +136,56 @@
         </div>
     </div>
 
-    <!-- MODAL PARA EDITAR PROVEEDORES -->
-    <div class="modal fade" id="modalEditarProveedor" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <!-- MODAL PARA EDITAR ALUMNO -->
+    <div class="modal fade" id="modalEditarAlumno" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header bg-warning">
-                    <h5 class="modal-title">Editar Proveedor</h5>
+                    <h5 class="modal-title">Editar Alumno</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form action="" id="formEditProveedor">
-                        <span class="d-none" id="idEditProveedor"></span>
+                    <form action="" id="formEditAlumno">
+                        <span class="d-none" id="idEditAlumno"></span>
                         <div class="row">
-                            <div class="col-sm-7">
+                            <div class="col-sm-7 form-group">
                                 <label for="">Nombre:</label>
-                                <input type="text" name="nomEditProveedor" id="nomEditProveedor" class="form-control" required>
+                                <input type="text" id="editNomAlumno" class="form-control" required>
                             </div>
-                            <div class="col-sm-5">
-                                <label for="">Telefono:</label>
-                                <input type="text" name="telEditProveedor" id="telEditProveedor" class="form-control" required>
+                            <div class="col-sm-5 form-group">
+                                <label for="">Carnet:</label>
+                                <input type="text" id="editCIAlumno" class="form-control" required>
                             </div>
                             <br>
                         </div>
-                        <br>
-                        <div class="form-group">
-                            <label for="">Detalle:</label>
-                            <input type="text" name="detalleEditProveedor" id="detalleEditProveedor" class="form-control">
+                        <div class="row">
+                            <div class="col-sm-7 form-group">
+                                <label for="">Nombre del tutor:</label>
+                                <input type="text" class="form-control" id="editNomTutorAlumno" required>
+                            </div>
+                            <div class="col-sm-5 form-group">
+                                <label for="">Numero contacto:</label>
+                                <input type="text" class="form-control" id="editContactoAlumn" required>
+                            </div>     
                         </div>
+                        <div class="row">
+                            <div class="col-sm-6 form-group">
+                                <label for="">Fecha de nacimiento:</label>
+                                <input type="date" class="form-control" id="editFechaNacAlumno" max="<?php echo date('Y-m-d');?>" value="<?php echo date('Y-m-d');?>" required>
+                            </div>
+                            <div class="col-sm-6 form-group">
+                                <label for="">Edad:</label>
+                                <input type="text" class="form-control" id="editEdadAlumno" disabled>
+                            </div>     
+                        </div>
+                        <!-- <div class="form-group">
+                            <label for="">Curso - Grupo</label>
+                            <select id="selEditGrupos" class="form-control">
+                                <option value="Ninguno">Ninguno</option>
+                            </select>
+                        </div> -->
                         <div class="text-center my-3">
                             <input type="submit" class="btn btn-primary" value="Actualizar">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
@@ -172,36 +197,55 @@
     </div>
     
     <!-- MODAL PARA AGREGAR PROVEEDOR-->
-    <div class="modal fade" id="modalAgregarProveedor" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal fade" id="modalAgregarAlumno" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header bg-success">
-                    <h5 class="modal-title">Agregar empleado</h5>
+                    <h5 class="modal-title">Agregar alumno</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form action="" id="formAddProveedor">
+                    <form action="" id="formAddAlumno">
                         <div class="row">
-                            <div class="col-sm-7">
+                            <div class="col-sm-7 form-group">
                                 <label for="">Nombre:</label>
-                                <input type="text" name="nomAddProveedor" id="nomAddProveedor" class="form-control" required>
+                                <input type="text" id="addNomAlumno" class="form-control" required>
                             </div>
-                            <div class="col-sm-5">
-                                <label for="">Telefono:</label>
-                                <input type="text" name="telAddProveedor" id="telAddProveedor" class="form-control" required>
+                            <div class="col-sm-5 form-group">
+                                <label for="">Carnet:</label>
+                                <input type="text" id="addCIAlumno" class="form-control" required>
                             </div>
                             <br>
                         </div>
-                        <br>
-                        <div class="form-group">
-                            <label for="">Detalle:</label>
-                            <input type="text" name="detalleAddProveedor" id="detalleAddProveedor" class="form-control">
+                        <div class="row">
+                            <div class="col-sm-7 form-group">
+                                <label for="">Nombre del tutor:</label>
+                                <input type="text" class="form-control" id="addNomTutorAlumno" required>
+                            </div>
+                            <div class="col-sm-5 form-group">
+                                <label for="">Numero contacto:</label>
+                                <input type="text" class="form-control" id="addContactoAlumn" required>
+                            </div>     
                         </div>
-                        <!-- <div class="row">
-                            
-                        </div> -->
+                        <div class="row">
+                            <div class="col-sm-6 form-group">
+                                <label for="">Fecha de nacimiento:</label>
+                                <input type="date" class="form-control" id="addFechaNacAlumno" max="<?php echo date('Y-m-d');?>" value="<?php echo date('Y-m-d');?>">
+                            </div>
+                            <div class="col-sm-6 form-group">
+                                <label for="">Edad:</label>
+                                <input type="text" class="form-control" id="addEdadAlumno" disabled>
+                            </div>     
+                        </div>
+                        <div class="form-group">
+                            <label for="">Curso - Grupo</label>
+                            <select id="selGrupos" class="form-control">
+                                <option value="Ninguno">Ninguno</option>
+                            </select>
+                        </div>
+
                         <div class="text-center my-3">
                             <input type="submit" class="btn btn-primary" value="Agregar">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>

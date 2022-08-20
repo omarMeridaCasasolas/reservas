@@ -35,6 +35,20 @@
             overflow-x: hidden;
             transition: all 200ms linear;
         }
+        /* #addAlumnosCurso{
+            font-size:10px;
+        } */
+        .select2-selection__rendered {
+            font-size: 12px;
+        }
+
+        .select2-selection__choice {
+            font-size: 12px;
+        }
+
+        ul.select2-results__options li{
+            font-size:12px;
+        }
     </style>
 </head>
 <body>
@@ -125,13 +139,14 @@
                             <div id="mensajeProveedor"></div>
                             <hr>
                             <div class="row">
-                                <div class="col-sm-6 form-group">
+                                <div class="col-sm-7 form-group">
                                     <label for="">Nombre</label>
                                     <input type="text" name="addNombreCurso" id="addNombreCurso" class="form-control">
                                 </div>
-                                <div class="col-sm-6 form-group">
-                                    <label for="">Fecha inicio</label>
-                                    <input type="date" name="addFechaCurso" id="addFechaCurso" min="<?php echo date("Y-m-d");?>" value="<?php echo date("Y-m-d");?>" class="form-control">
+                                <div class="col-sm-5 form-group">
+                                    <label for="">Precio curso</label>
+                                    <!-- <input type="text" id="addPrecioCurso" class="form-control"> -->
+                                    <input type="number" min="0.01" value="0.01" max="10000.00" step="0.01" id="addPrecioCurso" class="form-control">
                                 </div>
                             </div>
                             <div class="row">
@@ -147,25 +162,26 @@
                             <div class="row">
                                 <div class="col-sm-6 form-group">
                                     <label for="">Horario (Entrada)</label>
-                                    <input type="time" name="addTurnoEntrada" id="addTurnoEntrada" class="form-control">
+                                    <input type="time" name="addTurnoEntrada" id="addTurnoEntrada" class="form-control" required step="1800" value="09:00">
                                 </div>
                                 <div class="col-sm-6 form-group">
-                                    <label for="">Turno (Salida)</label>
-                                    <input type="time" name="addTurnoSalida" id="addTurnoSalida" class="form-control">
+                                    <label for="">Horario (Salida)</label>
+                                    <input type="time" name="addTurnoSalida" id="addTurnoSalida" class="form-control" required step="1800" value="09:30" min="09:30">
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-sm-6 form-group">
                                     <label for="">Fecha (Entrada)</label>
-                                    <input type="date" name="addFechaEntrada" id="addFechaEntrada" class="form-control" value="<?php echo date('Y-m-d');?>" required>
+                                    <input type="date" name="addFechaEntrada" id="addFechaEntrada" class="form-control" value="<?php echo date('Y-m-d');?>" required min="<?php echo date('Y-m-d');?>">
                                 </div>
                                 <div class="col-sm-6 form-group">
                                     <label for="">Fecha (Salida)</label>
-                                    <input type="date" name="addFechaSalida" id="addFechaSalida" class="form-control" value="<?php echo date('Y-m-d'); ?>" required>
+                                    <input type="date" name="addFechaSalida" id="addFechaSalida" class="form-control" value="<?php echo date('Y-m-d', strtotime(date('Y-m-d'). ' + 1 day')); ?>" required min="<?php date('Y-m-d');?>">
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-sm-4">
+                                
+                                <div class="col-sm-12" id="cajaFechasSemana">
                                     <p>Fechas de practica</p>
                                     <div class="form-check">
                                         <label class="form-check-label" for="check1">
@@ -178,36 +194,36 @@
                                         </label>
                                     </div>
                                     <div class="form-check">
-                                        <label class="form-check-label" for="check1">
-                                            <input type="checkbox" class="form-check-input" id="check1" name="option1" value="something">Miercoles
+                                        <label class="form-check-label" for="check3">
+                                            <input type="checkbox" class="form-check-input" id="check3" name="option1" value="something">Miercoles
                                         </label>
                                     </div>
                                     <div class="form-check">
-                                        <label class="form-check-label" for="check2">
-                                            <input type="checkbox" class="form-check-input" id="check2" name="option2" value="something">Jueves
+                                        <label class="form-check-label" for="check4">
+                                            <input type="checkbox" class="form-check-input" id="check4" name="option2" value="something">Jueves
                                         </label>
                                     </div>
                                     <div class="form-check">
-                                        <label class="form-check-label" for="check1">
-                                            <input type="checkbox" class="form-check-input" id="check1" name="option1" value="something">Viernes
+                                        <label class="form-check-label" for="check5">
+                                            <input type="checkbox" class="form-check-input" id="check5" name="option1" value="something">Viernes
                                         </label>
                                     </div>
                                     <div class="form-check">
-                                        <label class="form-check-label" for="check2">
-                                            <input type="checkbox" class="form-check-input" id="check2" name="option2" value="something">Sabado
+                                        <label class="form-check-label" for="check6">
+                                            <input type="checkbox" class="form-check-input" id="check6" name="option2" value="something">Sabado
                                         </label>
                                     </div>
                                     <div class="form-check">
-                                        <label class="form-check-label" for="check1">
-                                            <input type="checkbox" class="form-check-input" id="check1" name="option1" value="something">Domingo
+                                        <label class="form-check-label" for="check7">
+                                            <input type="checkbox" class="form-check-input" id="check7" name="option1" value="something">Domingo
                                         </label>
                                     </div>
                                 </div>
-                                <div class="col-sm-8">
+                                <!-- <div class="col-sm-7">
                                     <label for="">Alumnos Inscritos</label>
                                     <select class="my-2" id="addAlumnosCurso" name='addAlumnosCurso[]' style="width:100%;" multiple="multiple">
                                     </select>
-                                </div>
+                                </div> -->
                             </div>
 
                             <hr>
@@ -220,6 +236,32 @@
                 </div>
             </div>
         </div>
+
+    <!-- MODAL PARA ELIMINAR CURSO-->
+    <div class="modal fade" id="modalEliminarCurso" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header bg-danger">
+                    <h5 class="modal-title">Eliminar Proveedor</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="" id="formDeletCurso">
+                        <span class="d-none" id="idDeletCurso"></span>
+                        <p>¿Usted esta seguro que desea eliminar el curso-grupo <strong id="nomDeletCurso"></strong>?</p>
+                        <br>
+                        <span class="text-danger">* Solo se podra eliminar si no existe ningun alimno registado el grupo-curso</span>
+                        <div class="text-center my-3">
+                            <input type="submit" class="btn btn-primary" value="Eliminar">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
     <!-- MODAL PARA AGREGAR pRODUCTO-->
     <div class="modal fade" id="modalAgregarProducto" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
@@ -310,5 +352,6 @@
 <!-- <script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script> -->
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="js/cursos.js"></script>
 </html>

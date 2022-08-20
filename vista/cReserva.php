@@ -143,18 +143,30 @@
                             <span>Dia: <strong id="detalleDia"></strong></span>
                         </div>
                         <div class="col-sm-6">
-                            <span>Hora: <strong id="detalleHora"></strong></span>
+                            <span>Hora Inicio: <strong id="detalleHora"></strong></span>
+                        </div>
+                        <div class="col-sm-6">
+                            <span>Precio 30min: <strong id="detallePrecio"></strong></span>
                         </div>
                     </div>
                     <hr>
                     <form action="" id="formReservar">
+                        <div class="form-group">
+                            <label for="">Tipo de reserva</label>
+                            <select name="" id="tipoReserva" class="form-control">
+                                <option value="Juego Deportivo">Juego Deportivo</option>
+                                <option value="Evento">Evento</option>
+                            </select>
+                        </div>
+
                         <div class="row">
                             <div class="col-sm-6 form-group">
                                 <label for="">Hora limite</label>
-                                <select name="hrLimiteReserva" id="hrLimiteReserva"></select>
+                                <select name="hrLimiteReserva" id="hrLimiteReserva" class="form-control"></select>
                             </div>
                             <div class="col-sm-6 form-group">
-                                <span>Precio: <strong id="detallePrecio"></strong></span>
+                                <label for="">Hora limite</label>
+                                <input type="text" name="" id="precioCobraReserva" class="form-control" value="170">
                             </div>
                         </div>
                         <div class="row">

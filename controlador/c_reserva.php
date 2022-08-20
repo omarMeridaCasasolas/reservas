@@ -43,9 +43,14 @@
                     $res = "Error de credenciales";
                 }
                 break;
-            // case 'getlistaPublicaciones':
-            //     $res = $publicacion->getlistaPublicaciones();
-            //     break;
+            case 'getHorarioContinuo':
+                if(isset($_SESSION['usuario']) && ($_SESSION['tipo_empleado'] == 'Administrador' || $_SESSION['tipo_empleado'] == 'Tecnico')){
+                    $id = $_REQUEST['id'];
+                    $res = $reserva->getHorarioContinuo($id);
+                }else{
+                    $res = "Error de autentificacion";
+                }
+                break;
             // case 'verPublicaciones':
             //     $res = $publicacion->verPublicaciones();
             //     break; 
