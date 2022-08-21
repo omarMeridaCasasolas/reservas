@@ -124,118 +124,223 @@
             </table>
         </div>
     </main>
-    <!-- MODAL PARA VENTA -->
+    <!-- MODAL PARA AGREAGAR CURSO-->
     <div class="modal fade" id="myModal" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <!-- Modal Header -->
-                    <div class="modal-header bg-success text-white">
-                        <h4 class="modal-title">Nueva Curso - Grupo</h4>
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    </div>
-                    <!-- Modal body -->
-                    <div class="modal-body">
-                        <form id="formAddCurso" autocomplete="off">
-                            <div id="mensajeProveedor"></div>
-                            <hr>
-                            <div class="row">
-                                <div class="col-sm-7 form-group">
-                                    <label for="">Nombre</label>
-                                    <input type="text" name="addNombreCurso" id="addNombreCurso" class="form-control">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <!-- Modal Header -->
+                <div class="modal-header bg-success text-white">
+                    <h4 class="modal-title">Nueva Curso - Grupo</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <form id="formAddCurso" autocomplete="off">
+                        <div id="mensajeProveedor"></div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-sm-7 form-group">
+                                <label for="">Nombre</label>
+                                <input type="text" name="addNombreCurso" id="addNombreCurso" class="form-control">
+                            </div>
+                            <div class="col-sm-5 form-group">
+                                <label for="">Precio curso</label>
+                                <!-- <input type="text" id="addPrecioCurso" class="form-control"> -->
+                                <input type="number" min="0.01" value="0.01" max="10000.00" step="0.01" id="addPrecioCurso" class="form-control">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6 form-group">
+                                <label for="">Profesor</label>
+                                <input type="text" name="addProfesorCurso" id="addProfesorCurso" class="form-control">
+                            </div>
+                            <div class="col-sm-6 form-group">
+                                <label for="">Grupo</label>
+                                <input type="text" name="addGrupoCurso" id="addGrupoCurso" class="form-control" placeholder="que tipo de dato">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6 form-group">
+                                <label for="">Horario (Entrada)</label>
+                                <input type="time" name="addTurnoEntrada" id="addTurnoEntrada" class="form-control" required step="1800" value="09:00">
+                            </div>
+                            <div class="col-sm-6 form-group">
+                                <label for="">Horario (Salida)</label>
+                                <input type="time" name="addTurnoSalida" id="addTurnoSalida" class="form-control" required step="1800" value="09:30" min="09:30">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6 form-group">
+                                <label for="">Fecha (Entrada)</label>
+                                <input type="date" name="addFechaEntrada" id="addFechaEntrada" class="form-control" value="<?php echo date('Y-m-d');?>" required min="<?php echo date('Y-m-d');?>">
+                            </div>
+                            <div class="col-sm-6 form-group">
+                                <label for="">Fecha (Salida)</label>
+                                <input type="date" name="addFechaSalida" id="addFechaSalida" class="form-control" value="<?php echo date('Y-m-d', strtotime(date('Y-m-d'). ' + 1 day')); ?>" required min="<?php date('Y-m-d');?>">
+                            </div>
+                        </div>
+                        <div class="row">
+                            
+                            <div class="col-sm-12" id="cajaFechasSemana">
+                                <p>Fechas de practica</p>
+                                <div class="form-check">
+                                    <label class="form-check-label" for="check1">
+                                        <input type="checkbox" class="form-check-input" id="check1" name="option1" value="something">Lunes
+                                    </label>
                                 </div>
-                                <div class="col-sm-5 form-group">
-                                    <label for="">Precio curso</label>
-                                    <!-- <input type="text" id="addPrecioCurso" class="form-control"> -->
-                                    <input type="number" min="0.01" value="0.01" max="10000.00" step="0.01" id="addPrecioCurso" class="form-control">
+                                <div class="form-check">
+                                    <label class="form-check-label" for="check2">
+                                        <input type="checkbox" class="form-check-input" id="check2" name="option2" value="something">Martes
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label" for="check3">
+                                        <input type="checkbox" class="form-check-input" id="check3" name="option1" value="something">Miercoles
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label" for="check4">
+                                        <input type="checkbox" class="form-check-input" id="check4" name="option2" value="something">Jueves
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label" for="check5">
+                                        <input type="checkbox" class="form-check-input" id="check5" name="option1" value="something">Viernes
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label" for="check6">
+                                        <input type="checkbox" class="form-check-input" id="check6" name="option2" value="something">Sabado
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label" for="check7">
+                                        <input type="checkbox" class="form-check-input" id="check7" name="option1" value="something">Domingo
+                                    </label>
                                 </div>
                             </div>
-                            <div class="row">
-                                <div class="col-sm-6 form-group">
-                                    <label for="">Profesor</label>
-                                    <input type="text" name="addProfesorCurso" id="addProfesorCurso" class="form-control">
-                                </div>
-                                <div class="col-sm-6 form-group">
-                                    <label for="">Grupo</label>
-                                    <input type="text" name="addGrupoCurso" id="addGrupoCurso" class="form-control" placeholder="que tipo de dato">
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-sm-6 form-group">
-                                    <label for="">Horario (Entrada)</label>
-                                    <input type="time" name="addTurnoEntrada" id="addTurnoEntrada" class="form-control" required step="1800" value="09:00">
-                                </div>
-                                <div class="col-sm-6 form-group">
-                                    <label for="">Horario (Salida)</label>
-                                    <input type="time" name="addTurnoSalida" id="addTurnoSalida" class="form-control" required step="1800" value="09:30" min="09:30">
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-sm-6 form-group">
-                                    <label for="">Fecha (Entrada)</label>
-                                    <input type="date" name="addFechaEntrada" id="addFechaEntrada" class="form-control" value="<?php echo date('Y-m-d');?>" required min="<?php echo date('Y-m-d');?>">
-                                </div>
-                                <div class="col-sm-6 form-group">
-                                    <label for="">Fecha (Salida)</label>
-                                    <input type="date" name="addFechaSalida" id="addFechaSalida" class="form-control" value="<?php echo date('Y-m-d', strtotime(date('Y-m-d'). ' + 1 day')); ?>" required min="<?php date('Y-m-d');?>">
-                                </div>
-                            </div>
-                            <div class="row">
-                                
-                                <div class="col-sm-12" id="cajaFechasSemana">
-                                    <p>Fechas de practica</p>
-                                    <div class="form-check">
-                                        <label class="form-check-label" for="check1">
-                                            <input type="checkbox" class="form-check-input" id="check1" name="option1" value="something">Lunes
-                                        </label>
-                                    </div>
-                                    <div class="form-check">
-                                        <label class="form-check-label" for="check2">
-                                            <input type="checkbox" class="form-check-input" id="check2" name="option2" value="something">Martes
-                                        </label>
-                                    </div>
-                                    <div class="form-check">
-                                        <label class="form-check-label" for="check3">
-                                            <input type="checkbox" class="form-check-input" id="check3" name="option1" value="something">Miercoles
-                                        </label>
-                                    </div>
-                                    <div class="form-check">
-                                        <label class="form-check-label" for="check4">
-                                            <input type="checkbox" class="form-check-input" id="check4" name="option2" value="something">Jueves
-                                        </label>
-                                    </div>
-                                    <div class="form-check">
-                                        <label class="form-check-label" for="check5">
-                                            <input type="checkbox" class="form-check-input" id="check5" name="option1" value="something">Viernes
-                                        </label>
-                                    </div>
-                                    <div class="form-check">
-                                        <label class="form-check-label" for="check6">
-                                            <input type="checkbox" class="form-check-input" id="check6" name="option2" value="something">Sabado
-                                        </label>
-                                    </div>
-                                    <div class="form-check">
-                                        <label class="form-check-label" for="check7">
-                                            <input type="checkbox" class="form-check-input" id="check7" name="option1" value="something">Domingo
-                                        </label>
-                                    </div>
-                                </div>
-                                <!-- <div class="col-sm-7">
-                                    <label for="">Alumnos Inscritos</label>
-                                    <select class="my-2" id="addAlumnosCurso" name='addAlumnosCurso[]' style="width:100%;" multiple="multiple">
-                                    </select>
-                                </div> -->
-                            </div>
+                            <!-- <div class="col-sm-7">
+                                <label for="">Alumnos Inscritos</label>
+                                <select class="my-2" id="addAlumnosCurso" name='addAlumnosCurso[]' style="width:100%;" multiple="multiple">
+                                </select>
+                            </div> -->
+                        </div>
 
-                            <hr>
-                            <div class="text-center">
-                                <input type="submit" class="btn btn-primary" id="subAddPedido" value="Crear">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                            </div>
-                        </form>
-                    </div>
+                        <hr>
+                        <div class="text-center">
+                            <input type="submit" class="btn btn-primary" id="subAddPedido" value="Crear">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
+    </div>
+
+    <!-- MODAL PARA EDITAR CURSO-->
+    <div class="modal fade" id="modalEditarCurso" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <!-- Modal Header -->
+                <div class="modal-header bg-warning text-white">
+                    <h4 class="modal-title">Editar curso</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <form id="formEditCurso" autocomplete="off">
+                        <span id="idEditCurso" class="d-none"></span>
+                        <div class="row">
+                            <div class="col-sm-7 form-group">
+                                <label for="">Nombre</label>
+                                <input type="text" id="editNombreCurso" class="form-control">
+                            </div>
+                            <div class="col-sm-5 form-group">
+                                <label for="">Precio curso</label>
+                                <!-- <input type="text" id="addPrecioCurso" class="form-control"> -->
+                                <input type="number" min="0.01" value="0.01" max="10000.00" step="0.01" id="editPrecioCurso" class="form-control">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6 form-group">
+                                <label for="">Profesor</label>
+                                <input type="text" id="editProfesorCurso" class="form-control" required>
+                            </div>
+                            <div class="col-sm-6 form-group">
+                                <label for="">Grupo</label>
+                                <input type="text" id="editGrupoCurso" class="form-control" required>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6 form-group">
+                                <label for="">Horario (Entrada)</label>
+                                <input type="time" id="editTurnoEntrada" class="form-control" required step="1800" value="09:00">
+                            </div>
+                            <div class="col-sm-6 form-group">
+                                <label for="">Horario (Salida)</label>
+                                <input type="time" id="editTurnoSalida" class="form-control" required step="1800" value="09:30" min="09:30">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6 form-group">
+                                <label for="">Fecha (Entrada)</label>
+                                <input type="date"  id="editFechaEntrada" class="form-control" required>
+                            </div>
+                            <div class="col-sm-6 form-group">
+                                <label for="">Fecha (Salida)</label>
+                                <input type="date" id="editFechaSalida" class="form-control" required>
+                            </div>
+                        </div>
+                        <div class="row">       
+                            <div class="col-sm-12" id="cajaEditFechasSemana">
+                                <p>Fechas de practica</p>
+                                <div class="form-check">
+                                    <label class="form-check-label" for="check1">
+                                        <input type="checkbox" class="form-check-input" id="check1" name="option1" value="something">Lunes
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label" for="check2">
+                                        <input type="checkbox" class="form-check-input" id="check2" name="option2" value="something">Martes
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label" for="check3">
+                                        <input type="checkbox" class="form-check-input" id="check3" name="option1" value="something">Miercoles
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label" for="check4">
+                                        <input type="checkbox" class="form-check-input" id="check4" name="option2" value="something">Jueves
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label" for="check5">
+                                        <input type="checkbox" class="form-check-input" id="check5" name="option1" value="something">Viernes
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label" for="check6">
+                                        <input type="checkbox" class="form-check-input" id="check6" name="option2" value="something">Sabado
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label" for="check7">
+                                        <input type="checkbox" class="form-check-input" id="check7" name="option1" value="something">Domingo
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="text-center">
+                            <input type="submit" class="btn btn-primary" value="Actualizar">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- MODAL PARA ELIMINAR CURSO-->
     <div class="modal fade" id="modalEliminarCurso" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -262,84 +367,34 @@
             </div>
         </div>
     </div>
-    <!-- MODAL PARA AGREGAR pRODUCTO-->
-    <div class="modal fade" id="modalAgregarProducto" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <!-- MODAL PARA AGREGAR ELIMINAR ALUMNOS CURSO-->
+    <div class="modal fade" id="modalAlumnos" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header bg-info">
-                    <h5 class="modal-title">Agregar producto al inventario</h5>
+                    <h5 class="modal-title">Alumnos inscrito</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form action="" id="formAddProducto">
-                        <div class="row">
-                            <div class="col-sm-6 form-group">
-                                <label for="">Nombre del producto</label>
-                                <input type="text" name="addNomProducto" id="addNomProducto" class="form-control" required>
+                    <form action="" id="formEdicionAlumnos">
+                        <select id="listaAlumnosInscritos" name='listaAlumnosInscritos' style="width:100%;" multiple ></select>
+                        <br>
+                        <br>
+                        <span class="" id="editAlumnoCurso"></span>
+                        <div class="form-group row p-1">
+                            <div class="col-sm-6 form-group" >
+                                <label for="" class="text-danger">Alumnos inscritos</label>
+                                <div id="cajaAlumnosNuevos" style="font-size: 13px;"></div>
                             </div>
                             <div class="col-sm-6 form-group">
-                                <label for="">Descripcion del producto</label>
-                                <input type="text" name="addDescProducto" id="addDescProducto" class="form-control">
+                                <label for="" class="text-danger">Alumnos eliminados</label>
+                                <div id="cajaAlumnosEliminados" style="font-size: 13px;"></div>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-sm-5 form-group">
-                                <label for="">Precio de venta en Bs</label>
-                                <input type="number" step="0.1" value="1" name="addVentaProducto" id="addVentaProducto" class="form-control">
-                            </div>
-                            <div class="col-sm-7 form-group">
-                            <label for="">Seleccione el tipo de compra:</label>
-                                <div class="form-check">
-                                    <label class="form-check-label">
-                                        <input type="radio" class="form-check-input" name="optradio" value="compraPorUnidad" required>Compra por unidad
-                                    </label>
-                                    </div>
-                                    <div class="form-check">
-                                    <label class="form-check-label">
-                                        <input type="radio" class="form-check-input" name="optradio" value="compraPorPaquete">Compra por paquete
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-                        <hr>
-                        <div id="compraPaquete" class="d-none">
-                            <div class="row">
-                                <div class="col-sm-6 form-group">
-                                    <label for="">Precio compra paquete</label>
-                                    <input  type="number" step="0.1" value="1" name="addCompraPaqueteProducto" id="addCompraPaqueteProducto" class="form-control" required>
-                                </div>
-                                <div class="col-sm-6 form-group">
-                                    <label for="">Cant. unidades por paquete</label>
-                                    <input type="number" value="1" min="1" name="addCantPaqueteProducto" id="addCantPaqueteProducto" class="form-control">
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-sm-6 form-group">
-                                    <label for="">Paquetes comprados</label>
-                                    <input type="number" value="1" min="1" name="addCantPaqueteComprados" id="addCantPaqueteComprados" class="form-control">
-                                </div>
-                                <div class="col-sm-6 form-group">
-                                    <label for="">Precio unitario compra</label>
-                                    <input type="text" name="calPrecioUnit" id="calPrecioUnit" class="form-control" disabled required>
-                                </div>
-                            </div>
-                        </div>
-                        <div id="compraUnidad" class="d-none">
-                            <div class="row">
-                                <div class="col-sm-6 form-group">
-                                    <label for="">Precio unitario compra</label>
-                                    <input type="number" value="1" step="0.1" name="addPrecioCompraUnit" id="addPrecioCompraUnit" class="form-control">
-                                </div>
-                                <div class="col-sm-6 form-group">
-                                    <label for="">Unidades compradas</label>
-                                    <input type="number" value="1" min="1" name="addUnidadesCompra" id="addUnidadesCompra" class="form-control">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="text-center my-2">
-                            <input type="submit" class="btn btn-primary" value="Agregar">
+                        <div class="text-center my-3">
+                            <input type="submit" class="btn btn-primary" value="Actualizar">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
                         </div>
                     </form>

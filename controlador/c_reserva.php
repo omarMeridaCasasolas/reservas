@@ -13,6 +13,12 @@
                 $fechaFinal = date("Y-m-d", strtotime($fechaInicio.' + 6 days'));
                 $res = $reserva->getReservaSemana($fechaInicio,$fechaFinal);
                 break;
+            case 'listaReservaSemanaEdit':
+                $fechaInicio = $_REQUEST['fechaInicio'];
+                $fechaFinal = date("Y-m-d", strtotime($fechaInicio.' + 6 days'));
+                $idCurso = $_REQUEST['idCurso'];
+                $res = $reserva->listaReservaSemanaEdit($fechaInicio,$fechaFinal,$idCurso);
+                break;
             case 'obtenerReservasGeneradas':
                 $fechaInicio = $_REQUEST['fechaInicio'];
                 $fechaFinal = $_REQUEST['fechaFin'];

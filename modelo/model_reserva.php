@@ -79,6 +79,15 @@
             return $res;
         }
 
+        public function listaReservaSemanaEdit($fechaInicio,$fechaFinal,$idCurso){
+            $sql = "SELECT DISTINCT(fecha_reserva) FROM reserva WHERE fecha_reserva BETWEEN :fechaInicio AND :fechaFinal AND id_curso = :id;";
+            $sentenceSQL = $this->connexion_bd->prepare($sql);
+            $res = $sentenceSQL->execute(array(":fechaInicio"=>$fechaInicio,":fechaFinal"=>$fechaFinal,":id"=>$idCurso));
+            $respuesta = $sentenceSQL->fetchAll(PDO::FETCH_ASSOC);
+            $sentenceSQL->closeCursor();
+            return json_encode($respuesta, JSON_PRETTY_PRINT);
+        }
+
     } 
 
 ?>

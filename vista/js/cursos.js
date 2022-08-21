@@ -1,4 +1,11 @@
 var tablaCurso;
+let arregloAlumnos = new Array();
+let listaDatosAlumnos = new Array();
+let alumnosEliminados = new Array();
+let alumnosNuevos = new Array();
+let cantAlumnosInscritos = 0;   //Solo se actualiza por cada curso
+let cantAlumnosNuevos = 0;
+let cantAlumnosEliminados = 0;
 $(document).ready(function () {
     getListaCurso();
     getListaAlumno(); 
@@ -15,12 +22,30 @@ $(document).ready(function () {
         console.log(horaSalida);
     });
 
+    // EDITAR LISTA DE ALUMNO POR CURSO 
+    $("#formEdicionAlumnos").submit(function (e) { 
+        e.preventDefault();
+        $.ajax({
+            type: "POST",
+            url: "../controlador/c_curso.php",
+            data: {metodo:"actualizarListaAlumnosCurso", idCurso: $("#editAlumnoCurso").html(),listaAlumnosNuevos:JSON.stringify(alumnosNuevos),listaAlumnosEliminados:JSON.stringify(alumnosEliminados)},
+            dataType: "JSON",
+            success: function (response) {
+                console.log(response);
+            }
+        });
+    });
 
 
     // CAMBIAR FECHA 
     $("#addFechaEntrada").change(function (e) { 
         e.preventDefault();
         calcularFechaReserva();
+    });
+
+    $("#editFechaEntrada").change(function (e) { 
+        e.preventDefault();
+        calcularFechaReservaEditar();
     });
 
     $("#formAddCurso").submit(function (e) { 
@@ -37,9 +62,9 @@ $(document).ready(function () {
         $('#cajaFechasSemana .form-check-input:checked').each(function() {
             fechasJuego.push($(this).val());
         });
-        console.log(fechasJuego);
-        console.log(fechaEntrada);
-        console.log(entrada);
+        // console.log(fechasJuego);
+        // console.log(fechaEntrada);
+        // console.log(entrada);
         $('#myModal').modal('hide');
         $.ajax({
             type: "POST",
@@ -60,11 +85,33 @@ $(document).ready(function () {
 
     });
 
-    // EDITAR EMPLEADO
-    // $("#tablaCurso tbody").on('click','button.editProveedor',function (e) {
-	// 	e.preventDefault();
-    //     console.log("Se ha hecho click en cerrado");
-    // });
+    // EDITAR CURSO 
+    $("#tablaCurso tbody").on('click','button.editCurso',function (e) {
+		e.preventDefault();
+        let datosCurso = tablaCurso.row( $(this).parents('tr') ).data();
+        console.log(datosCurso);
+        $("#idEditCurso").html(datosCurso.id_curso);
+        $("#editNombreCurso").val(datosCurso.nombre_curso);
+        $("#editPrecioCurso").val(parseFloat(datosCurso.precio_curso));
+        $("#editProfesorCurso").val(datosCurso.nombre_profesor);
+        $("#editGrupoCurso").val(datosCurso.grupo_curso);
+        $("#editTurnoEntrada").val(datosCurso.horario_entrada);
+        $("#editTurnoSalida").val(datosCurso.horario_salida);
+        $("#editFechaEntrada").val(datosCurso.fecha_inicio);
+        $("#editFechaSalida").val(datosCurso.fecha_final);
+        calcularFechaReservaEditar();
+        $.ajax({
+            type: "POST",
+            url: "../controlador/c_reserva.php",
+            data: {metodo:"listaReservaSemanaEdit", fechaInicio:datosCurso.fecha_inicio, idCurso: datosCurso.id_curso },
+            dataType: "JSON",
+            success: function (response) {
+                response.forEach(element => {
+                    $( "#cajaEditFechasSemana input[value="+element.fecha_reserva+"]").prop( "checked", true );
+                });
+            }
+        });
+    });
 
     $("#formEditProveedor").submit(function (e) { 
         e.preventDefault();
@@ -90,13 +137,71 @@ $(document).ready(function () {
         });
     });
 
-    $("#tablaCurso tbody").on('click','button.editProveedor',function () {
-		let datosProveedor = tablaCurso.row( $(this).parents('tr') ).data();
-        // $("#delIdPublicacion").html(datosPublicacion.id_publicacion);
-        $("#nomEditProveedor").val(datosProveedor.nombre_proveedor);
-		$("#telEditProveedor").val(datosProveedor.telefono_proveedor);
-        $("#detalleEditProveedor").val(datosProveedor.detalle_provvedor);
-        $("#idEditProveedor").html(datosProveedor.id_proveedor);
+    $("#tablaCurso tbody").on('click','button.editAlumnos',function () {
+		let datosCurso = tablaCurso.row( $(this).parents('tr') ).data();
+        $("#editAlumnoCurso").html(datosCurso.id_curso);
+        // $("#nomEditProveedor").val(datosProveedor.nombre_proveedor);
+        $("#cajaAlumnosNuevos").empty();
+        $("#cajaAlumnosEliminados").empty();
+        $.ajax({
+            type: "POST",
+            url: "../controlador/c_curso.php",
+            data: {metodo: "listaAlumnosCursoGrupo", idCurso:datosCurso.id_curso},
+            dataType: "JSON",
+            success: function (response) {
+                console.log(response);
+                arregloAlumnos = new Array();
+                // $("#cajaAlumnosNuevos").append("<ul>");
+                response.forEach(element => {
+                    $("#cajaAlumnosNuevos").append(`<li>${element.nombre_alumno} - ${element.edad}</li>`);
+                    // $("#listaAlumnosInscritos").select2().val(element.id_alumno).trigger("change");
+                    // $("#listaAlumnosInscritos").val(element.id_alumno);
+                    arregloAlumnos.push(element.id_alumno);
+                });
+                // $("#cajaAlumnosNuevos").append("</ul>");
+                $("#listaAlumnosInscritos").val(arregloAlumnos);
+                cantAlumnosInscritos = arregloAlumnos.length;
+                // $("#listaAlumnosInscritos").select2();
+                $('#listaAlumnosInscritos').select2().trigger('change');
+                cantAlumnosNuevos = 0;
+                cantAlumnosEliminados = 0;
+            }
+        });
+    });
+
+    $("#listaAlumnosInscritos").change(function (e) { 
+        e.preventDefault();
+        // var selectVal = $("#listaAlumnosInscritos option:selected").val();
+        let listaAlumnosActual = $('#listaAlumnosInscritos').val(); 
+        // console.log("Alumnos inscritos inicio "+arregloAlumnos);
+        // console.log("Alumnos inscritos nuevos"+listaAlumnosActual);
+        alumnosNuevos = listaAlumnosActual.filter(item => !arregloAlumnos.includes(item));
+        console.log(arregloAlumnos);
+        if(cantAlumnosNuevos != alumnosNuevos.length){
+            // let element = alumnosNuevos[alumnosNuevos.length-1];
+            //     let alumno = listaDatosAlumnos.find(x => x.id_alumno == element );
+            //     console.log(alumno);
+            //     $("#cajaAlumnosNuevos").append(`<li>${alumno.nombre_alumno} - ${alumno.edad}</li>`);
+            $("#cajaAlumnosNuevos").empty();
+            listaAlumnosActual.forEach(element => {
+                console.log(element);
+                let alumno = listaDatosAlumnos.find(x => x.id_alumno == element );
+                console.log(alumno);
+                $("#cajaAlumnosNuevos").append(`<li>${alumno.nombre_alumno} - ${alumno.edad}</li>`);
+            });
+            cantAlumnosNuevos = listaAlumnosActual.length;
+        }
+        alumnosEliminados = arregloAlumnos.filter(item => !listaAlumnosActual.includes(item));
+        console.log("Alumnos eliminados "+alumnosEliminados);
+        if(cantAlumnosEliminados != alumnosEliminados.length){
+            $("#cajaAlumnosEliminados").empty();
+            alumnosEliminados.forEach(element => {
+                let alumno = listaDatosAlumnos.find(x => x.id_alumno == element );
+                console.log(alumno);
+                $("#cajaAlumnosEliminados").append(`<li>${alumno.nombre_alumno} - ${alumno.edad}</li>`);
+            });
+            cantAlumnosEliminados = alumnosEliminados.length;
+        }
     });
 
     $("#tablaCurso tbody").on('click','button.deletCurso',function () {
@@ -137,17 +242,17 @@ function getListaAlumno(){
         dataType: "JSON",
         success: function (response) {
             console.log(response);
-            let arregloAlumnos = response.data;
+            listaDatosAlumnos = response.data;
             // let listaClientes = JSON.parse(response);
             // $("#addPedidoTienda").empty();
             // $("#editPedidoTienda").empty();
             // $("#addPedidoTienda").append("<option value=''>Ninguno</option>");
             // $("#editPedidoTienda").append("<option value=''>Ninguno</option>");
-            arregloAlumnos.forEach(element => {
-                $("#addAlumnosCurso").append("<option value='"+element.id_alumno+"'>"+element.nombre_alumno+" - "+element.carnet_alumno+"</option>");
+            listaDatosAlumnos.forEach(element => {
+                $("#listaAlumnosInscritos").append("<option value='"+element.id_alumno+"'>"+element.nombre_alumno+" - "+element.edad+"</option>");
                 // $("#editPedidoTienda").append("<option value='"+element.id_cliente+"'>"+element.nombre_cliente+" - "+element.ci_cliente+"</option>");
             });
-            $('#addAlumnosCurso').select2();
+            // $('#listaAlumnosInscritos').select2();
             // $('#editPedidoTienda').select2();
         }
     });
@@ -202,8 +307,9 @@ function getListaCurso(){
             { data: "cantidad_alumnos", width: "10%" },
 			{ data: null,
 				defaultContent:
-				"<button type='button' class='editProveedor btn btn-warning btn-sm' data-toggle='modal' data-target='#modalEditarProveedor'><i class='fas fa-edit'></i></button> "+
-                "<button type='button' class='deletCurso btn btn-danger btn-sm' data-toggle='modal' data-target='#modalEliminarCurso'><i class='fas fa-trash'></i></button> ",
+				"<button type='button' class='editCurso btn btn-warning btn-sm' data-toggle='modal' data-target='#modalEditarCurso'><i class='fas fa-edit'></i></button> "+
+                "<button type='button' class='deletCurso btn btn-danger btn-sm' data-toggle='modal' data-target='#modalEliminarCurso'><i class='fas fa-trash'></i></button> "+
+                "<button type='button' class='editAlumnos btn btn-info btn-sm' data-toggle='modal' data-target='#modalAlumnos'><i class='fa fa-users'></i></button> ",
 				width: "10%"
 			}
 		]
@@ -227,7 +333,7 @@ function calcularFechaReserva(){
         let cadena = '<p>Fechas de practica</p>';
         for (let i = 0; i < weekday.length; i++) {
             let dia = weekday[fechaInicio];
-            console.log(dia);
+            // console.log(dia);
             cadena += `<div class="form-check">
                 <label class="form-check-label" for="check_${i}">
                     <input type="checkbox" class="form-check-input" id="check_${i}" value="${fecha.getFullYear() + "-" + agregarZero(fecha.getMonth() + 1) + "-"+ agregarZero(fecha.getDate())}" 
@@ -240,4 +346,28 @@ function calcularFechaReserva(){
             fecha.setDate(fecha.getDate() + 1);
         }
         $("#cajaFechasSemana").html(cadena);
+}
+
+
+function calcularFechaReservaEditar(){
+    let weekday = ["domingo","lunes","martes","miercoles","jueves","viernes","sabado"];
+        let fecha = new Date($("#editFechaEntrada").val());
+        fecha.setDate(fecha.getDate() + 1);
+        let fechaInicio = parseInt(fecha.getDay());
+        let cadena = '<p>Fechas de practica</p>';
+        for (let i = 0; i < weekday.length; i++) {
+            let dia = weekday[fechaInicio];
+            // console.log(dia);
+            cadena += `<div class="form-check">
+                <label class="form-check-label" for="checkEdit_${i}">
+                    <input type="checkbox" class="form-check-input" id="checkEdit_${i}" value="${fecha.getFullYear() + "-" + agregarZero(fecha.getMonth() + 1) + "-"+ agregarZero(fecha.getDate())}" 
+                    name="option2">${dia+" "+ agregarZero(fecha.getDate()) + "/" + agregarZero(fecha.getMonth() + 1) + "/"+fecha.getFullYear()}
+                </label>
+            </div>`;
+            fechaInicio = (fechaInicio + 1) % 7;
+            // fecha = addDays(fecha.getFullYear() + "-" + (fecha.getMonth() + 1) + "-" + fecha.getDate());
+            // fecha.setDate(setDate(fecha.getDate() + days));
+            fecha.setDate(fecha.getDate() + 1);
+        }
+        $("#cajaEditFechasSemana").html(cadena);
 }

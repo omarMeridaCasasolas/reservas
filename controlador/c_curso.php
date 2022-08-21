@@ -109,19 +109,26 @@
                 }
                 break;
                 
-            case 'agregarRapidoCursoNombre':
+            case 'listaAlumnosCursoGrupo':
                 if(isset($_SESSION['usuario']) && ($_SESSION['tipo_empleado'] == 'Administrador' || $_SESSION['tipo_empleado'] == 'Tecnico')){
-                    $nombre = $_REQUEST['nombre']; 
-                    $res = $curso->agregarRapidocursoNombre($nombre);
+                    $idCurso = $_REQUEST['idCurso']; 
+                    $res = $curso->listaAlumnosCursoGrupo($idCurso);
                 }else{
                     $res = "Error de autentificacion";
                 }
                 break;
-            case 'agregarRapidoCurso':
+            case 'actualizarListaAlumnosCurso':
                 if(isset($_SESSION['usuario']) && ($_SESSION['tipo_empleado'] == 'Administrador' || $_SESSION['tipo_empleado'] == 'Tecnico')){
-                    $nombre = $_REQUEST['nombre'];
-                    $numero = $_REQUEST['numero'];
-                    $res = $curso->agregarRapidocurso($nombre,$numero);
+                    $idCurso = $_REQUEST['idCurso'];
+                    $listaAlumnosNuevos = json_decode($_REQUEST['listaAlumnosNuevos']);
+                    $listaAlumnosEliminados = json_decode($_REQUEST['listaAlumnosEliminados']);
+                    $res = 1 ;
+                    if(is_array($listaAlumnosNuevos) && count($listaAlumnosNuevos) >= 1){
+                        $res = $curso->agregarNuevosAlumnos($listaAlumnosNuevos,$idCurso,date('Y-m-d'));
+                    }
+                    if(is_array($listaAlumnosEliminados) && count($listaAlumnosEliminados) >= 1){
+                        $res = $curso->eliminarAlumnosCurso($listaAlumnosEliminados,$idCurso);
+                    }
                 }else{
                     $res = "Error de autentificacion";
                 }

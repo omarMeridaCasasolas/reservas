@@ -12,7 +12,8 @@
         }
 
         public function getListaAlumno(){
-            $sql = "SELECT * from alumno ORDER BY id_alumno DESC;";
+            $sql = "SELECT id_alumno, nombre_alumno, carnet_alumno, fecha_nacimiento nombre_tutor, celular_contacto, 
+            DATE_FORMAT(FROM_DAYS(DATEDIFF(now(),fecha_nacimiento)), '%Y')+0 AS edad from alumno ORDER BY id_alumno DESC;";
             $sentenceSQL = $this->connexion_bd->prepare($sql);
             $res = $sentenceSQL->execute();
             $respuesta = $sentenceSQL->fetchAll(PDO::FETCH_ASSOC);
