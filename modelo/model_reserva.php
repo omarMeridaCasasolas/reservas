@@ -10,17 +10,19 @@
             $this->sentenceSQL = null;
             $this->connexion_bd = null;
         }
-        public function insertarReserva($idCancha,$fechaReserva,$diaReserva,$precioReserva,$hora,$estadoReserva){
-            $sql = "INSERT INTO reserva(id_cancha, fecha_reserva, dia_reserva, precio_hora, hora_reserva, estado_reserva) VALUES (:id, :fecha, :dia, :precio, :hora , :estado);";
+        public function insertarReserva($idCancha,$fechaReserva,$diaReserva,$precioReserva,$hora,$estadoReserva,$limite){
+            $sql = "INSERT INTO reserva(id_cancha, fecha_reserva, dia_reserva, precio_hora, hora_reserva, estado_reserva, hora_limite) 
+            VALUES (:id, :fecha, :dia, :precio, :hora , :estado, :limite);";
             $sentenceSQL = $this->connexion_bd->prepare($sql);
-            $res = $sentenceSQL->execute(array(":id"=>$idCancha,":fecha"=>$fechaReserva,":dia"=>$diaReserva,":precio"=>$precioReserva,":hora"=>$hora ,":estado"=>$estadoReserva));
+            $res = $sentenceSQL->execute(array(":id"=>$idCancha,":fecha"=>$fechaReserva,":dia"=>$diaReserva,":precio"=>$precioReserva,
+            ":hora"=>$hora ,":estado"=>$estadoReserva,":limite"=>$limite));
             $sentenceSQL->closeCursor();
             return $res;
         }
 
         public function getReservaSemana($fechaInicio,$fechaFinal){
             $sql = "SELECT id_reserva, dia_reserva, id_cancha, id_empleado, id_cliente, fecha_reserva, precio_hora, TIME_FORMAT(hora_reserva, '%H:%i') as hora_reserva, 
-            estado_reserva, id_curso, id_evento, tipo_reserva FROM reserva WHERE fecha_reserva between :inicio AND :fin order by fecha_reserva;";
+            estado_reserva, id_curso, id_evento, tipo_reserva, TIME_FORMAT(hora_limite, '%H:%i') as hora_limite FROM reserva WHERE fecha_reserva between :inicio AND :fin order by fecha_reserva;";
             $sentenceSQL = $this->connexion_bd->prepare($sql);
             $res = $sentenceSQL->execute(array(":inicio"=>$fechaInicio,":fin"=>$fechaFinal));
             $respuesta = $sentenceSQL->fetchAll(PDO::FETCH_ASSOC);
@@ -40,7 +42,8 @@
         }
 
         public function getReserva($idReserva){
-            $sql = "SELECT * from reserva WHERE id_reserva = :id;";
+            $sql = "SELECT id_reserva, dia_reserva, id_cancha, id_empleado, id_cliente, fecha_reserva, precio_hora, TIME_FORMAT(hora_reserva, '%H:%i') as hora_reserva, 
+            estado_reserva, id_curso, id_evento, tipo_reserva from reserva WHERE id_reserva = :id;";
             $sentenceSQL = $this->connexion_bd->prepare($sql);
             $res = $sentenceSQL->execute(array(":id"=>$idReserva));
             $respuesta = $sentenceSQL->fetchAll(PDO::FETCH_ASSOC);
@@ -86,6 +89,15 @@
             $respuesta = $sentenceSQL->fetchAll(PDO::FETCH_ASSOC);
             $sentenceSQL->closeCursor();
             return json_encode($respuesta, JSON_PRETTY_PRINT);
+        }
+
+        public function reservaPorJuegoDeportivo($idCliente,$costoReserva,$pagoDigital,$pagoEfectivo,$reservaInicio,$reservaFinal,$ident){
+            $sql = "CALL reservaPorJuegoDeportivo(:idCliente,:costoReserva,:pagoDigital,:pagoEfectivo,:reservaInicio,:reservaFinal,:ident)";
+            $sentenceSQL = $this->connexion_bd->prepare($sql);
+            $res = $sentenceSQL->execute(array(":idCliente"=>$idCliente,":costoReserva"=>$costoReserva,":pagoDigital"=>$pagoDigital,
+            ":pagoEfectivo"=>$pagoEfectivo,":reservaInicio"=>$reservaInicio,":reservaFinal"=>$reservaFinal,":ident"=>$ident));
+            $sentenceSQL->closeCursor();
+            return json_encode($res, JSON_PRETTY_PRINT);
         }
 
     } 

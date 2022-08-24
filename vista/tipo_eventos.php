@@ -65,10 +65,13 @@
                 <?php
                 if($_SESSION['tipo_empleado'] == 'Administrador' || $_SESSION['tipo_empleado'] == 'Tecnico'){
                     echo '<li class="nav-item">
-                    <a class="nav-link" href="productos.php">Productos</a>
+                    <a class="nav-link" href="compras.php">Compras</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="compras.php">Compras</a>
+                    <a class="nav-link" href="cursos.php">Cursos</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="alumnos.php">Alumnos</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="empleado.php">Empleado</a>

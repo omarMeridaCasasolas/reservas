@@ -1,6 +1,7 @@
 <?php
     //obtencion del archivo
     session_start();
+    date_default_timezone_set('America/La_Paz');
     require_once("../modelo/model_reserva.php");
     ob_clean();
     if(isset($_POST['metodo'])){
@@ -47,6 +48,22 @@
                     }
                 }else{
                     $res = "Error de credenciales";
+                }
+                break;
+                // reservaPorJuegoDeportivo",idCliente,costoReserva,pagoDigital,pagoEfectivo,reservaInicio,reservaFinal
+            case 'reservaPorJuegoDeportivo':
+                if(isset($_SESSION['usuario']) && ($_SESSION['tipo_empleado'] == 'Administrador' || $_SESSION['tipo_empleado'] == 'Tecnico')){
+                    $idCliente = intval($_REQUEST['idCliente']);
+                    $costoReserva = floatval($_REQUEST['costoReserva']);
+                    $pagoDigital = floatval($_REQUEST['pagoDigital']);
+                    $pagoEfectivo = floatval($_REQUEST['pagoEfectivo']);
+                    $reservaInicio = intval($_REQUEST['reservaInicio']);
+                    $reservaFinal = intval($_REQUEST['reservaFinal']);
+                    $ident = strval(strtotime("now"));
+                                        
+                    $res = $reserva->reservaPorJuegoDeportivo($idCliente,$costoReserva,$pagoDigital,$pagoEfectivo,$reservaInicio,$reservaFinal,$ident);
+                }else{
+                    $res = "Error de autentificacion";
                 }
                 break;
             case 'getHorarioContinuo':

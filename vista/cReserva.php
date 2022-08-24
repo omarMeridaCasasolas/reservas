@@ -158,39 +158,37 @@
                                 <option value="Evento">Evento</option>
                             </select>
                         </div>
-
+                        <select name="" id="nombreCliente" style="width:100%" required></select>
+                        <br>
+                        <div id="cajaListaEvento" class="d-none">
+                            <br>
+                            <select name="" id="nombreEventoModelo" style="width:100%" required></select>
+                            <br>
+                        </div>
+                        <br>
                         <div class="row">
                             <div class="col-sm-6 form-group">
                                 <label for="">Hora limite</label>
                                 <select name="hrLimiteReserva" id="hrLimiteReserva" class="form-control"></select>
                             </div>
                             <div class="col-sm-6 form-group">
-                                <label for="">Hora limite</label>
-                                <input type="text" name="" id="precioCobraReserva" class="form-control" value="170">
+                                <label for="">Costo:</label>
+                                <input type="text" id="precioCostoReserva" class="form-control" value="170">
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-sm-6 form-group">
                                 <label for="">Pago digital</label>
-                                <input type="number" value="0" name="reservaDigital" id="reservaDigital" class="form-control">
+                                <input type="number" value="0" id="pagoDigital" class="form-control pagos">
                             </div>
                             <div class="col-sm-6 form-group">
-                                <label for="">Caja</label>
-                                <input type="number" value="0" name="reservaFsica" id="reservaFsica" class="form-control">
+                                <label for="">Pago efectivo</label>
+                                <input type="number" value="0" id="pagoEfectivo" class="form-control pagos">
                             </div>
                         </div>
                         <div class="text-right">
-                            <strong>Total <span>X</span></strong>
-                        </div>  
-                        <div class="text-right">
-                            <strong>En caja <span>X</span></strong>
-                        </div>  
-                        <select name="" id="nombreCliente" style="width:100%"></select>
-                        <hr>
-                        <div class="form-group">
-                            <label for="">Detalles:</label>
-                            <textarea name="descripcionReserva" id="descripcionReserva" cols="30" rows="4" class="form-control" style="resize:none;"></textarea>
-                        </div>
+                            <strong>Total <span id="pagoDepositado">X</span></strong>
+                        </div> 
                         <div class="text-center">
                             <input type="submit" value="Reservar" class="btn btn-primary">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
@@ -203,5 +201,6 @@
 </body>
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="js/cReserva.js"></script>
 </html>

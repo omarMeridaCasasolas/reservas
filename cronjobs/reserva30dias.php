@@ -1,6 +1,6 @@
 <?php
     require_once('../modelo/model_reserva.php');
-    reserva(30);
+    reserva(92);
     function reserva($dias){
         $reserva = new Reserva();
         $idCancha = 1;
@@ -14,32 +14,57 @@
             $fecha = date($today['year']."-".$today['mon']."-".$today['mday']);
             if($intDia == 0){
                 // echo "Es domingo\n";
-                for($j = 9; $j< 14 ;$j++){
-                    $hora = $j.":00";
-                    $reserva->insertarReserva($idCancha,$fecha,convDiasSemana($today['weekday']),$precio,$hora,'disponible');
-                    // agregar media hora
-                    $hora = $j.":30";
-                    $reserva->insertarReserva($idCancha,$fecha,convDiasSemana($today['weekday']),$precio,$hora,'disponible');
+                for($j = 9; $j< 23 ;$j++){
+                    if($j<14){
+                        $hora = $j.":00";
+                        $reserva->insertarReserva($idCancha,$fecha,convDiasSemana($today['weekday']),$precio,$hora,'disponible',$j.":29");
+                        // agregar media hora
+                        $hora = $j.":30";
+                        $reserva->insertarReserva($idCancha,$fecha,convDiasSemana($today['weekday']),$precio,$hora,'disponible',$j.":59");
+                    }
+                    else{
+                        $hora = $j.":00";
+                        $reserva->insertarReserva($idCancha,$fecha,convDiasSemana($today['weekday']),$precio,$hora,'mantenimiento',$j.":29");
+                        // agregar media hora
+                        $hora = $j.":30";
+                        $reserva->insertarReserva($idCancha,$fecha,convDiasSemana($today['weekday']),$precio,$hora,'mantenimiento',$j.":59");
+                    }
+
                 }
             }else{
                 if($intDia <= 5){
                     // echo "Es un dia laboral entre lun-viernes\n";
                     for($j = 9; $j< 23 ;$j++){
                         $hora = $j.":00";
-                        $reserva->insertarReserva($idCancha,$fecha,convDiasSemana($today['weekday']),$precio,$hora,'disponible');
-
+                        $reserva->insertarReserva($idCancha,$fecha,convDiasSemana($today['weekday']),$precio,$hora,'disponible',$j.":29");
                         $hora = $j.":30";
-                        $reserva->insertarReserva($idCancha,$fecha,convDiasSemana($today['weekday']),$precio,$hora,'disponible');
+                        $reserva->insertarReserva($idCancha,$fecha,convDiasSemana($today['weekday']),$precio,$hora,'disponible',$j.":59");
                     }
                 }else{
-                    for($j = 9; $j< 20 ;$j++){
-                        $hora = $j.":00";
-                        $reserva->insertarReserva($idCancha,$fecha,convDiasSemana($today['weekday']),$precio,$hora,'disponible');
+                    // for($j = 9; $j< 20 ;$j++){
+                    //     $hora = $j.":00";
+                    //     $reserva->insertarReserva($idCancha,$fecha,convDiasSemana($today['weekday']),$precio,$hora,'disponible',$j.":29");
 
-                        $hora = $j.":30";
-                        $reserva->insertarReserva($idCancha,$fecha,convDiasSemana($today['weekday']),$precio,$hora,'disponible');
-                    }
+                    //     $hora = $j.":30";
+                    //     $reserva->insertarReserva($idCancha,$fecha,convDiasSemana($today['weekday']),$precio,$hora,'disponible',$j.":59");
+                    // }
                     // echo "Es sabado\n";
+                    for($j = 9; $j< 23 ;$j++){
+                        if($j<20){
+                            $hora = $j.":00";
+                            $reserva->insertarReserva($idCancha,$fecha,convDiasSemana($today['weekday']),$precio,$hora,'disponible',$j.":29");
+                            // agregar media hora
+                            $hora = $j.":30";
+                            $reserva->insertarReserva($idCancha,$fecha,convDiasSemana($today['weekday']),$precio,$hora,'disponible',$j.":59");
+                        }
+                        else{
+                            $hora = $j.":00";
+                            $reserva->insertarReserva($idCancha,$fecha,convDiasSemana($today['weekday']),$precio,$hora,'mantenimiento',$j.":29");
+                            // agregar media hora
+                            $hora = $j.":30";
+                            $reserva->insertarReserva($idCancha,$fecha,convDiasSemana($today['weekday']),$precio,$hora,'mantenimiento',$j.":59");
+                        }
+                    }
                 }
             }
             //var_dump($fecha);

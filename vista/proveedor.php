@@ -79,6 +79,9 @@
                 <li class="nav-item">
                     <a class="nav-link" href="empleado.php"> Empleado</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="tipo_eventos.php">Tipo evento</a>
+                </li>
                 <li class="nav-item active">
                     <a class="nav-link" href="proveedor.php"><i class="fas fa-eye"></i> Proveedor</a>
                 </li>';
