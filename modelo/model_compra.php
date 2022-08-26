@@ -22,16 +22,30 @@
             return json_encode(array('data' => $respuesta), JSON_PRETTY_PRINT);
         }
 
-        // public function obtenercomprasGeneradas($fechaInicio,$fechaFinal){
-        //     $sql = "SELECT nombre_producto, sum(total_producto) AS total, count(detalle_compra.id_producto) * cant_compra AS cant_vendida FROM detalle_compra 
-        //     INNER JOIN producto ON producto.id_producto = detalle_compra.id_producto INNER JOIN compra ON compra.id_compras = detalle_compra.id_compras 
-        //     WHERE fecha_compra between :inicio AND :final group by(detalle_compra.id_producto)  order by total desc";
-        //     $sentenceSQL = $this->connexion_bd->prepare($sql);
-        //     $res = $sentenceSQL->execute(array(":inicio"=>$fechaInicio,":final"=>$fechaFinal));
-        //     $respuesta = $sentenceSQL->fetchAll(PDO::FETCH_ASSOC);
-        //     $sentenceSQL->closeCursor();
-        //     return json_encode($respuesta, JSON_PRETTY_PRINT);
-        // }
+        public function agregarCompra($fechaCompra,$totalCompra,$idProveedor){
+            $sql = "INSERT INTO compra (fecha_compra, total_compra, id_proveedor) VALUES(:fecha,:total,:proveedor);";
+            $sentenceSQL = $this->connexion_bd->prepare($sql);
+            $res = $sentenceSQL->execute(array(":fecha"=>$fechaCompra,":total"=>$totalCompra,":proveedor"=>$idProveedor));
+            if($res == 1 || $res == true){
+                $res = $this->connexion_bd->lastInsertId();
+                $string = preg_replace("/[\r\n|\n|\r]+/", PHP_EOL, $res);
+                $sentenceSQL->closeCursor();
+                return $string;
+            }else{
+                $sentenceSQL->closeCursor();
+                return $res;
+            }
+        }
+        
+        public function agregarDetalleCompra($idCompra,$idProducto,$cantidadProducto,$precioCompra){
+            // $sql = "INSERT INTO detalle_compra (id_compra, id_producto, cantidad_producto, precio_producto) VALUES(:compra,:product,:cant,:precio);";
+            $sql = "CALL agregarProductoStock(:compra, :product, :cant, :precio)";
+                    // CALL agregarProductoStock(5, 10, 6, 51.12
+            $sentenceSQL = $this->connexion_bd->prepare($sql);
+            $res = $sentenceSQL->execute(array(":compra"=>$idCompra,":product"=>$idProducto,":cant"=>intval($cantidadProducto),":precio"=>$precioCompra));
+            return $res;
+        }
+        
     } 
 
 ?>

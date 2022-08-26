@@ -18,7 +18,7 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.min.css">
     <script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
-    <title>Productos</title>
+    <title>Compras</title>
     <style>
         body{
             font-family: 'Poppins', sans-serif;
@@ -100,6 +100,7 @@
             <table id="tablaCompra" class="table compact bordered table-hover" style="width:100%">
                 <thead>
                     <tr>
+                        <th>ID</th>
                         <th>Fecha</th>
                         <th>Proveedor</th>
                         <th>Productos</th>
@@ -114,62 +115,95 @@
     </main>
     <!-- MODAL PARA VENTA -->
     <div class="modal fade" id="myModal" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-            <div class="modal-dialog modal-lg">
-                <div class="modal-content">
-                    <!-- Modal Header -->
-                    <div class="modal-header bg-success text-white">
-                        <h4 class="modal-title">Nueva compra</h4>
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    </div>
-                    <!-- Modal body -->
-                    <div class="modal-body">
-                        <form id="formAddPedido" autocomplete="off">
-                            <select class="my-2" id="addPedidoTienda" name='addPedidoTienda' required style="width:100%;">
-                            </select>
-                            <br>
-                            <br>
-                            <div id="mensajeProveedor"></div>
-                            <hr>
-                            <div id="contenedorInput" style="font-size: 13px;">
-                                <div class="row">
-                                    <div class="col-4"><strong>Producto</strong></div>
-                                    <div class="col-3"><strong>Cant.</strong></div>
-                                    <div class="col-3"><strong>Tot.</strong></div>
-                                    <div class="col-2 text-center"><strong>Elim.</strong></div>
-                                </div>
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <!-- Modal Header -->
+                <div class="modal-header bg-success text-white">
+                    <h4 class="modal-title">Nueva compra</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <form id="formAddCompra">
+                        <select class="my-2" id="addCompraProveedor" name='addCompraProveedor' required style="width:100%;">
+                        </select>
+                        <br>
+                        <br>
+                        <div id="mensajeProveedor"></div>
+                        <hr>
+                        <div id="contenedorInput" style="font-size: 13px;">
+                            <div class="row no-gutters text-center">
+                                <div class="col-4"><strong>Producto</strong></div>
+                                <div class="col-2"><strong>Cant.</strong></div>
+                                <div class="col-2"><strong>Precio.</strong></div>
+                                <div class="col-2"><strong>Tot.</strong></div>
+                                <div class="col-2 text-center"><strong>Elim.</strong></div>
                             </div>
-                            <div class="row">
-                                <div class="col-6"></div>
-                                <div class="col-1"></div>
-                                <div class="col-1"></div>
-                                <div class="col-4">Total:<input type="text" name="IdTotalPedido" id="IdTotalPedido" disabled class='form-control'></div>  
-                            </div>
-                            <hr>
-                            <br>
-                            <table id="tablaDeProductos" class="display compact" style="width:100%">
-                                <thead>
-                                    <tr class='bg-secondary text-white'>
-                                        <th>Producto</th>
-                                        <th>Desc.</th>
-                                        <th>Bs.</th>
-                                        <th>Opc.</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                </tbody>
-                            </table>
-                            <hr>
-                            <div class="text-center">
-                                <input type="submit" class="btn btn-primary" id="subAddPedido" value="Venta">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                            </div>
-                        </form>
-                    </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-6"></div>
+                            <div class="col-1"></div>
+                            <div class="col-1"></div>
+                            <div class="col-4">Total:<input type="text" name="IdTotalPedido" id="IdTotalPedido" class='form-control'></div>  
+                        </div>
+                        <hr>
+                        <br>
+                        <table id="tablaDeProductos" class="display compact" style="width:100%">
+                            <thead>
+                                <tr class='bg-secondary text-white'>
+                                    <th>Producto</th>
+                                    <th>Desc.</th>
+                                    <th>Stock.</th>
+                                    <th>Opc.</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                        <hr>
+                        <div class="text-center">
+                            <input type="submit" class="btn btn-primary" value="Compra">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
+    </div>
+
+    <!-- MODAL PARA ELIMINAR CURSO-->
+    <div class="modal fade" id="modalEliminarCurso" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header bg-danger">
+                    <h5 class="modal-title">Eliminar Compra</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="" id="formDeletCompra">
+                        <span class="" id="idDeletCompra"></span>
+                        <p>¿Usted esta seguro que desea eliminar la compra de la fecha <strong id="deletFechaCompra"></strong>? 
+                        realizada al proveedor: <strong id="deletProveedorCompra"></strong></p>
+                        <br>
+                        <div class="form-check">
+                            <label class="form-check-label text-danger">
+                                <input type="checkbox" class="form-check-input" value="" id="checkConfirmar">Solo se podra eliminar si existe stock de productos
+                            </label>
+                        </div>
+                        <!-- <span class="text-danger">* Solo se podra eliminar si no existe ningun alimno registado el grupo-curso</span> -->
+                        <div class="text-center my-3">
+                            <input type="submit" class="btn btn-primary" value="Eliminar" id="btnEliminarCompra" disabled>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
     <!-- MODAL PARA AGREGAR pRODUCTO-->
-    <div class="modal fade" id="modalAgregarProducto" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <!-- <div class="modal fade" id="modalAgregarProducto" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header bg-info">
@@ -252,11 +286,12 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
 </body>
 <!-- <link rel="stylesheet" href="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.min.css"> -->
 <!-- <script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script> -->
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="js/compras.js"></script>
 </html>

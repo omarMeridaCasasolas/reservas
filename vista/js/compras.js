@@ -8,15 +8,52 @@ $(document).ready(function () {
     $("#tablaDeProductos tbody").on('click','button.addProductoPedido',function () {
         let dataProducto = tablaDeProductos.row( $(this).parents('tr') ).data();
         tablaDeProductos.row( $(this).parents('tr') ).remove().draw();
-        $("#contenedorInput").append("<div class='row my-1 filaItem' id='fila_"+dataProducto.id_producto+"'>"+
+        $("#contenedorInput").append("<div class='row no-gutters my-1 filaItem p-1' id='fila_"+dataProducto.id_producto+"'>"+
                                         "<span id='preciosProducto"+dataProducto.id_producto+"' class='d-none'>"+JSON.stringify(dataProducto)+"</span>"+
                                         "<div class='col-4'>"+dataProducto.nombre_producto+" "+tieneDescripcion(dataProducto.descripcion_producto)+"</div>"+
-                                        "<div class='col-3'><input type='text' value='1' name='IdCant_"+dataProducto.id_producto+"' id='IdCant_"+dataProducto.id_producto+"' class='form-control cantProductoSolicitado p-1' style='width:100%;'></div>"+
-                                        "<div class='col-3'><input type='text' value='"+dataProducto.precio_venta+"' name='subTotalProducto_"+dataProducto.id_producto+"' id='subTotalProducto_"+dataProducto.id_producto+"' class='form-control actualSubtotal p-1 text-center' disabled style='width:100%;'></div>"+
+                                        "<div class='col-2'><input type='text' value='1' name='IdCant_"+dataProducto.id_producto+"' id='IdCant_"+dataProducto.id_producto+"' class='form-control cantProductoSolicitado p-1' style='width:100%;'></div>"+
+                                        "<div class='col-2'><input type='number' value='1.00' min='0.0' step='0.01' name='IdPrecio_"+dataProducto.id_producto+"' id='IdPrecio_"+dataProducto.id_producto+"' class='form-control precioCompraProducto p-1' style='width:100%;'></div>"+
+                                        "<div class='col-2 text-center' style='font-size:16px;'><span id='precioUnidad_"+dataProducto.id_producto+"'>1</span><span> Bs</span></div>"+
                                         "<div class='col-2 text-center'><button type='button' class='btnDeletePedido btn btn-sm btn-danger' id='btnID_"+dataProducto.id_producto+"'><i class='far fa-window-close'></i></button></div>"+
                                     "</div>");
         listaDeProductosPedido.push(dataProducto);
         calcularTotalAcumalado();
+    });
+
+    $('#contenedorInput').on('keyup','input.precioCompraProducto', function(e) {
+        e.preventDefault();
+        let precioCompra = parseFloat($(this).val());
+        let param = this.id.split('_');
+        let idProd = param[1];
+        let precioTmp = $("#"+this.id).val();
+        if(precioTmp.match(/^[0-9.]+$/)){
+            $("#"+this.id).css('color','#000');
+            let totalCompraProducto =  precioCompra / parseInt($("#IdCant_"+idProd).val());
+            $("#precioUnidad_"+idProd).html(totalCompraProducto.toFixed(2));
+            calcularTotalAcumalado();
+        }else{
+            $("#"+this.id).css('color','#F00');
+            $('#subTotalProducto_'+idProd).val("Error");
+            $("#IdTotalPedido").val("Error");
+        }
+    });
+
+    $('#contenedorInput').on('keyup','input.cantProductoSolicitado', function(e) {
+        e.preventDefault();
+        let cantidad = parseInt($(this).val());
+        let param = this.id.split('_');
+        let idProd = param[1];
+        let precioTmp = $("#"+this.id).val();
+        if(precioTmp.match(/^[0-9]+$/)){
+            $("#"+this.id).css('color','#000');
+            let totalCompraProducto =  parseFloat( $("#IdPrecio_"+idProd).val() ) / cantidad ;
+            $("#precioUnidad_"+idProd).html(totalCompraProducto.toFixed(2));
+            calcularTotalAcumalado();
+        }else{
+            $("#"+this.id).css('color','#F00');
+            $('#subTotalProducto_'+idProd).val("Error");
+            $("#IdTotalPedido").val("Error");
+        }
     });
 
     $('#contenedorInput').on('click','button.btnDeletePedido ', function(e) {
@@ -28,31 +65,8 @@ $(document).ready(function () {
         calcularTotalAcumalado();
     });
 
-    $('#contenedorInput').on('keyup','input.cantProductoSolicitado', function(e) {
-        let param = this.id.split('_');
-        let idProd = param[1];
-        let precioTmp = $("#"+this.id).val();
-        if(precioTmp.match(/^[0-9]+$/)){
-            console.log('es un numero');
-            $("#"+this.id).css('color','#000');
-            calcularPrecioProducto(precioTmp,idProd);
-            calcularTotalAcumalado();
-        }else{
-            $("#"+this.id).css('color','#F00');
-            $('#subTotalProducto_'+idProd).val("Error");
-            $("#IdTotalPedido").val("Error");
-        }
-    });
 
-
-    // $(document).on('keyup', '.select2-search__field', function (e) {
-    //     if (e.which === 13) {
-    //         console.log($(".select2-search__field").val());
-            
-    //     }
-    // });
-
-    $(document).on('click','button.addProveedorNuevo ', function() {
+    $(document).on('click','button.addProveedorNuevo', function() {
         // e.preventDefault();
         let proveedor = $(".select2-search__field").val();
         console.log(proveedor);
@@ -67,16 +81,60 @@ $(document).ready(function () {
         }
     });
 
-    // $(".addProveedorNuevo").click(function (e) { 
-    //     e.preventDefault();
-    //     console.log($(".select2-search__field").val());
-    // });
 
     // EVENTO UNA VES QUE SE ESCONDIO MODAL 
     $('#myModal').on('hidden.bs.modal', function () {
         $("#mensajeProveedor").empty();
         // console.log("Se escondio modal");
     });
+
+    $("#formAddCompra").submit(function (e) { 
+        e.preventDefault();
+        let formData = new FormData($(this)[0]);
+        // for (var pair of formData.entries()) {
+        //     console.log(pair[0]+ ', ' + pair[1]); 
+        // }
+        $('#myModal').modal('hide');
+        $.ajax({
+            url: "../controlador/c_crearCompra.php",
+            type: 'POST',
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function (data, textStatus, jqXHR) {
+                // console.log(data);
+                if(data == "1"){
+                    tablaCompra.ajax.reload();
+                    tablaDeProductos.ajax.reload();
+					// $('#formAddCurso')[0].reset();
+                    Swal.fire('Exito!!','Se ha registrado la compra','success');
+                }else{
+                    Swal.fire('Error!!',response,'error');
+                }
+            }
+        });
+    });
+
+    // ELIMINAR COMPRA 
+    $("#checkConfirmar").change(function (e) { 
+        e.preventDefault();
+        if($("#checkConfirmar").is(':checked')){
+            $('#btnEliminarCompra').prop("disabled", false)
+        }
+        else{
+            $('#btnEliminarCompra').prop("disabled", true); 
+        }
+    });
+
+    $("#tablaCompra tbody").on('click','button.eliminarCompra',function (e) {
+        e.preventDefault();
+        let dataCompra = tablaCompra.row( $(this).parents('tr') ).data();
+        $("#idDeletCompra").html(dataCompra.id_compra);
+        $("#deletProveedorCompra").html(dataCompra.nombre_proveedor);
+        $("#deletFechaCompra").html(dataCompra.fecha_compra);
+    });
+
+
 });
 
 function agregarRapidoProveedor(nombre,numero){
@@ -90,9 +148,9 @@ function agregarRapidoProveedor(nombre,numero){
             if(Number.isInteger(num1)){
                 let data = {id:num1, text: nombre+' - '+numero};
                 var newOption = new Option(data.text, data.id, false, false);
-                $('#addPedidoTienda').append(newOption).trigger('change');
-                $('#addPedidoTienda').val(data.id).trigger('change');
-                // $('#addPedidoTienda').select2({ minimumResultsForSearch: -1 });
+                $('#addCompraProveedor').append(newOption).trigger('change');
+                $('#addCompraProveedor').val(data.id).trigger('change');
+                // $('#addCompraProveedor').select2({ minimumResultsForSearch: -1 });
                 $("#mensajeProveedor").append(`<div class="alert alert-success alert-dismissible">
                             <button type="button" class="close" data-dismiss="alert">&times;</button>
                             <strong>Exito!</strong> Se agrego a un nuevo proveedor.
@@ -119,9 +177,9 @@ function agregarRapidoProveedorNombre(nombre){
             if(Number.isInteger(num1)){
                 let data = {id:num1, text: nombre};
                 var newOption = new Option(data.text, data.id, false, false);
-                $('#addPedidoTienda').append(newOption).trigger('change');
-                $('#addPedidoTienda').val(data.id).trigger('change');
-                // $('#addPedidoTienda').select2({ minimumResultsForSearch: -1 });
+                $('#addCompraProveedor').append(newOption).trigger('change');
+                $('#addCompraProveedor').val(data.id).trigger('change');
+                // $('#addCompraProveedor').select2({ minimumResultsForSearch: -1 });
                 $("#mensajeProveedor").append(`<div class="alert alert-success alert-dismissible">
                             <button type="button" class="close" data-dismiss="alert">&times;</button>
                             <strong>Exito!</strong> Se agrego a un nuevo proveedor.
@@ -158,7 +216,7 @@ function obtenerTablaProductos(){
         columns:[
             {data: "nombre_producto"},
             {data: "descripcion_producto"},
-            {data: "precio_venta"},
+            {data: "stock_producto"},
             {data: null,
                 defaultContent:
                   "<button type='button' class='addProductoPedido btn btn-warning btn-sm'><i class='fas fa-shopping-cart'></i></button>",
@@ -177,15 +235,15 @@ function getListaProveedores(){
             console.log(response);
             let arregloProveedores = response.data;
             // let listaClientes = JSON.parse(response);
-            // $("#addPedidoTienda").empty();
+            // $("#addCompraProveedor").empty();
             // $("#editPedidoTienda").empty();
-            // $("#addPedidoTienda").append("<option value=''>Ninguno</option>");
+            // $("#addCompraProveedor").append("<option value=''>Ninguno</option>");
             // $("#editPedidoTienda").append("<option value=''>Ninguno</option>");
             arregloProveedores.forEach(element => {
-                $("#addPedidoTienda").append("<option value='"+element.id_proveedor+"'>"+element.nombre_proveedor+" - "+element.telefono_proveedor+"</option>");
+                $("#addCompraProveedor").append("<option value='"+element.id_proveedor+"'>"+element.nombre_proveedor+" - "+element.telefono_proveedor+"</option>");
                 // $("#editPedidoTienda").append("<option value='"+element.id_cliente+"'>"+element.nombre_cliente+" - "+element.ci_cliente+"</option>");
             });
-            $('#addPedidoTienda').select2({
+            $('#addCompraProveedor').select2({
                 "language": {
                     "noResults": function(){
                         // return "Provvedor no encontrado <a href='#' class='btn btn-sm btn-primary addProveedorNuevo'>  Agregar proveedor</a>";
@@ -203,7 +261,7 @@ function getListaProveedores(){
 
 function calcularTotalAcumalado(){
     let totalFinal = 0;
-    $(".actualSubtotal").each(function() {
+    $(".precioCompraProducto").each(function() {
         totalFinal +=  parseFloat($(this).val());
     });
     $("#IdTotalPedido").val(totalFinal.toFixed(2));
@@ -230,7 +288,7 @@ function buscarProductoAddTabla(id){
     }
 }
 
-function calcularPrecioProducto(cantidad,idProducto){
+function calcularPrecioPorUnidad(cantidad,idProducto){
     let tmp = $('#preciosProducto'+idProducto).html();
     let objetoTmp  = JSON.parse(tmp);
     let subtotal = cantidad*objetoTmp.precio_venta;
@@ -280,6 +338,7 @@ function getlistaVentas(){
 			data: { metodo: "getlistaCompras"},
 		},
 		columns: [
+            { data: "id_compra", width:"5%" },
 			{ data: "fecha_compra", width: "15%" },
             { data: "nombre_proveedor", width: "20%" },
 			{ data: "cantidad", width: "15%" },
@@ -287,7 +346,7 @@ function getlistaVentas(){
 			{ data: null,
 				defaultContent:
 				"<button type='button' class='editProducto btn btn-warning btn-sm' data-toggle='modal' data-target='#myModal'><i class='fas fa-edit'></i></button> "+
-				"<button type='button' class='estadoEmpleado btn btn-danger btn-sm' data-toggle='modal' data-target='#myModal3'><i class='fas fa-sync'></i></button>",
+				"<button type='button' class='eliminarCompra btn btn-danger btn-sm' data-toggle='modal' data-target='#modalEliminarCurso'><i class='fas fa-trash'></i></button>",
 				width: "10%"
 			}
 		]

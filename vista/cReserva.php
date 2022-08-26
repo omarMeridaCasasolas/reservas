@@ -150,6 +150,7 @@
                         </div>
                     </div>
                     <hr>
+                    <div class="text-center"><span id="mensajeReserva30min" class='d-none alert alert-warning'>No se puede reserva solo por 30 minutos</span></div>
                     <form action="" id="formReservar">
                         <div class="form-group">
                             <label for="">Tipo de reserva</label>

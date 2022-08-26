@@ -12,6 +12,8 @@ var semanaCompleta = new Array();
 var idReserva;
 var dataFormularioDeportivo;
 var listaIdReserva = new Array();
+
+let listaEventos = new Array();
 $(document).ready(function () {
     calendarioReserva($("#fechaReserva").val());
     getListaClientes();
@@ -51,11 +53,13 @@ $(document).ready(function () {
 
     $("#hrLimiteReserva").change(function (e) { 
         e.preventDefault();
-        let idPrecio = $("#hrLimiteReserva").val();
-        console.log(idPrecio);
-        let datos = idPrecio.split('_');
-        let precio = datos[datos.length-1];
-        $("#precioCostoReserva").val(precio);
+        if($("#tipoReserva").val() == "Juego Deportivo"){
+            let idPrecio = $("#hrLimiteReserva").val();
+            console.log(idPrecio);
+            let datos = idPrecio.split('_');
+            let precio = datos[datos.length-1];
+            $("#precioCostoReserva").val(precio);
+        }
     });
 
     $("#tipoReserva").change(function (e) { 
@@ -112,23 +116,16 @@ $(document).ready(function () {
         }else{
             realizarReservaEvento(idCliente,costoReserva,pagoDigital,pagoEfectivo,reserva);
         }
-        // $.ajax({
-        //     type: "POST",
-        //     url: "../controlador/c_reserva.php",
-        //     data: {metodo:"agregarReserva",cliente,reserva},
-        //     dataType: "JSON",
-        //     success: function (response) {
-        //         console.log(response);
-        //         if(response == "1"){
-        //             $("#idRsv_"+reserva).removeClass("btn-success");
-        //             $("#idRsv_"+reserva).removeClass("btnDisponible");
-        //             $("#idRsv_"+reserva).addClass("btn-warning");
-        //             $("#idRsv_"+reserva).addClass("btnReservado");
-        //             $("#idRsv_"+reserva).html("Reservado");
-        //         }
-        //         $('#modalDisponble').modal('hide');
-        //     }
-        // });
+    });
+
+    $("#nombreEventoModelo").change(function (e) { 
+        e.preventDefault();
+        let id = $("#nombreEventoModelo").val();
+        console.log(id);
+        let evento = listaEventos.find(e => e.id_modelo_evento == id);
+        $("#precioCostoReserva").val(evento.precio_aprox);
+        // console.log($("#nombreEventoModelo option:selected" ).text());
+
     });
 });
 
@@ -374,7 +371,7 @@ function listadeEventos(){
         dataType: "JSON",
         success: function (response) {
             console.log(response);
-            let listaEventos = response.data;
+            listaEventos = response.data;
             listaEventos.forEach(element => {
                 $("#nombreEventoModelo").append(`<option value="${element.id_modelo_evento}">${element.nombre_modelo_evento} - ${element.precio_aprox}</option>`);
             });
@@ -406,6 +403,8 @@ function rellenarHorario(nombreDia, horaDia){
                                 addOpciones +=`<option value="option_${element.id_reserva}_${precioTotal}">${element.hora_limite} -Tiempo ${ minutosAHoras(tiempo)}</option>`
                             }
                             tiempo += 30;
+                        }else{
+                            bandera = false;
                         }
                     }
                 }
@@ -414,6 +413,15 @@ function rellenarHorario(nombreDia, horaDia){
     }
     // console.log(addOpciones);
     $("#hrLimiteReserva").append(addOpciones);
+    let cantOpciones  = $('#hrLimiteReserva option').length;
+    // console.log(cantOpciones);
+    if(cantOpciones == 0){
+        $('#mensajeReserva30min').removeClass('d-none');
+        $("#formReservar").addClass('d-none');
+    }else{
+        $('#mensajeReserva30min').addClass('d-none');
+        $('#formReservar').removeClass('d-none');
+    }
 }
 
 function minutosAHoras(totalMinutes) {
@@ -438,7 +446,7 @@ function realizarReservaJuegoDeportivo(idCliente,costoReserva,pagoDigital,pagoEf
         data: {metodo: "reservaPorJuegoDeportivo",idCliente,costoReserva,pagoDigital,pagoEfectivo,reservaInicio,reservaFinal: datos[1]},
         // dataType: "JSON",
         success: function (response) {
-            console.log(response);
+            // console.log(response);
             if(response == 'true'){
                 $('#modalDisponble').modal('hide');
                 calendarioReserva($("#fechaReserva").val());
