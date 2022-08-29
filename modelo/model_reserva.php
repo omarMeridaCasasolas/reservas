@@ -53,7 +53,21 @@
             }else{
                 return "Error de obtenr reserva";
             }
-            // return json_encode($respuesta[0], JSON_PRETTY_PRINT);
+        }
+
+        public function getReservaEdit($idReserva){
+            $sql = "SELECT id_reserva, dia_reserva, id_cancha, id_empleado, id_cliente, fecha_reserva, dia_reserva, precio_hora, TIME_FORMAT(hora_reserva, '%H:%i') as hora_reserva, pago_digital, 
+            pago_efectivo, costo_reserva, estado_reserva, id_curso, id_evento, tipo_reserva, TIME_FORMAT(hora_limite, '%H:%i') as hora_limite , 
+            identificador_reserva FROM reserva WHERE identificador_reserva = (SELECT identificador_reserva FROM reserva WHERE id_reserva = :id);";
+            $sentenceSQL = $this->connexion_bd->prepare($sql);
+            $res = $sentenceSQL->execute(array(":id"=>$idReserva));
+            $respuesta = $sentenceSQL->fetchAll(PDO::FETCH_ASSOC);
+            $sentenceSQL->closeCursor();
+            if(count($respuesta) >= 1){
+                return $respuesta;
+            }else{
+                return "Error de obtenr reserva";
+            }
         }
 
         public function agregarReserva($idReserva,$idCliente){
@@ -100,6 +114,31 @@
             return json_encode($res, JSON_PRETTY_PRINT);
         }
 
+        public function reservaPorJuegoDeportivoEdit($idCliente,$costoReserva,$pagoDigital,$pagoEfectivo,$reservaInicio,$reservaFinal,$ident,$fechaAnteriorReserva){
+            $sql = "CALL reservaPorJuegoDeportivoEdit(:idCliente,:costoReserva,:pagoDigital,:pagoEfectivo,:reservaInicio,:reservaFinal,:ident,:fechaAnterior)";
+            $sentenceSQL = $this->connexion_bd->prepare($sql);
+            $res = $sentenceSQL->execute(array(":idCliente"=>$idCliente,":costoReserva"=>$costoReserva,":pagoDigital"=>$pagoDigital,
+            ":pagoEfectivo"=>$pagoEfectivo,":reservaInicio"=>$reservaInicio,":reservaFinal"=>$reservaFinal,":ident"=>$ident,":fechaAnterior"=>$fechaAnteriorReserva));
+            $sentenceSQL->closeCursor();
+            return json_encode($res, JSON_PRETTY_PRINT);
+        }
+
+        public function eliminarReserva($fechaAnteriorReserva){
+            $sql = "CALL reservaEliminar(:fechaAnterior)";
+            $sentenceSQL = $this->connexion_bd->prepare($sql);
+            $res = $sentenceSQL->execute(array(":fechaAnterior"=>$fechaAnteriorReserva));
+            $sentenceSQL->closeCursor();
+            return json_encode($res, JSON_PRETTY_PRINT);
+        }
+
+        public function habilitarReserva($id){
+            $sql = "UPDATE reserva SET id_cliente = NULL, estado_reserva = 'disponible', tipo_reserva = NULL , pago_efectivo = NULL, pago_digital = NULL, costo_reserva = NULL,
+            identificador_reserva = NULL WHERE id_reserva = :id ;";
+            $sentenceSQL = $this->connexion_bd->prepare($sql);
+            $res = $sentenceSQL->execute(array(":id"=>$id));
+            $sentenceSQL->closeCursor();
+            return json_encode($res, JSON_PRETTY_PRINT);
+        }
     } 
 
 ?>

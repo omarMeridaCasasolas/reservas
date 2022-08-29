@@ -31,6 +31,28 @@
             $sentenceSQL->closeCursor();
             return json_encode($respuesta, JSON_PRETTY_PRINT);
         }
+
+        public function agregarVenta($fecha, $total, $idCliente,$idEmpleado){
+            $sql = "INSERT INTO venta (fecha_venta, total_venta, id_cliente, id_empleado) VALUES(:fecha,:total,:cliente,:empleado);";
+            $sentenceSQL = $this->connexion_bd->prepare($sql);
+            $res = $sentenceSQL->execute(array(":fecha"=>$fecha,":total"=>$total,":cliente"=>$idCliente,":empleado"=>$idEmpleado));
+            if($res == 1 || $res == true){
+                $res = $this->connexion_bd->lastInsertId();
+                $string = preg_replace("/[\r\n|\n|\r]+/", PHP_EOL, $res);
+                $sentenceSQL->closeCursor();
+                return $string;
+            }else{
+                $sentenceSQL->closeCursor();
+                return $res;
+            }
+        }
+
+        public function agregarDetalleVenta($idVenta,$idProducto,$cantidad,$precio){
+            $sql = "CALL agregarDetalleVenta(:compra, :product, :cant, :precio)";
+            $sentenceSQL = $this->connexion_bd->prepare($sql);
+            $res = $sentenceSQL->execute(array(":compra"=>$idVenta,":product"=>$idProducto,":cant"=>intval($cantidad),":precio"=>$precio));
+            return $res;
+        }
     } 
 
 ?>

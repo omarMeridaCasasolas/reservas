@@ -27,6 +27,13 @@ $(document).ready(function () {
         $("#pagoDepositado").html(parseFloat(pagoDigital)+ parseFloat(pagoEfectivo));
     });
 
+    $(".pagosEdit").change(function (e) { 
+        e.preventDefault();
+        let pagoDigital = $("#pagoEditDigital").val();
+        let pagoEfectivo = $("#pagoEditEfectivo").val();
+        $("#pagoEditDepositado").html(parseFloat(pagoDigital)+ parseFloat(pagoEfectivo));
+    });
+
     // convertirHoraToNumber();
 
     $("#fechaReserva").change(function (e) { 
@@ -35,10 +42,10 @@ $(document).ready(function () {
         calendarioReserva($("#fechaReserva").val());
     });
     
-    $("#myTable").on('click','button.btnCerrado',function (e) {
-		e.preventDefault();
-        console.log("Se ha hecho click en cerrado");
-    });
+    // $("#myTable").on('click','button.btnCerrado',function (e) {
+	// 	e.preventDefault();
+    //     console.log("Se ha hecho click en cerrado");
+    // });
 
     $("#cajaIntervalo .form-check-input").change(function (e) { 
         e.preventDefault();
@@ -62,10 +69,20 @@ $(document).ready(function () {
         }
     });
 
+    $("#hrLimiteEditReserva").change(function (e) { 
+        e.preventDefault();
+        if($("#tipoEditReserva").val() == "Juego Deportivo"){
+            let idPrecio = $("#hrLimiteEditReserva").val();
+            console.log(idPrecio);
+            let datos = idPrecio.split('_');
+            let precio = datos[datos.length-1];
+            $("#precioCostoEditReserva").val(precio);
+        }
+    });
+
     $("#tipoReserva").change(function (e) { 
         e.preventDefault();
         let tipo = $("#tipoReserva").val();
-        console.log(tipo);
         if(tipo == "Juego Deportivo"){
             $("#cajaListaEvento").addClass('d-none');
         }else{
@@ -127,6 +144,172 @@ $(document).ready(function () {
         // console.log($("#nombreEventoModelo option:selected" ).text());
 
     });
+
+
+    // EDITAR RESEVA 
+    $("#myTable").on('click','button.btnReservado',function (e) {
+		e.preventDefault();
+        let aux = this.id;
+        let arreglo = aux.split('_');
+        if(arreglo.length >= 2){
+            $("#idReservaActual").html(arreglo[1]);
+            $.ajax({
+                type: "POST",
+                url: "../controlador/c_reserva.php",
+                data: {metodo:"getReservaEdit", reserva :arreglo[1]},
+                dataType: "JSON",
+                success: function (response) {
+                    console.log(response);
+                    $("#idEditReservaActual").html(response[0].id_reserva);
+                    $("#detalleEditFecha").html(response[0].fecha_reserva);
+                    $("#detalleEditDia").html(response[0].dia_reserva);
+                    $("#detalleEditHora").html(response[0].hora_reserva);
+                    $("#detalleEditPrecio").html(response[0].precio_hora);
+                    $("#nombreEditCliente").val(response[0].id_cliente).trigger('change');
+                    $("#precioCostoEditReserva").val(response[0].costo_reserva);
+                    $("#pagoEditDigital").val(response[0].pago_digital);
+                    $("#pagoEditEfectivo").val(response[0].pago_efectivo);
+                    $("#pagoEditDepositado").html(parseFloat(response[0].pago_digital)+ parseFloat(response[0].pago_efectivo));
+
+                    $("#idEditFechaReserva").html(response[0].identificador_reserva);
+
+                    $("#precioCostoEditReserva").attr("placeholder", response[0].costo_reserva);
+                    $("#pagoEditDigital").attr("placeholder", response[0].pago_digital);
+                    $("#pagoEditEfectivo").attr("placeholder", response[0].pago_efectivo);
+
+                    if(response[0].tipo_preserva == 'Deportivo'){
+                        $("#tipoEditReserva").val("Juego Deportivo");
+                    }else{
+                        if(response[0].tipo_preserva == 'Evento'){
+                            $("#tipoEditReserva").val("Evento");
+                        }else{
+
+                        }
+                    }
+                    rellenarHorarioEdit(response[0].dia_reserva,response[0].hora_reserva);
+                    total = 0;
+                    response.forEach(element => {
+                        total += parseInt(element.precio_hora);
+                    });
+                    console.log("option_"+response[response.length-1].id_reserva+"_"+total);
+                    $("#hrLimiteEditReserva").val("option_"+response[response.length-1].id_reserva+"_"+total);
+                    
+                    // rellenarHorario(response.dia_reserva,response.hora_reserva);
+                }
+            });
+        }else{
+            console.log("No es numero");
+        }
+        // let fecha = 
+    });
+
+    $("#btnActulizarReserva").click(function (e) { 
+        e.preventDefault();
+        
+        let reserva = $("#idEditReservaActual").html();
+        let fechaAnteriorReserva = $("#idEditFechaReserva").html();
+        console.log();
+        if($("#btnActulizarReserva").val() == "Actualizar"){
+            let idCliente = $("#nombreEditCliente").val();
+            let pagoDigital = $("#pagoEditDigital").val();
+            let pagoEfectivo = $("#pagoEditEfectivo").val();
+            let costoReserva = $("#precioCostoEditReserva").val();
+            let tipoReserva = $("#tipoEditReserva").val();
+            if(tipoReserva == "Juego Deportivo"){
+                // $(selector).addClass(className);
+                realizarEditReservaJuegoDeportivo(idCliente,costoReserva,pagoDigital,pagoEfectivo,reserva,fechaAnteriorReserva);
+            }else{
+                realizarReservaEvento(idCliente,costoReserva,pagoDigital,pagoEfectivo,reserva);
+            }
+        }else{
+            eliminarReserva(fechaAnteriorReserva);
+        }
+    });
+
+    // $("#formReservarEdit").submit(function (e) {
+    //     e.preventDefault();
+        // console.log("click desde submit");
+        // let idCliente = $("#nombreEditCliente").val();
+        // let pagoDigital = $("#pagoEditDigital").val();
+        // let pagoEfectivo = $("#pagoEditEfectivo").val();
+        // let costoReserva = $("#precioCostoEditReserva").val();
+        // let reserva = $("#idEditReservaActual").html();
+        // // console.log(cliente);
+        // let tipoReserva = $("#tipoEditReserva").val();
+        // if(tipoReserva == "Juego Deportivo"){
+        //     // $(selector).addClass(className);
+        //     realizarEditReservaJuegoDeportivo(idCliente,costoReserva,pagoDigital,pagoEfectivo,reserva);
+        // }else{
+        //     realizarReservaEvento(idCliente,costoReserva,pagoDigital,pagoEfectivo,reserva);
+        // }
+    // });
+
+    // ACIONES (EDITAR - ELIMINAR)
+    $("#switch1").change(function (e) { 
+        e.preventDefault();
+        if($(this).is(":checked")) {
+            $("#headerEditar").removeClass('bg-warning');
+            $("#headerEditar").addClass('bg-danger');
+            $("#headerEditar > .modal-title").html('Eliminar reserva');
+            $("#btnActulizarReserva").val("Eliminar");
+            
+            $("#msjEliminar").removeClass('d-none');
+            
+        }else{
+            $("#headerEditar").removeClass('bg-danger');
+            $("#headerEditar").addClass('bg-warning');
+            $("#headerEditar > .modal-title").html('Actualizar reserva');
+            $("#btnActulizarReserva").val("Actualizar");
+
+            $("#msjEliminar").addClass('d-none');
+        }
+    });
+
+    $("#myTable").on('click','button.btnCerrado',function (e) {
+		e.preventDefault();
+        let aux = this.id;
+        console.log(aux);
+        let arreglo = aux.split('_');
+        if(arreglo.length >= 2){
+            $("#idHabilitarReservaActual").html(arreglo[1]);
+            $.ajax({
+                type: "POST",
+                url: "../controlador/c_reserva.php",
+                data: {metodo:"getReserva", reserva :arreglo[1]},
+                dataType: "JSON",
+                success: function (response) {
+                    console.log(response);
+                    // $("#idHabilitarReservaActual").html(response.id_reserva);
+                    $("#detalleHabilitarFecha").html(response.fecha_reserva);
+                    $("#detalleHabilitarDia").html(response.dia_reserva);
+                    $("#detalleHabilitarHora").html(response.hora_reserva);
+                    $("#detalleHabilitarPrecio").html(response.precio_hora);
+                }
+            });
+        }else{
+            console.log("No es numero");
+        }
+    });    
+
+    $("#formReservarHabilitar").submit(function (e) { 
+        e.preventDefault();
+        // console.log($("#idHabilitarReservaActual").html());
+        $.ajax({
+            type: "POST",
+            url: "../controlador/c_reserva.php",
+            data: {metodo:"habilitarReserva",reserva: $("#idHabilitarReservaActual").html()},
+            success: function (response) {
+                // console.log(response);
+                if(response == 'true'){
+                    $('#modalNoDisponble').modal('hide');
+                    calendarioReserva($("#fechaReserva").val());
+                    Swal.fire('Exito!!','Se ha habilitado horario para futuras reservas','success');
+                }else{
+                    Swal.fire('Error!!',response,'error');
+                }
+            }
+        });
+    });
 });
 
 function getListaClientes(){
@@ -136,11 +319,12 @@ function getListaClientes(){
         data: {metodo:"getListaClientes"},
         dataType: "JSON",
         success: function (response) {
-            // console.log(response);
             response.forEach(element => {
                 $("#nombreCliente").append(`<option value=${element.id_cliente}>${element.nombre_cliente} `+tieneCarnet(element.ci_cliente)+`</option>`);
+                $("#nombreEditCliente").append(`<option value=${element.id_cliente}>${element.nombre_cliente} `+tieneCarnet(element.ci_cliente)+`</option>`);
             });
             $('#nombreCliente').select2();
+            $('#nombreEditCliente').select2();
         }
     });
 }
@@ -250,17 +434,15 @@ function buscarReserva(tmp){
         let diaNombre = diaReserva[i];    
         for (let j = 0; j < semanaCompleta.length; j++) {   //semana completa lleva los diferentes array de Lunes, martes, miercoles
             let myArray = semanaCompleta[j];
-            // console.log(myArray);
             if(myArray[0].dia_reserva == diaNombre){
-                // console.log()
                 let aux = myArray.find(e => e.hora_reserva == hora);
                 if(aux.estado_reserva == "mantenimiento"){
-                    res += `<td><button type='button' class='btn btn-sm btn-info btnCerrado' data-toggle='modal' data-target='#modalNoDisponble'>Revision</button></td>`;
+                    res += `<td ><button type='button' class='btn btn-sm btn-info btnCerrado' data-toggle='modal' data-target='#modalNoDisponble' id='idRsv_${aux.id_reserva}'>Revision</button></td>`;
                 }else{
                     if(aux.estado_reserva == "disponible"){
                         res += `<td><button type='button' class='btn btn-sm btn-success btnDisponible' data-toggle='modal' data-target='#modalDisponble' id='idRsv_${aux.id_reserva}'>Disponible</button></td>`;
                     }else{
-                        res += `<td><button type='button' class='btn btn-sm btn-warning btnReservado' id='idRsv_${aux.id_reserva}'>Reservado</button></td>`;
+                        res += `<td><button type='button' class='btn btn-sm btn-warning btnReservado' id='idRsv_${aux.id_reserva}' data-toggle='modal' data-target='#modalReservado'>Reservado</button></td>`;
                     }
                 }
             }
@@ -282,12 +464,12 @@ function buscarReservaMedia(tmp){
             if(myArray[0].dia_reserva == diaNombre){
                 let aux = myArray.find(e => e.hora_reserva == hora);
                 if(aux.estado_reserva == "mantenimiento"){
-                    res += `<td><button type='button' class='btn btn-sm btn-info btnCerrado' data-toggle='modal' data-target='#modalNoDisponble'>Revision</button></td>`;
+                    res += `<td><button type='button' class='btn btn-sm btn-info btnCerrado' data-toggle='modal' data-target='#modalNoDisponble' id='idRsv_${aux.id_reserva}'>Revision</button></td>`;
                 }else{
                     if(aux.estado_reserva == "disponible"){
                         res += `<td><button type='button' class='btn btn-sm btn-success btnDisponible' data-toggle='modal' data-target='#modalDisponble' id='idRsv_${aux.id_reserva}'>Disponible</button></td>`;
                     }else{
-                        res += `<td><button type='button' class='btn btn-sm btn-warning btnReservado' id='idRsv_${aux.id_reserva}'>Reservado</button></td>`;
+                        res += `<td><button type='button' class='btn btn-sm btn-warning btnReservado' id='idRsv_${aux.id_reserva}' data-toggle='modal' data-target='#modalReservado'>Reservado</button></td>`;
                     }
                 }
             }
@@ -298,7 +480,6 @@ function buscarReservaMedia(tmp){
 }
 
 function crearFormularioJuegoDeportivo(){
-    console.log(dataFormularioDeportivo);
     let id = $("#idReservaActual").html();
     $.ajax({
         type: "POST",
@@ -349,7 +530,6 @@ function crearFormularioJuegoDeportivo(){
 function buscarElemento(arrayActual, horaReserva){
     for (let i = 0; i < arrayActual.length; i++) {
         let element = arrayActual[i];
-        // console.log(element.hora_reserva+"<---->"+horaReserva);
         if(element.hora_reserva == horaReserva){
             return element;
         }
@@ -381,7 +561,6 @@ function listadeEventos(){
 }
 
 function rellenarHorario(nombreDia, horaDia){
-    // console.log(nombreDia+"<--->"+horaDia);
     $("#hrLimiteReserva").empty();
     let bandera = true;
     let addOpciones = '';
@@ -411,10 +590,55 @@ function rellenarHorario(nombreDia, horaDia){
             }
         }
     }
-    // console.log(addOpciones);
     $("#hrLimiteReserva").append(addOpciones);
     let cantOpciones  = $('#hrLimiteReserva option').length;
-    // console.log(cantOpciones);
+    if(cantOpciones == 0){
+        $('#mensajeReserva30min').removeClass('d-none');
+        $("#formReservar").addClass('d-none');
+    }else{
+        $('#mensajeReserva30min').addClass('d-none');
+        $('#formReservar').removeClass('d-none');
+    }
+}
+
+
+function rellenarHorarioEdit(nombreDia, horaDia){
+    // console.log(nombreDia+"<--->"+horaDia);
+    $("#hrLimiteEditReserva").empty();
+    let bandera = true;
+    let addOpciones = '';
+    let precioTotal = 0;
+    for (let index = 0; index < semanaCompleta.length && bandera; index++) {
+        let arraySemana = semanaCompleta[index];
+        if(arraySemana[0].dia_reserva == nombreDia){
+            for (let i = 0; i < arraySemana.length && bandera; i++) {
+                let dia = arraySemana[i];
+                // console.log(dia);
+                if(dia.hora_reserva == horaDia ){
+                    let tiempo = 30;
+                    for (let j = i; j < arraySemana.length && bandera; j++) {
+                        let element = arraySemana[j];
+                        // console.log(element);
+                        let aux1 = 'reservado';
+                        if(element.estado_reserva == aux1 || element.estado_reserva == 'disponible'){
+                            if(element.estado_reserva == 'disponible'){
+                                aux1 = 'disponible';
+                            }
+                            precioTotal += parseInt(element.precio_hora);
+                            if( j != i){
+                                addOpciones +=`<option value="option_${element.id_reserva}_${precioTotal}">${element.hora_limite} -Tiempo ${ minutosAHoras(tiempo)}</option>`
+                            }
+                            tiempo += 30;
+                        }else{
+                            bandera = false;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    $("#hrLimiteEditReserva").append(addOpciones);
+    let cantOpciones  = $('#hrLimiteEditReserva option').length;
     if(cantOpciones == 0){
         $('#mensajeReserva30min').removeClass('d-none');
         $("#formReservar").addClass('d-none');
@@ -460,4 +684,46 @@ function realizarReservaJuegoDeportivo(idCliente,costoReserva,pagoDigital,pagoEf
 
 function realizarReservaEvento(idCliente,costoReserva,pagoDigital,pagoEfectivo,reserva){
     
+}
+
+function realizarEditReservaJuegoDeportivo(idCliente,costoReserva,pagoDigital,pagoEfectivo,reservaInicio,fechaAnteriorReserva){
+    console.log("hola");
+    let tmp = $("#hrLimiteEditReserva").val();
+    datos = tmp.split('_');
+    console.log(datos[1]);
+    $.ajax({
+        type: "POST",
+        url: "../controlador/c_reserva.php",
+        data: {metodo: "reservaPorJuegoDeportivoEdit",idCliente,costoReserva,pagoDigital,pagoEfectivo,reservaInicio,reservaFinal: datos[1],fechaAnteriorReserva},
+        // dataType: "JSON",
+        success: function (response) {
+            console.log(response);
+            if(response == 'true'){
+                $('#modalReservado').modal('hide');
+                calendarioReserva($("#fechaReserva").val());
+                Swal.fire('Exito!!','Se ha actualizado la reserva','success');
+            }else{
+                Swal.fire('Error!!',response,'error');
+            }
+        }
+    });
+}
+
+function eliminarReserva(fechaAnteriorReserva){
+    $.ajax({
+        type: "POST",
+        url: "../controlador/c_reserva.php",
+        data: {metodo:"eliminarReserva",fechaAnteriorReserva},
+        // dataType: "dataType",
+        success: function (response) {
+            console.log(response);
+            if(response == 'true'){
+                $('#modalReservado').modal('hide');
+                calendarioReserva($("#fechaReserva").val());
+                Swal.fire('Exito!!','Se ha eliminado la reserva','success');
+            }else{
+                Swal.fire('Error!!',response,'error');
+            }
+        }
+    });
 }

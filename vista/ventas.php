@@ -71,6 +71,9 @@
                     <a class="nav-link" href="cursos.php">Cursos</a>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link" href="pagoCurso.php"></i>Pagos curso</a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link" href="alumnos.php">Alumnos</a>
                 </li>
                 <li class="nav-item">
@@ -120,15 +123,16 @@
                     </div>
                     <!-- Modal body -->
                     <div class="modal-body">
-                        <form id="formAddPedido" autocomplete="off">
-                            <select class="my-2" id="addPedidoTienda" name='addPedidoTienda' required style="width:100%;">
+                        <form id="formAddVenta" autocomplete="off">
+                            <select class="my-2" id="addClientaVenta" name='addClientaVenta' required style="width:100%;">
                             </select>
                             <hr>
                             <div id="contenedorInput" style="font-size: 13px;">
-                                <div class="row">
+                                <div class="row text-center">
                                     <div class="col-4"><strong>Producto</strong></div>
-                                    <div class="col-3"><strong>Cant.</strong></div>
-                                    <div class="col-3"><strong>Tot.</strong></div>
+                                    <div class="col-2"><strong>Cant.</strong></div>
+                                    <div class="col-2"><strong>Bs.</strong></div>
+                                    <div class="col-2"><strong>Tot.</strong></div>
                                     <div class="col-2 text-center"><strong>Elim.</strong></div>
                                 </div>
                             </div>
@@ -146,6 +150,7 @@
                                         <th>Producto</th>
                                         <th>Desc.</th>
                                         <th>Bs.</th>
+                                        <th>Stock.</th>
                                         <th>Opc.</th>
                                     </tr>
                                 </thead>
@@ -252,5 +257,6 @@
 <!-- <script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script> -->
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="js/ventas.js"></script>
 </html>

@@ -70,6 +70,12 @@
                 <li class="nav-item">
                     <a class="nav-link" href="compras.php">Compras</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="cursos.php">Cursos</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="pagoCurso.php"></i>Pagos curso</a>
+                </li>
                 <li class="nav-item active">
                     <a class="nav-link" href="alumnos.php"><i class="fas fa-eye"></i> Alumnos</a>
                 </li>

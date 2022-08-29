@@ -13,6 +13,7 @@
             $res = $usuario->getUsuario($user,$pass);
             // $res = json_decode($aux);
             if(count($res) == 1){
+                $_SESSION['id_empleado'] = $res[0]['id_empleado'];
                 $_SESSION['usuario'] = $res[0]['usuario_empleado'];
                 $_SESSION['pass'] = $res[0]['pass_empleado'];
                 $_SESSION['nombre'] = $res[0]['nombre_empleado'];

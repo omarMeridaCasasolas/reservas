@@ -8,11 +8,12 @@ $(document).ready(function () {
     $("#tablaDeProductos tbody").on('click','button.addProductoPedido',function () {
         let dataProducto = tablaDeProductos.row( $(this).parents('tr') ).data();
         tablaDeProductos.row( $(this).parents('tr') ).remove().draw();
-        $("#contenedorInput").append("<div class='row my-1 filaItem' id='fila_"+dataProducto.id_producto+"'>"+
+        $("#contenedorInput").append("<div class='row my-1 no-gutters filaItem' id='fila_"+dataProducto.id_producto+"'>"+
                                         "<span id='preciosProducto"+dataProducto.id_producto+"' class='d-none'>"+JSON.stringify(dataProducto)+"</span>"+
                                         "<div class='col-4'>"+dataProducto.nombre_producto+" "+tieneDescripcion(dataProducto.descripcion_producto)+"</div>"+
-                                        "<div class='col-3'><input type='text' value='1' name='IdCant_"+dataProducto.id_producto+"' id='IdCant_"+dataProducto.id_producto+"' class='form-control cantProductoSolicitado p-1' style='width:100%;'></div>"+
-                                        "<div class='col-3'><input type='text' value='"+dataProducto.precio_venta+"' name='subTotalProducto_"+dataProducto.id_producto+"' id='subTotalProducto_"+dataProducto.id_producto+"' class='form-control actualSubtotal p-1 text-center' disabled style='width:100%;'></div>"+
+                                        "<div class='col-2'><input type='number' value='1'  required step='1' max='"+dataProducto.stock_producto+"' name='IdCant_"+dataProducto.id_producto+"' id='IdCant_"+dataProducto.id_producto+"' class='form-control cantProductoSolicitado p-1' style='width:100%;'></div>"+
+                                        "<div class='col-2 text-center' style='font-size:16px;'><span id='precioUnidad_"+dataProducto.id_producto+"'>"+dataProducto.precio_venta+"</span><span> Bs</span></div>"+
+                                        "<div class='col-2'><input type='text' required value='"+dataProducto.precio_venta+"' name='subTotalProducto_"+dataProducto.id_producto+"' id='subTotalProducto_"+dataProducto.id_producto+"' class='form-control actualSubtotal p-1 text-center' disabled style='width:100%;'></div>"+
                                         "<div class='col-2 text-center'><button type='button' class='btnDeletePedido btn btn-sm btn-danger' id='btnID_"+dataProducto.id_producto+"'><i class='far fa-window-close'></i></button></div>"+
                                     "</div>");
         listaDeProductosPedido.push(dataProducto);
@@ -28,7 +29,7 @@ $(document).ready(function () {
         calcularTotalAcumalado();
     });
 
-    $('#contenedorInput').on('keyup','input.cantProductoSolicitado', function(e) {
+    $('#contenedorInput').on('change','input.cantProductoSolicitado', function(e) {
         let param = this.id.split('_');
         let idProd = param[1];
         let precioTmp = $("#"+this.id).val();
@@ -57,21 +58,55 @@ function obtenerTablaProductos(){
             dataSrc: function ( json ) {
                 //Make your callback here.
                 // alert("Done!");
-                console.log(json.data);
+                // console.log(json.data);
                 // listaPermanenteItem = {};
                 listaPermanenteItem = json.data;
                 return json.data;
             }   
         },
         columns:[
-            {data: "nombre_producto"},
-            {data: "descripcion_producto"},
-            {data: "precio_venta"},
+            {data: "nombre_producto", width: "35%" },
+            {data: "descripcion_producto", width: "30%" },
+            {data: "precio_venta", width: "10%" },
+            {data: "stock_producto", width: "15%" },
             {data: null,
                 defaultContent:
                   "<button type='button' class='addProductoPedido btn btn-warning btn-sm'><i class='fas fa-shopping-cart'></i></button>",
+                width: "10%" 
             }
         ]
+    });
+
+    // REALIZAR UNA VENTA 
+    $("#formAddVenta").submit(function (e) { 
+        e.preventDefault();
+        // $(".actualSubtotal").removeAttr("");
+        $('.actualSubtotal').prop("disabled", false);
+        $('#IdTotalPedido').prop("disabled", false);
+        let formData = new FormData($(this)[0]);
+        for (var pair of formData.entries()) {
+            console.log(pair[0]+ ', ' + pair[1]); 
+        }
+        $('.actualSubtotal').prop("disabled", true);
+        $('#IdTotalPedido').prop("disabled", true);
+        $.ajax({
+            url: "../controlador/c_crearVenta.php",
+            type: 'POST',
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function (data) {
+                // console.log(data);
+                if(data == "1"){
+                    tablaVenta.ajax.reload();
+                    tablaDeProductos.ajax.reload();
+					// $('#formAddCurso')[0].reset();
+                    Swal.fire('Exito!!','Se ha registrado la venta','success');
+                }else{
+                    Swal.fire('Error!!',response,'error');
+                }
+            }
+        });
     });
 }
 
@@ -82,17 +117,16 @@ function getlistaTiendasPedido(){
         data: {metodo:'getListaClientes'},
         dataType: "JSON",
         success: function (response) {
-            console.log(response);
             // let listaClientes = JSON.parse(response);
-            // $("#addPedidoTienda").empty();
+            // $("#addClientaVenta").empty();
             // $("#editPedidoTienda").empty();
-            // $("#addPedidoTienda").append("<option value=''>Ninguno</option>");
+            // $("#addClientaVenta").append("<option value=''>Ninguno</option>");
             // $("#editPedidoTienda").append("<option value=''>Ninguno</option>");
             response.forEach(element => {
-                $("#addPedidoTienda").append("<option value='"+element.id_cliente+"'>"+element.nombre_cliente+" - "+element.ci_cliente+"</option>");
+                $("#addClientaVenta").append("<option value='"+element.id_cliente+"'>"+element.nombre_cliente+" - "+element.ci_cliente+"</option>");
                 // $("#editPedidoTienda").append("<option value='"+element.id_cliente+"'>"+element.nombre_cliente+" - "+element.ci_cliente+"</option>");
             });
-            $('#addPedidoTienda').select2();
+            $('#addClientaVenta').select2();
             // $('#editPedidoTienda').select2();
         }
     });

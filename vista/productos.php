@@ -74,6 +74,9 @@
                     <a class="nav-link" href="cursos.php">Cursos</a>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link" href="pagoCurso.php"></i>Pagos curso</a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link" href="alumnos.php">Alumnos</a>
                 </li>
                 <li class="nav-item">

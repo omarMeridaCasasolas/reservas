@@ -88,6 +88,9 @@
                     <a class="nav-link" href="cursos.php"><i class="fas fa-eye"></i>Cursos</a>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link" href="pagoCurso.php"></i>Pagos curso</a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link" href="alumnos.php">Alumnos</a>
                 </li>
                 <li class="nav-item">
@@ -385,7 +388,7 @@
                         <select id="listaAlumnosInscritos" name='listaAlumnosInscritos' style="width:100%;" multiple ></select>
                         <br>
                         <br>
-                        <span class="" id="editAlumnoCurso"></span>
+                        <span id="editAlumnoCurso" class='d-none'></span>
                         <div class="form-group row p-1">
                             <div class="col-sm-6 form-group" >
                                 <label for="" class="text-danger">Alumnos inscritos</label>

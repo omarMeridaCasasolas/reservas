@@ -50,7 +50,7 @@
         <div class="collapse navbar-collapse" id="collapsibleNavbar">
             <ul class="navbar-nav p-2">
                 <li class="nav-item active">
-                    <a class="nav-link" href="cReserva.php"><i class="fas fa-eye"></i> Reserva</a>
+                    <a class="nav-link" href="cReserva.php"> Reserva</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="ventas.php">Ventas</a>
@@ -72,8 +72,8 @@
                 <li class="nav-item">
                     <a class="nav-link" href="cursos.php">Cursos</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="pagoCurso.php"></i>Pagos curso</a>
+                <li class="nav-item active">
+                    <a class="nav-link" href="pagoCurso.php"><i class="fas fa-eye"></i>Pagos curso</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="alumnos.php">Alumnos</a>
@@ -89,37 +89,28 @@
         </div>
     </nav>
     <main class="container border shadow p-2 mb-4 mx-auto my-2 bg-white" style="min-height: 650px;">
-        <h1 class="text-center p-2">Reservas</h1>
-        <div class="row">
-            <div class="col-sm-8 form-group">
-                <input type="date" name="" id="fechaReserva" class="form-control" min="2022-07-29" max="2022-08-29" value=<?php echo date('Y-m-d');?>>
-            </div>
-            <div class="col-sm-4 form-group" id="cajaIntervalo">
-                <h6>Vista en intervalos:</h6>
-                <div class="form-check">
-                    <label class="form-check-label">
-                        <input type="radio" class="form-check-input" name="radioIntervalo" value="60" checked>60 minutos
-                    </label>
-                </div>
-                <div class="form-check">
-                    <label class="form-check-label">
-                        <input type="radio" class="form-check-input" name="radioIntervalo" value="30">30 minutos
-                    </label>
-                </div>
+        <h1 class="text-center p-2 text-primary">Pago por curso</h1>
+        <div class="row mx-auto">
+            <div class="mx-auto">
+                <select name="" id="selectGrupo"></select>
             </div>
         </div>
-        <div class="table-responsive">
+        <br>
+        <hr>
+        <div>
+            <button class="btn btn-success" data-toggle='modal' data-target='#modalAgregarProveedor'>Inscribir alumno</button>
+        </div>
+        <br>
+        <div class="table-responsive" id="contTabla">
             <table class="table table-sm table-bordered text-center table-hover" id="myTable">
                 <thead>
                     <tr class="bg-dark text-white">
-                        <th>Horario</th>
-                        <th>Lunes</th>
-                        <th>Martes</th>
-                        <th>Miercoles</th>
-                        <th>Jueves</th>
-                        <th>Viernes</th>
-                        <th>Sabado</th>
-                        <th>Domingo</th>
+                        <th>Nombre</th>
+                        <th>1er mes</th>
+                        <th>2do mes</th>
+                        <th>3er Mes</th>
+                        <th>4to mes</th>
+                        <th>opciones</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -334,5 +325,5 @@
 <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
 
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<script src="js/cReserva.js"></script>
+<script src="js/pagoCurso.js"></script>
 </html>
