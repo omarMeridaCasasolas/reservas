@@ -18,7 +18,7 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.min.css">
     <script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
-    <title>Productos</title>
+    <title>Clientes</title>
     <style>
         body{
             font-family: 'Poppins', sans-serif;
@@ -97,7 +97,10 @@
         <div>
             <button class="btn btn-success" data-toggle='modal' data-target='#modalAgregarCliente'>Agregar cliente</button>
         </div>
-        <br>
+        <!-- <br>
+        <button type='button' class='btn btn-success buttons-excel buttons-html5'>Excel</button>
+        <button type='button' class='btn btn-danger buttons-pdf buttons-html5' id="btnGeneratePDF">PDF</button>
+        <br> -->
         <br>
         <div class="table-responsive">
             <table id="tablaCliente" class="table compact bordered table-hover" style="width:100%">
@@ -130,22 +133,90 @@
                 <div class="modal-body">
                     <form action="" id="formAddCliente">
                         <div class="row">
-                            <div class="col-sm-7">
+                            <div class="col-sm-7 form-group">
                                 <label for="">Nombre:</label>
                                 <input type="text" name="" id="nomCliente" class="form-control">
                             </div>
-                            <div class="col-sm-5">
+                            <div class="col-sm-5 form-group">
                                 <label for="">Carnet:</label>
                                 <input type="text" name="" id="ciCliente" class="form-control">
                             </div>
                             <br>
-                            <div class="col-sm-7">
+                            <div class="col-sm-7 form-group">
                                 <label for="">Numero:</label>
                                 <input type="text" name="" id="numCliente" class="form-control">
                             </div>  
                         </div>
-                        <div class="text-center my-3">
+                        <div class="text-center">
                             <input type="submit" class="btn btn-primary" value="Agregar">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- EDITAR CLIENTE  -->
+    <div class="modal fade" id="modalEditarCliente" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header bg-warning">
+                    <h5 class="modal-title">Editar cliente</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <span id="idEditCliente" class='d-none'></span>
+                    <form action="" id="formEditCliente">
+                        <div class="row">
+                            <div class="col-sm-7 form-group">
+                                <label for="">Nombre:</label>
+                                <input type="text" id="nomEditCliente" class="form-control">
+                            </div>
+                            <div class="col-sm-5 form-group">
+                                <label for="">Carnet:</label>
+                                <input type="text" id="ciEditCliente" class="form-control">
+                            </div>
+                            <br>
+                            <div class="col-sm-7 form-group">
+                                <label for="">Numero:</label>
+                                <input type="text" id="numEditCliente" class="form-control">
+                            </div>  
+                        </div>
+                        <div class="text-center">
+                            <input type="submit" class="btn btn-primary" value="Agregar">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL PARA ELIMINAR CLIENTE  -->
+    <div class="modal fade" id="modalEliminarCliente" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header bg-danger">
+                    <h5 class="modal-title">Eliminar cliente</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <span id="idEliminarCliente" class='d-none'></span>
+                    <form action="" id="formEliminarCliente">
+                        <div class="form-check">
+                            <label class="form-check-label">
+                                <input type="checkbox" class="form-check-input" value="" id="checkConfirmacion"> ¿Usted esta de acuerdo con eliminar 
+                                al cliente <strong id='nomEliminarCliente'></strong> siempre y cuando no haya ninguna compra?
+                            </label>
+                        </div>
+                        <br>
+                        <div class="text-center">
+                            <input type="submit" class="btn btn-primary" value="Eliminar" disabled id="btnEliminarCliente">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
                         </div>
                     </form>
@@ -157,5 +228,16 @@
 <!-- <link rel="stylesheet" href="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.min.css"> -->
 <!-- <script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script> -->
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<script src="https://cdn.datatables.net/buttons/2.2.3/js/dataTables.buttons.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.2.3/js/buttons.html5.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.2.3/js/buttons.print.min.js"></script>
+
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js" integrity="sha512-qZvrmS2ekKPF2mSznTQsxqPgnpkI4DNTlrdUmTzrDgektczlKNRRhy5X5AAOnx5S09ydFYWWNSfcEqDTTHgtNA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.25/jspdf.plugin.autotable.min.js" integrity="sha512-SgWewGM3r8xXm8LNXt4ZHqKVKu/7eKrJ1aBCbMaX44xXXaCcIvCAvD2kj9qnC1lhyjAu04mcPiTzcc/CaACnUQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> -->
+
 <script src="js/clientes.js"></script>
 </html>

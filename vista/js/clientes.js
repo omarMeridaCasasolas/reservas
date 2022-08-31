@@ -1,6 +1,17 @@
 var tablaCliente;
 $(document).ready(function () {
     getListaClientes(); 
+
+	$("#checkConfirmacion").change(function (e) { 
+		e.preventDefault();
+		let res = $('#checkConfirmacion').is(':checked');
+		if(res){
+			$('#btnEliminarCliente').prop("disabled", false);
+		}else{
+			$('#btnEliminarCliente').prop("disabled", true);
+		}
+	});
+
     $("#formAddCliente").submit(function (e) { 
         e.preventDefault();
         let nombre = $("#nomCliente").val();
@@ -24,11 +35,74 @@ $(document).ready(function () {
             }
         });
     });
+
+	// EDITAR CLIENTE 
+	$("#tablaCliente tbody").on('click','button.editCliente',function () {
+		let datosCliente = tablaCliente.row( $(this).parents('tr') ).data();
+        $("#idEditCliente").html(datosCliente.id_cliente);
+        $("#nomEditCliente").val(datosCliente.nombre_cliente);
+		$("#numEditCliente").val(datosCliente.celular_cliente);
+        $("#ciEditCliente").val(datosCliente.ci_cliente);
+    });
+
+	$("#formEditCliente").submit(function (e) { 
+		e.preventDefault();
+		let id = $("#idEditCliente").html();
+		let nombreCliente = $("#nomEditCliente").val();
+		let celCliente = $("#numEditCliente").val();
+		let ciCliente = $("#ciEditCliente").val(); 
+		$('#modalEditarCliente').modal('hide');
+		$.ajax({
+			type: "POST",
+			url: "../controlador/c_cliente.php",
+			data: {metodo:'actualizarCliente',nombreCliente,celCliente,ciCliente,id},
+			dataType: "JSON",
+			success: function (response) {
+				if(response == "1"){
+                    tablaCliente.ajax.reload();
+					$('#formEditCliente')[0].reset();
+                    Swal.fire('Exito!!','Se ha actualizado los datos del cliente','success');
+                }else{
+                    Swal.fire('Error!!',response,'error');
+                }
+			}
+		});
+	});
+
+	// ELIMINAR CLIENTE 
+	$("#tablaCliente tbody").on('click','button.eliminarCliente',function () {
+		let datosCliente = tablaCliente.row( $(this).parents('tr') ).data();
+        $("#idEliminarCliente").html(datosCliente.id_cliente);
+        $("#nomEliminarCliente").html(datosCliente.nombre_cliente);
+    });
+
+	$("#formEliminarCliente").submit(function (e) { 
+		e.preventDefault();
+		$('#modalEliminarCliente').modal('hide');
+		$.ajax({
+			type: "POST",
+			url: "../controlador/c_cliente.php",
+			data: {metodo:"eliminarCliente",id:$("#idEliminarCliente").html()},
+			dataType: "JSON",
+			success: function (response) {
+				// console.log(response);
+				if(response == "1"){
+					$('#checkConfirmacion').prop('checked', false);
+					$('#btnEliminarCliente').prop("disabled", true);
+                    tablaCliente.ajax.reload();
+                    Swal.fire('Exito!!','Se ha eliminado al cliente '+$("#nomEliminarCliente").html(),'success');
+                }else{
+                    Swal.fire('Error!!',response,'error');
+                }
+			}
+		});
+	});
 });
 
 function getListaClientes(){
     $('#tablaCliente').dataTable().fnDestroy();
 	tablaCliente = $("#tablaCliente").DataTable({
+		"pageLength": 50,
 		responsive: true,
 		"order": [[ 0, "desc" ]],
 		language: {
@@ -74,10 +148,51 @@ function getListaClientes(){
 			{ data: "ci_cliente", width: "10%" },
 			{ data: null,
 				defaultContent:
-				"<button type='button' class='editProducto btn btn-warning btn-sm' data-toggle='modal' data-target='#myModal'><i class='fas fa-edit'></i></button> "+
-				"<button type='button' class='estadoEmpleado btn btn-danger btn-sm' data-toggle='modal' data-target='#myModal3'><i class='fas fa-sync'></i></button>",
+				"<button type='button' class='editCliente btn btn-warning btn-sm' data-toggle='modal' data-target='#modalEditarCliente'><i class='fas fa-edit'></i></button> "+
+				"<button type='button' class='eliminarCliente btn btn-danger btn-sm' data-toggle='modal' data-target='#modalEliminarCliente'><i class='fas fa-trash'></i></button>",
 				width: "10%"
 			}
-		]
+		],
+		dom: 'Blfrtip',
+        buttons: [
+			{ 	extend: 'copy',
+				className: 'btn btn-info  mb-3', 
+				text:      '<i class="fa fa-copy"></i> Copiar',
+                titleAttr: 'Copy',
+				exportOptions: {
+                    columns: [ 0, 1, 2, 3 ]
+                }
+			},
+			{ 	extend: 'csv', 
+				className: 'btn btn-warning  mb-3',
+				text:      '<i class="fas fa-file-csv"></i> CSV',
+                titleAttr: 'csv',
+				exportOptions: {
+                    columns: [ 0, 1, 2, 3 ]
+                } 
+			},
+			{ 	extend: 'excel', 
+				className: 'btn btn-success mb-3',
+				text:      '<i class="fas fa-file-excel"></i> Excel',
+                titleAttr: 'Excel',
+				exportOptions: {
+                    columns: [ 0, 1, 2, 3 ]
+                } 
+			},
+			{ 	extend: 'pdf', 
+				className: 'btn btn-danger  mb-3',
+				text:      '<i class="fas fa-file-pdf"></i> PDF',
+                titleAttr: 'PDF',
+				alignment: 'center',
+				exportOptions: {
+                    columns: [ 0, 1, 2, 3 ]
+                },
+				customize: function (doc) {
+					// doc.content[1].table.widths = Array(doc.content[1].table.body[0].length + 1).join('*').split('');
+					doc.content[1].table.widths =Array(doc.content[1].table.body[0].length + 1).join('*').split('');
+    				doc.defaultStyle.alignment = 'center';
+				} 
+			}
+        ]
 	});
 }

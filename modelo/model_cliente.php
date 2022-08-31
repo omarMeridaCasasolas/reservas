@@ -37,6 +37,22 @@
             $sentenceSQL->closeCursor();
             return $res;
         }
+
+        public function actualizarCliente($nombre,$ci,$numero,$id){
+            $sql = "UPDATE cliente set nombre_cliente = :nom, ci_cliente = :ci, celular_cliente = :num WHERE id_cliente = :id;";
+            $sentenceSQL = $this->connexion_bd->prepare($sql);
+            $res = $sentenceSQL->execute(array(":nom"=>$nombre,":ci"=>$ci,":num"=>$numero,":id"=>$id));
+            $sentenceSQL->closeCursor();
+            return $res;
+        }
+
+        public function eliminarCliente($id){
+            $sql = "DELETE FROM cliente WHERE id_cliente = :id;";
+            $sentenceSQL = $this->connexion_bd->prepare($sql);
+            $res = $sentenceSQL->execute(array(":id"=>$id));
+            $sentenceSQL->closeCursor();
+            return $res;
+        }
     } 
 
 ?>

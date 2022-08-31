@@ -31,11 +31,25 @@
                 }else{
                     $res = "Error de autentificacion";
                 }
-                break; 
-            // case 'eliminarPublicacion':
-            //     $idPublicacion = $_REQUEST['idPublicacion'];
-            //     $res = $publicacion->eliminarPublicacion($idPublicacion);
-            //     break; 
+                break;
+            case 'actualizarCliente':
+                if(isset($_SESSION['usuario']) && ($_SESSION['tipo_empleado'] == 'Administrador' || $_SESSION['tipo_empleado'] == 'Tecnico')){
+                    $id =  trim($_REQUEST['id']);
+                    $nombre =  trim($_REQUEST['nombreCliente']); 
+                    $ci =  trim($_REQUEST['ciCliente']);
+                    $numero =  trim($_REQUEST['celCliente']);
+                    $res = $cliente->actualizarCliente($nombre,$ci,$numero,$id);
+                }else{
+                    $res = "Error de autentificacion";
+                }
+                break;   
+            case 'eliminarCliente':
+                if(isset($_SESSION['usuario']) && ($_SESSION['tipo_empleado'] == 'Administrador' || $_SESSION['tipo_empleado'] == 'Tecnico')){
+                    $id =  trim($_REQUEST['id']);
+                    $res = $cliente->eliminarCliente($id);
+                }else{
+                    $res = "Error de autentificacion";
+                }
             default:
                 # code...
                 break;

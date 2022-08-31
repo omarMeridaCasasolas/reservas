@@ -98,95 +98,70 @@
         <br>
         <hr>
         <div>
-            <button class="btn btn-success" data-toggle='modal' data-target='#modalAgregarProveedor'>Inscribir alumno</button>
+            <button class="btn btn-success" data-toggle='modal' data-target='#modalAgregarAlumnoCurso'>Inscribir alumno</button>
         </div>
         <br>
         <div class="table-responsive" id="contTabla">
-            <table class="table table-sm table-bordered text-center table-hover" id="myTable">
+            <table class="table table-sm table-bordered text-center" id="myTable">
                 <thead>
                     <tr class="bg-dark text-white">
-                        <th>Nombre</th>
+                        <!-- <th>Nombre</th>
                         <th>1er mes</th>
                         <th>2do mes</th>
                         <th>3er Mes</th>
                         <th>4to mes</th>
-                        <th>opciones</th>
+                        <th>opciones</th> -->
                     </tr>
                 </thead>
                 <tbody>
+                    <tr>
+
+                    </tr>
                 </tbody>
             </table>
         </div>
     </main>
-    <!-- MODAL PARA RESERVAR  -->
-    <div class="modal fade" id="modalDisponble" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <!-- MODAL PARA AGREGAR ALUMNO CURSO  -->
+    <div class="modal fade" id="modalAgregarAlumnoCurso" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header bg-success">
-                    <h5 class="modal-title">Reservar cancha</h5>
+                    <h5 class="modal-title">Inscribir alumno</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
-                    <span id="idReservaActual" class="d-none"></span>
-                    <div class="row">
-                        <div class="col-sm-6">
-                            <span>Fecha: <strong id="detalleFecha"></strong></span>
-                        </div>
-                        <div class="col-sm-6">
-                            <span>Dia: <strong id="detalleDia"></strong></span>
-                        </div>
-                        <div class="col-sm-6">
-                            <span>Hora Inicio: <strong id="detalleHora"></strong></span>
-                        </div>
-                        <div class="col-sm-6">
-                            <span>Precio 30min: <strong id="detallePrecio"></strong></span>
-                        </div>
-                    </div>
-                    <hr>
-                    <div class="text-center"><span id="mensajeReserva30min" class='d-none alert alert-warning'>No se puede reserva solo por 30 minutos</span></div>
-                    <form action="" id="formReservar">
-                        <div class="form-group">
-                            <label for="">Tipo de reserva</label>
-                            <select name="" id="tipoReserva" class="form-control">
-                                <option value="Juego Deportivo">Juego Deportivo</option>
-                                <option value="Evento">Evento</option>
-                            </select>
-                        </div>
-                        <select name="" id="nombreCliente" style="width:100%" required></select>
-                        <br>
-                        <div id="cajaListaEvento" class="d-none">
-                            <br>
-                            <select name="" id="nombreEventoModelo" style="width:100%" required></select>
-                            <br>
+                    <form action="" id="formAddAlumnoGrupo">
+                        <div>
+                            <label for="">Selecione alumno</label>
+                            <select name="" id="listasAddAlumno" style="width:100%;" required></select>
                         </div>
                         <br>
-                        <div class="row">
-                            <div class="col-sm-6 form-group">
-                                <label for="">Hora limite</label>
-                                <select name="hrLimiteReserva" id="hrLimiteReserva" class="form-control"></select>
+                        <div class='row'>
+                            <div class="form-group col-sm-7">
+                                <label for="">Grupo</label>
+                                <select name="" id="listasAddGrupo" required class='form-control'></select>
                             </div>
-                            <div class="col-sm-6 form-group">
-                                <label for="">Costo:</label>
-                                <input type="text" id="precioCostoReserva" class="form-control" value="170">
+                            <div class="form-group col-sm-5">
+                                <label for="">Inscripcion</label>
+                                <input type="date" name="" required id="fechaAddInscripcion" class='form-control' disabled value="<?php echo date('Y-m-d');?>">
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-sm-6 form-group">
-                                <label for="">Pago digital</label>
-                                <input type="number" value="0" id="pagoDigital" class="form-control pagos">
-                            </div>
-                            <div class="col-sm-6 form-group">
+                        <div class='row'>
+                            <div class="col-6 form-group">
                                 <label for="">Pago efectivo</label>
-                                <input type="number" value="0" id="pagoEfectivo" class="form-control pagos">
+                                <input type="number" name="" id="pagoAddEfectico" class="form-control pagoAdd" value='0.00' required >
+                            </div>
+                            <div class="col-6 form-group">
+                                <label for="">Pago digital</label>
+                                <input type="number" name="" id="pagoAddDigital" class="form-control pagoAdd" value='0.00' required >
                             </div>
                         </div>
-                        <div class="text-right">
-                            <strong>Total <span id="pagoDepositado">X</span></strong>
-                        </div> 
+                        <strong>Pago Total: <span id="totalPagadoInscripcion"></span></strong>
+                        <br>
                         <div class="text-center">
-                            <input type="submit" value="Reservar" class="btn btn-primary">
+                            <input type="submit" value="Agreagr" class="btn btn-primary">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
                         </div>
                     </form>
@@ -196,80 +171,62 @@
     </div>
 
     <!-- MODAL EDITAR RESERVA  -->
-    <div class="modal fade" id="modalReservado" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal fade" id="modalPagoEstudiante" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
-                <div class="modal-header bg-warning" id="headerEditar">
-                    <h5 class="modal-title">Editar reserva</h5>
+                <div class="modal-header bg-info" id="headerEditar">
+                    <h5 class="modal-title">Pago estudiante</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
-                    <div class="custom-control custom-switch">
-                        <input type="checkbox" class="custom-control-input" id="switch1" name="example" value="x">
-                        <label class="custom-control-label" for="switch1">Acciones</label>
-                    </div>
-                    <span id="idEditReservaActual" class="d-none"></span>
-                    <span id="idEditFechaReserva" class="d-none"></span>
+                    <span id="idCursoAlumno" class="d-none"></span>
                     <div class="row">
-                        <div class="col-sm-6">
-                            <span>Fecha: <strong id="detalleEditFecha"></strong></span>
+                        <div class="col-sm-8">
+                            <span>Nombre: <strong id="detalleNombre"></strong></span>
                         </div>
-                        <div class="col-sm-6">
-                            <span>Dia: <strong id="detalleEditDia"></strong></span>
+                        <div class="col-sm-4">
+                            <span>Precio: <strong id="precioCursoMes"></strong></span>
                         </div>
-                        <div class="col-sm-6">
-                            <span>Hora Inicio: <strong id="detalleEditHora"></strong></span>
+                        <div class="col-sm-8">
+                            <span>Fecha Inscripcion: <strong id="fechaInscripcionGrupo"></strong></span>
                         </div>
-                        <div class="col-sm-6">
-                            <span>Precio 30min: <strong id="detalleEditPrecio"></strong></span>
+                        <div class="col-sm-4">
+                            <span>Pago: <strong id="detallePagoTotal"></strong></span>
                         </div>
+                    </div>
+                    <br>
+                    <h6 class='text-danger text-center'>Pagos realizados</h6>
+                    <div class="cajaRegistroPagos" class='table-responsive'>
+                        <table class='table compact bordered' id='tablaPagosAlumno'>
+                            <thead>
+                                <tr>
+                                    <th>Fecha</th>
+                                    <th>Digital</th>
+                                    <th>Efectivo</th>
+                                    <th>Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                            </tbody>
+                        </table>
                     </div>
                     <hr>
-                    <div class="text-center"><span id="mensajeReserva30min" class='d-none alert alert-warning'>No se puede reserva solo por 30 minutos</span></div>
                     <form id="formReservarEdit">
-                        <div class="form-group">
-                            <label for="">Tipo de reserva</label>
-                            <select name="" id="tipoEditReserva" class="form-control">
-                                <option value="Juego Deportivo">Juego Deportivo</option>
-                                <option value="Evento">Evento</option>
-                            </select>
-                        </div>
-                        <select name="" id="nombreEditCliente" style="width:100%" required></select>
-                        <br>
-                        <div id="cajaListaEditEvento" class="d-none">
-                            <br>
-                            <select name="" id="nombreEventoModelo" style="width:100%" required></select>
-                            <br>
-                        </div>
-                        <br>
                         <div class="row">
-                            <div class="col-sm-6 form-group">
-                                <label for="">Hora limite</label>
-                                <select name="hrLimiteEditReserva" id="hrLimiteEditReserva" class="form-control"></select>
+                            <div class="col-6 form-group">
+                                <label for="">Pago Efectivo</label>
+                                <input type="number" name="" id="pagoAlumnoEfectivo" class='form-control pagoAlumno' required>
                             </div>
-                            <div class="col-sm-6 form-group">
-                                <label for="">Costo:</label>
-                                <input type="text" id="precioCostoEditReserva" class="form-control" value="170">
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-sm-6 form-group">
-                                <label for="">Pago digital</label>
-                                <input type="number" value="0" id="pagoEditDigital" class="form-control pagosEdit">
-                            </div>
-                            <div class="col-sm-6 form-group">
-                                <label for="">Pago efectivo</label>
-                                <input type="number" value="0" id="pagoEditEfectivo" class="form-control pagosEdit">
+                            <div class="col-6 form-group">
+                                <label for="">Pago digital(qr) </label>
+                                <input type="number" name="" id="pagoAlumnoDigital" class='form-control pagoAlumno' required>
                             </div>
                         </div>
-                        <div class="text-right">
-                            <strong>Total <span id="pagoEditDepositado">X</span></strong>
-                        </div>
-                        <span class="text-danger d-none" id="msjEliminar">Usted esta seguro de querer eliminar la reserva??<br></span> 
                         <div class="text-center">
-                            <input type="submit" value="Actualizar" class="btn btn-primary" id="btnActulizarReserva">
+                            <input type="submit" value="Actualizar" class="btn btn-primary">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
                         </div>
                     </form>
@@ -278,38 +235,30 @@
         </div>
     </div>          
 
-    <!-- MODAL PARA HABILITAR HORARIO  -->
-    <div class="modal fade" id="modalNoDisponble" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <!-- MODAL PARA ELIMINAR ALUMNO -->
+    <div class="modal fade" id="modalEliminarAlumnoGrupo" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
-                <div class="modal-header bg-info">
-                    <h5 class="modal-title">Habilitar horario</h5>
+                <div class="modal-header bg-danger">
+                    <h5 class="modal-title">Eliminar alumno del curso</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
-                    <span id="idHabilitarReservaActual" class="d-none"></span>
-                    <div class="row">
-                        <div class="col-sm-6">
-                            <span>Fecha: <strong id="detalleHabilitarFecha"></strong></span>
+                    <span id="idDeletGestion" class="d-none"></span> 
+                    <!-- <span id="idDeletAlumno" class="d-none"></span> -->
+                    <form id="formDeleteAlumnoGrupo">
+                        <div class="form-check">
+                            <label class="form-check-label">
+                                <input type="checkbox" class="form-check-input" value="" id="msjConfirmacion"> ¿Usted esta seguro de querer eliminar al alumno
+                                <strong id='delNombreAlumno'></strong> del grupo-curso de <strong id='delNombreGrupo'></strong>? 
+                            </label>
                         </div>
-                        <div class="col-sm-6">
-                            <span>Dia: <strong id="detalleHabilitarDia"></strong></span>
-                        </div>
-                        <div class="col-sm-6">
-                            <span>Hora Inicio: <strong id="detalleHabilitarHora"></strong></span>
-                        </div>
-                        <div class="col-sm-6">
-                            <span>Precio 30min: <strong id="detalleHabilitarPrecio"></strong></span>
-                        </div>
-                    </div>
-                    <hr>
-                    <div class="text-center"><span id="mensajeReserva30min" class='d-none alert alert-warning'>No se puede reserva solo por 30 minutos</span></div>
-                    <form id="formReservarHabilitar">
-                        <p>¿Usted esta deacuerdo con disponer este horario para una futura reserva? </p>
+                        <br>
+                        <!-- <p>¿Usted esta deacuerdo con disponer este horario para una futura reserva? </p> -->
                         <div class="text-center">
-                            <input type="submit" value="Habilitar" class="btn btn-primary">
+                            <input type="submit" value="Eliminar" class="btn btn-primary">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
                         </div>
                     </form>
@@ -321,8 +270,8 @@
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
-<link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
-<script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
+<!-- <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
+<script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script> -->
 
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="js/pagoCurso.js"></script>
