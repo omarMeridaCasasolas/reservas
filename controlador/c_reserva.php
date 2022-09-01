@@ -85,6 +85,15 @@
                     $res = "Error de autentificacion";
                 }
                 break;
+            case 'obtenerPagosReserva':  
+                if(isset($_SESSION['usuario']) && ($_SESSION['tipo_empleado'] == 'Administrador' || $_SESSION['tipo_empleado'] == 'Tecnico')){
+                    $fechaInicio = $_REQUEST['fechaInicio']." 00:00:00"; 
+                    $fechaFin = $_REQUEST['fechaFin']." 23:59:59";
+                    $res = $reserva->obtenerPagosReserva($fechaInicio,$fechaFin);
+                }else{
+                    $res = "Error de autentificacion";
+                }
+                break;
             case 'reservaPorJuegoDeportivoEdit':
                 if(isset($_SESSION['usuario']) && ($_SESSION['tipo_empleado'] == 'Administrador' || $_SESSION['tipo_empleado'] == 'Tecnico')){
                     $idCliente = intval($_REQUEST['idCliente']);

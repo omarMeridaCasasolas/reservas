@@ -38,6 +38,15 @@
                 }else{
                     $res = "Error de autentificacion";
                 }
+                break; 
+            case 'obtenerPagosCurso':
+                if(isset($_SESSION['usuario']) && ($_SESSION['tipo_empleado'] == 'Administrador' || $_SESSION['tipo_empleado'] == 'Tecnico')){
+                    $fechaInicio = $_REQUEST['fechaInicio'];
+                    $fechaFinal = $_REQUEST['fechaFin'];
+                    $res = $pago->obtenerPagosCurso($fechaInicio,$fechaFinal);
+                }else{
+                    $res = "Error de autentificacion";
+                }
                 break;
             case 'eliminarAlumnoGrupo':
                 if(isset($_SESSION['usuario']) && ($_SESSION['tipo_empleado'] == 'Administrador' || $_SESSION['tipo_empleado'] == 'Tecnico')){

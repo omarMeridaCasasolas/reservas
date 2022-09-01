@@ -13,16 +13,19 @@
                 $fechaInicio = $_REQUEST['fechaInicio'];
                 $fechaFinal = $_REQUEST['fechaFin'];
                 $res = $venta->obtenerVentasGeneradas($fechaInicio,$fechaFinal);
+                break;
             // case 'getlistaPublicaciones':
             //     $res = $publicacion->getlistaPublicaciones();
             //     break;
             // case 'verPublicaciones':
             //     $res = $publicacion->verPublicaciones();
             //     break; 
-            // case 'eliminarPublicacion':
-            //     $idPublicacion = $_REQUEST['idPublicacion'];
-            //     $res = $publicacion->eliminarPublicacion($idPublicacion);
-            //     break; 
+            case 'getReporteVentas':
+                $fechaInicio = $_REQUEST['fechaInicio']." 00:00:00";
+                $fechaFinal = $_REQUEST['fechaFin']." 23:59:59";
+                // $res = $fechaInicio ."----".$fechaFinal;
+                $res = $venta->getReporteVentas($fechaInicio,$fechaFinal);
+                break; 
             default:
                 # code...
                 break;

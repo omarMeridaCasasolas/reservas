@@ -139,6 +139,18 @@
             $sentenceSQL->closeCursor();
             return json_encode($res, JSON_PRETTY_PRINT);
         }
+
+        public function obtenerPagosReserva($fechaInicio,$fechaFin){
+            $sql = "SELECT fecha_reserva ,TIME_FORMAT(min(hora_reserva), '%H:%i') as hora_reserva,TIME_FORMAT(ADDTIME(max(hora_limite),'00:01:00'), '%H:%i') as hora_limite, 
+            identificador_reserva, TIME_FORMAT( TIMEDIFF(ADDTIME(max(hora_limite),'00:01:00'), min(hora_reserva)), '%H:%i') as duracion_reserva
+            ,tipo_reserva, nombre_cliente, costo_reserva, pago_digital, pago_efectivo FROM reserva INNER JOIN cliente ON reserva.id_cliente = cliente.id_cliente
+            GROUP BY identificador_reserva HAVING identificador_reserva between :inicio AND :fin;";
+            $sentenceSQL = $this->connexion_bd->prepare($sql);
+            $res = $sentenceSQL->execute(array(":inicio"=>$fechaInicio,":fin"=>$fechaFin));
+            $respuesta = $sentenceSQL->fetchAll(PDO::FETCH_ASSOC);
+            $sentenceSQL->closeCursor();
+            return json_encode(array('data' => $respuesta), JSON_PRETTY_PRINT);
+        }
     } 
 
 ?>

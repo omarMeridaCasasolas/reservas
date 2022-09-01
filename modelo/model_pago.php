@@ -84,6 +84,19 @@
             $sentenceSQL->closeCursor();
             return $res;
         }
+
+        public function obtenerPagosCurso($fechaInicio,$fechaFinal){
+            // $sql = "SELECT fecha_venta, nombre_cliente, format(total_venta,2) as total_venta FROM venta INNER JOIN 
+            // cliente ON venta.id_cliente = cliente.id_cliente  WHERE fecha_venta between :inicio AND :fin;";
+            $sql = "SELECT nombre_curso, pago_digital, pago_efectivo, total_pago, fecha_pago FROM curso INNER JOIN 
+            gestion_curso ON curso.id_curso = gestion_curso.id_curso INNER JOIN pago 
+            ON gestion_curso.id_gestion_curso = pago.id_gestion_curso WHERE fecha_pago between :inicio  AND :fin ;";
+            $sentenceSQL = $this->connexion_bd->prepare($sql);
+            $res = $sentenceSQL->execute(array(":inicio"=>$fechaInicio,":fin"=>$fechaFinal));
+            $respuesta = $sentenceSQL->fetchAll(PDO::FETCH_ASSOC);
+            $sentenceSQL->closeCursor();
+            return json_encode(array('data' => $respuesta), JSON_PRETTY_PRINT);
+        }
     }
 
 ?>

@@ -13,9 +13,11 @@
                 $fechaInicio = $_REQUEST['fechaInicio'];
                 $fechaFinal = $_REQUEST['fechaFin'];
                 $res = $compra->obtenercomprasGeneradas($fechaInicio,$fechaFinal);
-            // case 'getlistaPublicaciones':
-            //     $res = $publicacion->getlistaPublicaciones();
-            //     break;
+            case 'getReporteCompras':
+                $fechaInicio = $_REQUEST['fechaInicio']." 00:00:00";
+                $fechaFinal = $_REQUEST['fechaFin']." 23:59:59";
+                $res = $compra->getReporteCompras($fechaInicio,$fechaFinal);
+                break;
             // case 'verPublicaciones':
             //     $res = $publicacion->verPublicaciones();
             //     break; 

@@ -1,5 +1,6 @@
 <?php
     session_start();
+    date_default_timezone_set('America/La_Paz');
     if(!isset($_SESSION['usuario'])){
         header("Location:../index.php");
         exit();
@@ -18,7 +19,7 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.min.css">
     <script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
-    <title>Productos</title>
+    <title>Reportes</title>
     <style>
         body{
             font-family: 'Poppins', sans-serif;
@@ -56,7 +57,7 @@
                 <li class="nav-item">
                     <a class="nav-link" href="ventas.php">Ventas</a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item active">
                     <a class="nav-link" href="reportes.php"> <i class="fas fa-eye"></i> Reportes</a>
                 </li>
                 <li class="nav-item">
@@ -102,6 +103,21 @@
                         <input type="checkbox" class="form-check-input" value="" id="checkReserva" checked>Reserva de Cancha
                     </label>
                 </div>
+                <!-- <div class="form-check">
+                    <label class="form-check-label">
+                        <input type="checkbox" class="form-check-input" value="" id="checkVenta" checked>Venta de productos
+                    </label>
+                </div> -->
+                <div class="form-check">
+                    <label class="form-check-label">
+                        <input type="checkbox" class="form-check-input" value="" id="checkInscripcion" checked>Cobro Alumno Grupo
+                    </label>
+                </div>
+                <div class="form-check">
+                    <label class="form-check-label">
+                        <input type="checkbox" class="form-check-input" value="" id="checkCompra" checked>Compra de productos
+                    </label>
+                </div>
                 <div class="form-check">
                     <label class="form-check-label">
                         <input type="checkbox" class="form-check-input" value="" id="checkVenta" checked>Venta de productos
@@ -135,41 +151,45 @@
 
         <div class="col-xl-8 col-lg-10 col-sm-11 border mx-auto bg-light p-3">
             <h2 class="text-center p-2 text-primary">Libro</h2>
-            <div id="cajaReserva" class="d-none">
-                <h5 class='text-danger'>Dinero por uso de cancha</h5>
-                <table class="table compact" style="width:100%" id="tablaReserva">
+            
+            <div id="cajaPagosReserva" >
+                <h5 class='text-danger'>Pagos por reserva</h4>
+                <table class="table compact responsive" style="width:100%" id="tablaPagosReserva">
                     <thead>
                         <tr>
-                            <th>Nombre</th>
-                            <th>Cantidad</th>
+                            <th>Cliente</th>
+                            <th>Fecha</th>
+                            <th>Inicio</th>
+                            <th>Final</th>
+                            <th>Tiempo</th>
+                            <th>Efectivo</th>
+                            <th>Digital</th>
                             <th>Total</th>
                         </tr>
                     </thead>
                     <tbody>
-
                     </tbody>
                 </table>
                 <div class="text-right">
-                    <span>Total: <strong id="totalReserva"></strong></span>
+                    <span>Total: <strong id="totalPagoReserva"></strong></span>
                 </div>
-                <div class="mx-auto text-center">
-                    <canvas id="myChart" width="400" height="400" class="myChart"></canvas>
-                </div>
+                <!-- <div class="mx-auto text-center">
+                    <canvas id="myChart2" width="400" height="400" class="myChart"></canvas>
+                </div> -->
             </div>
-            <br>
             <hr>
-            <div id="cajaVenta" class="d-none">
-                <h5 class='text-danger'>Dinero por venta de snack</h4>
+            
+            <div id="cajaVenta" >
+                <h5 class='text-danger'>Dinero por venta</h4>
                 <table class="table compact" style="width:100%" id="tablaVentas">
                     <thead>
                         <tr>
-                            <th>Producto</th>
-                            <th>Cantidad</th>
+                            <th>Cliente</th>
+                            <th>Fecha</th>
                             <th>Total</th>
                         </tr>
                     </thead>
                     <tbody>
-
                     </tbody>
                 </table>
                 <div class="text-right">
@@ -180,6 +200,50 @@
                 </div> -->
             </div>
             <hr>
+
+            <div id="cajaCompras" >
+                <h5 class='text-danger'>Dinero por compras</h4>
+                <table class="table compact" style="width:100%" id="tablaCompras">
+                    <thead>
+                        <tr>
+                            <th>Proveedor</th>
+                            <th>Fecha</th>
+                            <th>Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+                <div class="text-right">
+                    <span>Total: <strong id="totalCompras"></strong></span>
+                </div>
+                <!-- <div class="mx-auto text-center">
+                    <canvas id="myChart2" width="400" height="400" class="myChart"></canvas>
+                </div> -->
+            </div>
+
+            <div id="cajaPagosGrupo" >
+                <h5 class='text-danger'>Dinero por grupos</h4>
+                <table class="table compact" style="width:100%" id="tablaPagosGrupo">
+                    <thead>
+                        <tr>
+                            <th>Grupo</th>
+                            <th>Fecha</th>
+                            <th>Efectivo</th>
+                            <th>Digital</th>
+                            <th>Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+                <div class="text-right">
+                    <span>Total: <strong id="totalPagosGrupo"></strong></span>
+                </div>
+                <!-- <div class="mx-auto text-center">
+                    <canvas id="myChart2" width="400" height="400" class="myChart"></canvas>
+                </div> -->
+            </div>
         </div>
     </main>
     <!-- MODAL PARA VENTA -->
@@ -271,5 +335,13 @@
     </div>
 </body>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script src="https://cdn.datatables.net/buttons/2.2.3/js/dataTables.buttons.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.2.3/js/buttons.html5.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.2.3/js/buttons.print.min.js"></script>
+
 <script src="js/reportes.js"></script>
 </html>

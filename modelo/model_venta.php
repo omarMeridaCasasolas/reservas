@@ -53,6 +53,16 @@
             $res = $sentenceSQL->execute(array(":compra"=>$idVenta,":product"=>$idProducto,":cant"=>intval($cantidad),":precio"=>$precio));
             return $res;
         }
+
+        public function getReporteVentas($fechaInicio,$fechaFinal){
+            $sql = "SELECT fecha_venta, nombre_cliente, format(total_venta,2) as total_venta FROM venta INNER JOIN 
+            cliente ON venta.id_cliente = cliente.id_cliente  WHERE fecha_venta between :inicio AND :fin;";
+            $sentenceSQL = $this->connexion_bd->prepare($sql);
+            $res = $sentenceSQL->execute(array(":inicio"=>$fechaInicio,":fin"=>$fechaFinal));
+            $respuesta = $sentenceSQL->fetchAll(PDO::FETCH_ASSOC);
+            $sentenceSQL->closeCursor();
+            return json_encode(array('data' => $respuesta), JSON_PRETTY_PRINT);
+        }
     } 
 
 ?>
