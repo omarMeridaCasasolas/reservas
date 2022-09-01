@@ -308,8 +308,8 @@ function getListaCurso(){
 			{ data: null,
 				defaultContent:
 				"<button type='button' class='editCurso btn btn-warning btn-sm' data-toggle='modal' data-target='#modalEditarCurso'><i class='fas fa-edit'></i></button> "+
-                "<button type='button' class='deletCurso btn btn-danger btn-sm' data-toggle='modal' data-target='#modalEliminarCurso'><i class='fas fa-trash'></i></button> "+
-                "<button type='button' class='editAlumnos btn btn-info btn-sm' data-toggle='modal' data-target='#modalAlumnos'><i class='fa fa-users'></i></button> ",
+                "<button type='button' class='deletCurso btn btn-danger btn-sm' data-toggle='modal' data-target='#modalEliminarCurso'><i class='fas fa-trash'></i></button> ",
+                // "<button type='button' class='editAlumnos btn btn-info btn-sm' data-toggle='modal' data-target='#modalAlumnos'><i class='fa fa-users'></i></button> ",
 				width: "10%"
 			}
 		]

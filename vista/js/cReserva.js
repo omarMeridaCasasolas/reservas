@@ -34,18 +34,10 @@ $(document).ready(function () {
         $("#pagoEditDepositado").html(parseFloat(pagoDigital)+ parseFloat(pagoEfectivo));
     });
 
-    // convertirHoraToNumber();
-
     $("#fechaReserva").change(function (e) { 
         e.preventDefault();
-        console.log("Se esta cambiando el dia");
         calendarioReserva($("#fechaReserva").val());
     });
-    
-    // $("#myTable").on('click','button.btnCerrado',function (e) {
-	// 	e.preventDefault();
-    //     console.log("Se ha hecho click en cerrado");
-    // });
 
     $("#cajaIntervalo .form-check-input").change(function (e) { 
         e.preventDefault();
@@ -421,9 +413,9 @@ function showBody(){
         let media = buscarReservaMedia(i);
         fila += `<tr class="cat1">${media}</tr>`;
     }
-    $("#myTable tbody").empty();
+    // $("#myTable tbody").empty();
     $("#myTable tbody").html(fila);
-    $(".cat1").hide();
+    // $(".cat1").hide();
 }
 
 function buscarReserva(tmp){

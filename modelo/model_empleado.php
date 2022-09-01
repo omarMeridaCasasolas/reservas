@@ -12,7 +12,8 @@
         }
 
         public function getListaEmpleado(){
-            $sql = "SELECT * from empleado WHERE tipo_empleado <> 'Tecnico' ORDER BY id_empleado DESC;";
+            // $sql = "SELECT * from empleado WHERE tipo_empleado <> 'Tecnico' ORDER BY id_empleado DESC;";
+            $sql = "SELECT * from empleado  ORDER BY id_empleado DESC;";
             $sentenceSQL = $this->connexion_bd->prepare($sql);
             $res = $sentenceSQL->execute();
             $respuesta = $sentenceSQL->fetchAll(PDO::FETCH_ASSOC);

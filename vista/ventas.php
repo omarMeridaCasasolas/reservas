@@ -83,7 +83,11 @@
                     <a class="nav-link" href="tipo_eventos.php">Tipo evento</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="proveedor.php"></i> Proveedor</a>';
+                    <a class="nav-link" href="proveedor.php"></i> Proveedor</a>
+                </li>    
+                <li class="nav-item">
+                    <a href="../controlador/formCerrarSession.php" class="btn btn-danger" title="Cerrar Session"><i class="fas fa-sign-out-alt"></i></a>
+                </li>';
                 }?>
             </ul>
         </div>

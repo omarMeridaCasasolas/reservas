@@ -41,19 +41,9 @@
         <h1 class="text-center p-2 text-danger">Snack</h1>
         <div class="col-xl-7 col-lg-9 col-md-10 mx-auto">
             <div class="row">
-                <div class="col-sm-6 form-group">
+                <div class="col-sm-12 form-group">
                     <label for="">Nombre producto</label>
-                    <input type="text" name="buscadorSnack" id="buscadorSnack" class="form-control">
-                </div>
-                <div class="col-sm-6 form-group">
-                    <label for="">Categoria</label>
-                    <select name="" id="" class="form-control">
-                        <option value="">Todos</option>
-                        <option value="">Bebidas</option>
-                        <option value="">Dulces</option>
-                        <option value="">Galletas</option>
-                        <option value="">Otros</option>
-                    </select>
+                    <input type="text" name="buscadorSnack" id="buscadorSnack" class="form-control" placeholder='Escribe nombre del producto'>
                 </div>
             </div>
         </div>

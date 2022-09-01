@@ -2,10 +2,20 @@ let listaCursoAlumno = new Array();
 $(document).ready(function () {
     // getListaPagosGrupo($("#selectGrupo").val());
     getlistaCursos();
-    listaAlumnos();
+    // listaAlumnos();
     $("#selectGrupo").change(function (e) { 
         e.preventDefault();
-        // getlistaCursos();
+        getlistaCursos(getListaPagosGrupo($("#selectGrupo").val()));
+    });
+
+    $("#btnChangeAlumnos").click(function (e) { 
+        e.preventDefault();
+        listaAlumnos();
+    });
+
+    $("#listasAddGrupo").change(function (e) { 
+        e.preventDefault();
+        listaAlumnos();
     });
 
     $(".pagoAdd").change(function (e) { 
@@ -14,6 +24,8 @@ $(document).ready(function () {
         let pagoEfectivo = $("#pagoAddEfectico").val();
         $("#totalPagadoInscripcion").html( parseFloat(pagoDigital)+ parseFloat(pagoEfectivo) );
     });
+
+
 
     $("#formAddAlumnoGrupo").submit(function (e) { 
         e.preventDefault();
@@ -134,10 +146,17 @@ function getListaPagosGrupo(id){
         data: {metodo:"getListaPagosGrupo",id},
         dataType: "JSON",
         success: function (response) {
-            // console.log(response);
-            listaCursoAlumno = response;
-            drawCabecera();
-            drawbody();
+            console.log(response);
+            if(response.length == 0){
+                let cabezera = '<th>Nombres</th><th>1º</th><th>2º</th><th>3º</th>';
+                let cuerpo = '<tr><td colspan="4">No existe alumnos</td></tr>';
+                $("#myTable  thead  tr").html(cabezera); 
+                $("#myTable  tbody").html(cuerpo); 
+            }else{
+                listaCursoAlumno = response;
+                drawCabecera();
+                drawbody();
+            }
         }
     });
 }
@@ -154,6 +173,8 @@ function getlistaCursos(){
         success: function (response) {
             // console.log(response);
             // let listaCursos =  response.data;
+            // $("#selectGrupo").empty();
+            $("#listasAddGrupo").empty();
             response.forEach(element => {
                 $("#selectGrupo").append(`<option value='${element.id_curso}'>${element.nombre_curso}</option>`);
                 $("#listasAddGrupo").append(`<option value='${element.id_curso}'>${element.nombre_curso}</option>`);
@@ -238,10 +259,11 @@ function listaAlumnos() {
     $.ajax({
         type: "POST",
         url: "../controlador/c_alumno.php",
-        data: {metodo:"getListaAlumno"},
+        data: {metodo:"getListaAlumnoNoInscritos",clase:$("#selectGrupo").val()},
         dataType: "JSON",
         success: function (response) {
             // console.log(response);
+            $('#listasAddAlumno').empty();
             response.data.forEach(element => {
                 $("#listasAddAlumno").append(`<option value='${element.id_alumno}'>${element.nombre_alumno} - ${element.edad}</option>`);
             });

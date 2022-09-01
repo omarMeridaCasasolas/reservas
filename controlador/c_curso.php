@@ -41,7 +41,7 @@
                         $horaInicio = strtotime($entrada.":00");
                         while($horaInicio < $horaFinal-1){
                             // $res = $res. $horaFinal."\t";
-                            $timeReserva = date('h:i:s',$horaInicio);
+                            $timeReserva = date('H:i:s',$horaInicio);
                             $aux = $reserva->reservaCancha30min($value,$fechaSalida,$timeReserva,$idCurso);
                             // var_dump($aux);
                             if($aux == "1"){

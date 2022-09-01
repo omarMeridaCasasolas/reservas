@@ -15,6 +15,14 @@
                 }else{
                     $res = "Error de autentificacion";
                 }
+                break; 
+            case 'getListaAlumnoNoInscritos':
+                if(isset($_SESSION['usuario']) && ($_SESSION['tipo_empleado'] == 'Administrador' || $_SESSION['tipo_empleado'] == 'Tecnico')){
+                    $id = $_REQUEST['clase'];
+                    $res = $alumno->getListaAlumnoNoInscritos($id);
+                }else{
+                    $res = "Error de autentificacion";
+                }
                 break;
             case 'agregarAlumno':
                 if(isset($_SESSION['usuario']) && ($_SESSION['tipo_empleado'] == 'Administrador' || $_SESSION['tipo_empleado'] == 'Tecnico')){

@@ -49,7 +49,7 @@
         <!-- Navbar links -->
         <div class="collapse navbar-collapse" id="collapsibleNavbar">
             <ul class="navbar-nav p-2">
-                <li class="nav-item active">
+                <li class="nav-item">
                     <a class="nav-link" href="cReserva.php"> Reserva</a>
                 </li>
                 <li class="nav-item">
@@ -98,7 +98,7 @@
         <br>
         <hr>
         <div>
-            <button class="btn btn-success" data-toggle='modal' data-target='#modalAgregarAlumnoCurso'>Inscribir alumno</button>
+            <button class="btn btn-success" data-toggle='modal' id='btnChangeAlumnos' data-target='#modalAgregarAlumnoCurso'>Inscribir alumno</button>
         </div>
         <br>
         <div class="table-responsive" id="contTabla">

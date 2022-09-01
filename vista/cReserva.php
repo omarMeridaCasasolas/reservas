@@ -83,6 +83,9 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="proveedor.php"></i> Proveedor</a>
+                </li>
+                <li class="nav-item">
+                    <a href="../controlador/formCerrarSession.php" class="btn btn-danger" title="Cerrar Session"><i class="fas fa-sign-out-alt"></i></a>
                 </li>';
                 }?>
             </ul>
@@ -92,7 +95,7 @@
         <h1 class="text-center p-2">Reservas</h1>
         <div class="row">
             <div class="col-sm-8 form-group">
-                <input type="date" name="" id="fechaReserva" class="form-control" min="2022-07-29" max="2022-08-29" value=<?php echo date('Y-m-d');?>>
+                <input type="date" name="" id="fechaReserva" class="form-control" value=<?php echo date('Y-m-d');?>>
             </div>
             <div class="col-sm-4 form-group" id="cajaIntervalo">
                 <h6>Vista en intervalos:</h6>

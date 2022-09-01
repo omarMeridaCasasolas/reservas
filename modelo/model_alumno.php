@@ -91,6 +91,17 @@
                 return $res;
             }
         }
+
+        public function getListaAlumnoNoInscritos($id){
+            $sql = "SELECT id_alumno, nombre_alumno, carnet_alumno, fecha_nacimiento nombre_tutor, celular_contacto, 
+            DATE_FORMAT(FROM_DAYS(DATEDIFF(now(),fecha_nacimiento)), '%Y')+0 AS edad FROM alumno 
+            WHERE id_alumno NOT IN (SELECT id_alumno FROM gestion_curso WHERE id_curso = :id);";
+            $sentenceSQL = $this->connexion_bd->prepare($sql);
+            $res = $sentenceSQL->execute(array(":id"=>$id));
+            $respuesta = $sentenceSQL->fetchAll(PDO::FETCH_ASSOC);
+            $sentenceSQL->closeCursor();
+            return json_encode(array('data' => $respuesta), JSON_PRETTY_PRINT);
+        }
     } 
 
 ?>

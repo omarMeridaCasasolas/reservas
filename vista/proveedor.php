@@ -87,6 +87,9 @@
                 </li>
                 <li class="nav-item active">
                     <a class="nav-link" href="proveedor.php"><i class="fas fa-eye"></i> Proveedor</a>
+                </li>
+                <li class="nav-item">
+                    <a href="../controlador/formCerrarSession.php" class="btn btn-danger" title="Cerrar Session"><i class="fas fa-sign-out-alt"></i></a>
                 </li>';
                 }?>
             </ul>

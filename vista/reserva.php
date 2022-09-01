@@ -46,12 +46,12 @@
     <main class="container border">
         <h1 class="text-center p-5">Reservas</h1>
         <div class="form-group">
-            <input type="date" name="" id="fechaReserva" class="form-control" min="2022-07-29" max="2022-08-29" value=<?php echo date('Y-m-d');?>>
+            <input type="date" name="" id="fechaReserva" class="form-control" value=<?php echo date('Y-m-d');?>>
         </div>
         <div class="table-responsive">
             <table class="table table-sm table-bordered text-center" id="myTable">
                 <thead>
-                    <tr>
+                    <tr class='bg-dark text-white'>
                         <th>Horario</th>
                         <th>Lunes</th>
                         <th>Martes</th>
@@ -72,14 +72,14 @@
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header bg-info">
-                    <h5 class="modal-title" id="modalNoDisponble">No disponnible</h5>
+                    <h5 class="modal-title">No disponnible</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
                     <h6>No se puede reservar la cancha,ya esta fuera del rango de atencion gracias</h6> 
-                    <h6>Lunes - Viernes => 9:00 a 22:00</h6> 
+                    <h6>Lunes - Viernes => 9:00 a 23:00</h6> 
                     <h6>Sabado => 9:00 a 20:00</h6> 
                     <h6>Lunes - Viernes => 9:00 a 14:00</h6> 
                     <h3 class="text-center bg-light"><i class="fas fa-smile"></i>&nbsp&nbsp<i class="fas fa-smile"></i>&nbsp&nbsp<i class="fas fa-smile"></i></h3>
@@ -102,9 +102,32 @@
                 </div>
                 <div class="modal-body">
                     <h6>Posible, para ser la reserva comunicarse a los siguientes contactos, gracias</h6> 
-                    <h6><i class="fas fa-mail-bulk"></i>&nbsp Correo electronico: <a href="mailto:cuenta@deemail.com">OmarCasasolasMerida@gmail.com</a>
-                    <h6><i class="fas fa-search-location"></i>&nbsp Direccion: Juan de la rosa y america #14521</h6> 
-                    <h6><i class="fab fa-whatsapp"></i>&nbsp Whatsapp: <a href="https://wa.me/+59175931697?text=I'm%20interested%20in%20your%20car%20for%20sale" target="_blank" rel="noopener noreferrer">Enviar mensaje</a></h6> 
+                    <h6><i class="fas fa-mail-bulk"></i>&nbsp Correo electronico: <a href="mailto:gerencia@nexxo.com.bo">gerencia@nexxo.com.bo</a>
+                    <h6><i class="fas fa-search-location"></i>&nbsp Direccion: Av. Uyuni 731 Esquina, Cochabamba</h6> 
+                    <h6><i class="fab fa-whatsapp"></i>&nbsp Whatsapp 69416450: <a href="https://wa.me/+59169416450?text=Me%20interesa%20reservar%20la%20cancha%20" target="_blank" rel="noopener noreferrer">Enviar mensaje</a></h6> 
+                    <h3 class="text-center bg-light"><i class="fas fa-smile"></i>&nbsp&nbsp<i class="fas fa-smile"></i>&nbsp&nbsp<i class="fas fa-smile"></i></h3>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modalReservado" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header bg-warning">
+                    <h5 class="modal-title">Reservado</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <h6>Lo sentimos la cancha ya esta reservada, por favor seleciona otra fecha o contactese con:</h6> 
+                    <h6><i class="fas fa-mail-bulk"></i>&nbsp Correo electronico: <a href="mailto:gerencia@nexxo.com.bo">gerencia@nexxo.com.bo</a>
+                    <h6><i class="fas fa-search-location"></i>&nbsp Direccion: Av. Uyuni 731 Esquina, Cochabamba</h6> 
+                    <h6><i class="fab fa-whatsapp"></i>&nbsp Whatsapp 69416450: <a href="https://wa.me/+59169416450?text=Me%20interesa%20reservar%20la%20cancha%20" target="_blank" rel="noopener noreferrer">Enviar mensaje</a></h6> 
                     <h3 class="text-center bg-light"><i class="fas fa-smile"></i>&nbsp&nbsp<i class="fas fa-smile"></i>&nbsp&nbsp<i class="fas fa-smile"></i></h3>
                 </div>
                 <div class="modal-footer">
